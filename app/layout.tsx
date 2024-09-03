@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+import Layout from '@/src/components/commons/layout/layout';
 
 const inter = Noto_Sans_KR({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -19,7 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <body className={inter.className}>
+      <Layout>
+        <main className="pt-[66px] max-w-[1024px] mx-auto w-full">
+          {children}
+        </main>
+      </Layout>
+    </body>
+  </html>
   );
 }
