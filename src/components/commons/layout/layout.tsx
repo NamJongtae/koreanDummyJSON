@@ -1,3 +1,4 @@
+import Footer from './footer';
 import Header from "./header";
 import MobileNav from "./mobile-nav/mobile-nav";
 import MobileNavProvider from "@/src/store/mobile-nav-provider";
@@ -14,6 +15,7 @@ export default function Layout({ children }: IProps) {
         <MobileNav />
       </MobileNavProvider>
       {children}
+      <Footer />
     </>
   );
 }
