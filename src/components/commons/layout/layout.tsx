@@ -1,4 +1,6 @@
 import Header from "./header";
+import MobileNav from "./mobile-nav/mobile-nav";
+import MobileNavProvider from "@/src/store/mobile-nav-provider";
 
 interface IProps {
   children: React.ReactNode;
@@ -7,7 +9,10 @@ interface IProps {
 export default function Layout({ children }: IProps) {
   return (
     <>
-      <Header />
+      <MobileNavProvider>
+        <Header />
+        <MobileNav />
+      </MobileNavProvider>
       {children}
     </>
   );

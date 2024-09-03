@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import MobileNavBtn from "./mobile-nav/mobile-nav-btn";
 import { usePathname } from "next/navigation";
 import NavDocsMenu from "./nav-docs-menu";
 
@@ -36,6 +37,7 @@ export default function Nav() {
           </li>
         </ul>
       </nav>
+      <MobileNavBtn />
     </>
   );
 }
