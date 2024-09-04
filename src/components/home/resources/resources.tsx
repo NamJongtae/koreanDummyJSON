@@ -1,0 +1,43 @@
+"use client";
+
+import ResourcesRows from "./resources-rows";
+import { RESOURCES_DATA } from "@/src/table-data/resources-data";
+
+export default function Resources() {
+
+  return (
+    <section className={"mt-20 px-4 mb-20"}>
+      <h2 className="section-title">Resources</h2>
+
+      <p className="section-text mb-2">
+        users, posts, comments, todos, books, reviews 6개의 리소스가 제공됩니다.
+      </p>
+      <p className="section-text mb-5">
+        각 데이터는 서로 관계를 맺고 있으며, 이를 통해 다양한 데이터를
+        제공합니다.
+      </p>
+
+      <table className="min-w-full border-collapse border border-gray-200 shadow-md rounded-lg overflow-hidden">
+        <thead className="bg-gray-100 text-sm xs:text-base sm:text-lg">
+          <tr>
+            <th className="py-3 px-6 text-left font-medium text-gray-700 border-b border-gray-200">
+              Resource
+            </th>
+            <th className="py-3 px-6 text-left font-medium text-gray-700 border-b border-gray-200">
+              Information
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white text-sm sm:text-base break-keep">
+          {RESOURCES_DATA.map((row) => (
+            <ResourcesRows
+              key={row.resource}
+              resource={row.resource}
+              info={row.info}
+            />
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}
