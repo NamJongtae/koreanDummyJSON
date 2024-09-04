@@ -1,13 +1,17 @@
 "use client";
-
+import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function HomeIntro() {
+  const { ref, isVisible } = useSectionVisibility();
 
   return (
     <section
-      className={"mt-5 px-4 break-keep"}
+      className={`transition-opacity duration-1000 ${
+        isVisible ? "opacity-100" : "opacity-0"
+      } mt-5 px-4 break-keep`}
+      ref={ref}
     >
       <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold mb-10">
         <span className="text-gray-300">{"{ "}</span>Korean Dummy JSON{" "}
