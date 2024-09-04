@@ -33,13 +33,28 @@ const config: Config = {
         slideOutLeft: {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" }
+        },
+        buttonCopyAnimation: {
+          "0%": {
+            "background-color": "#3b82f6",
+            transform: "scale(1)"
+          },
+          "50%": {
+            "background-color": "#10b981",
+            transform: "scale(1.1)"
+          },
+          "100%": {
+            "background-color": "#3b82f6",
+            transform: "scale(1)"
+          }
         }
       },
       animation: {
         entering: "fadeInUp 200ms ease-out",
         leaving: "fadeOutDown 200ms ease-in",
         slideOutRight: "slideOutRight 0.5s ease-in-out",
-        slideOutLeft: "slideOutLeft 0.5s"
+        slideOutLeft: "slideOutLeft 0.5s",
+        buttonCopyAnimation: "buttonCopyAnimation 0.5s ease"
       }
     }
   },
