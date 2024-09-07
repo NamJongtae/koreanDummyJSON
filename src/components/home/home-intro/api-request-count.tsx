@@ -17,7 +17,7 @@ export default function ApiRequestCount() {
           {countLoading.todayCountLoading ? (
             <LoadingSkeleton />
           ) : (
-            count.todayCount
+            count.todayCount || 0
           )}
           번
         </span>
@@ -28,7 +28,7 @@ export default function ApiRequestCount() {
           {countLoading.totalCountLoading ? (
             <LoadingSkeleton />
           ) : (
-            count.totalCount
+            count.totalCount || 0
           )}
           번
         </span>
