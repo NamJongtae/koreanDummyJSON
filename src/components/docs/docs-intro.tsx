@@ -20,6 +20,8 @@ export default function DocsIntro() {
         return "총 100개의 책 데이터가 제공됩니다.";
       case "reviews":
         return "총 500개의 리뷰 데이터가 제공됩니다.";
+      case "auth":
+        return "로그인 및 인증/인가 기능을 제공합니다.";
       default:
         return null;
     }
