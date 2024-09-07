@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
   .section-title {
     @apply text-2xl md:text-3xl font-semibold mb-5;
