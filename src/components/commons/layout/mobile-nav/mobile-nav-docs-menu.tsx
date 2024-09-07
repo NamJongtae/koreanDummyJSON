@@ -44,7 +44,7 @@ export default function MobileNavDocsMenu({
         onKeyDown={handleDocsBtnFocusOnTab}
         className={`${
           pathname.includes("/docs") ? "text-blue-400" : undefined
-        } betterhover:hover:text-blue-400 transition-colors delay-75 flex items-center gap-2 focus:outline-none focus:bg-gray-200 px-4 py-2`}
+        } hover-focus-effect flex items-center gap-2  px-4 py-2`}
         ref={lastNavMenuRef}
       >
         <Image src={"/icons/docs-icon.svg"} alt="docs" width={24} height={24} />

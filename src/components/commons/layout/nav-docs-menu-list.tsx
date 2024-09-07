@@ -43,8 +43,8 @@ export default function NavDocsMenuList({
             className={`${
               pathname === `/docs/${doc.toLocaleLowerCase()}`
                 ? "text-blue-400"
-                : undefined
-            } betterhover:hover:text-blue-400 transition-colors delay-75 focus:outline-none focus:text-blue-400`}
+                : "text-black"
+            } hover-focus-effect transition-colors delay-75`}
             ref={
               setDocsMenuListRef(
                 index

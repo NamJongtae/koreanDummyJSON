@@ -15,4 +15,7 @@
   .primary-btn {
     @apply px-5 py-3 text-lg text-white rounded-md mb-3 transition-all delay-75;
   }
+  .hover-focus-effect {
+    @apply betterhover:hover:text-blue-400  focus:outline-none focus:text-blue-400  transition-colors delay-75;
+  }
 }

@@ -51,8 +51,8 @@ export default function MobileNavDocsMenuList({
             className={`${
               pathname === `/docs/${doc.toLocaleLowerCase()}`
                 ? "text-blue-400"
-                : undefined
-            } betterhover:hover:text-blue-400 transition-colors delay-75 focus:outline-none focus:bg-gray-200 w-full inline-block px-2 py-1`}
+                : "text-black"
+            } w-full inline-block px-1 py-1 hover-focus-effect`}
             href={`/docs/${doc.toLocaleLowerCase()}`}
             onClick={toggleNavMenu}
             ref={

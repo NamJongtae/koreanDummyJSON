@@ -16,7 +16,7 @@ export default function Nav() {
             <Link
               className={`${
                 pathname === "/" ? "text-blue-400" : undefined
-              } betterhover:hover:text-blue-400 transition-all delay-75`}
+              } hover-focus-effect transition-all delay-75`}
               href={"/"}
             >
               HOME
@@ -26,7 +26,7 @@ export default function Nav() {
             <Link
               className={`${
                 pathname === "/guide" ? "text-blue-400" : undefined
-              } betterhover:hover:text-blue-400 transition-all delay-75`}
+              } hover-focus-effect transition-all delay-75`}
               href={"/guide"}
             >
               GUIDE

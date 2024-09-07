@@ -34,7 +34,7 @@ export default function MobileNavList({ toggleNavMenu }: IProps) {
         <Link
           className={`${
             pathname === "/" ? "text-blue-400" : undefined
-          } inline-flex items-center gap-2 betterhover:hover:text-blue-400 transition-colors delay-75 focus:outline-none focus:bg-gray-200 px-4 py-2`}
+          } inline-flex items-center gap-2 hover-focus-effect px-4 py-2`}
           href={"/"}
           onKeyDown={handleHomeLinkFocusOnTab}
           onClick={toggleNavMenu}
@@ -53,7 +53,7 @@ export default function MobileNavList({ toggleNavMenu }: IProps) {
         <Link
           className={`${
             pathname === "/guide" ? "text-blue-400" : undefined
-          } inline-flex items-center gap-2 betterhover:hover:text-blue-400 transition-colors delay-75 focus:outline-none focus:bg-gray-200 px-4 py-2`}
+          } inline-flex items-center gap-2 px-4 py-2 hover-focus-effect`}
           href={"/guide"}
           onClick={toggleNavMenu}
           ref={lastNavMenuPreviousRef}

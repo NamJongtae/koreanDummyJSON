@@ -8,7 +8,8 @@ export const DOCS_MENU = [
   "Posts",
   "Comments",
   "Books",
-  "Reviews"
+  "Reviews",
+  "Auth"
 ];
 
 export default function NavDocsMenu() {
@@ -29,7 +30,7 @@ export default function NavDocsMenu() {
         onClick={toggleDocsMenu}
         className={`${
           pathname.includes("/docs") ? "text-blue-400" : undefined
-        } betterhover:hover:text-blue-400 transition-all delay-75 flex items-center`}
+        } hover-focus-effect transition-all delay-75 flex items-center`}
         onKeyDown={(e) => handleKeyDownEsc(e, toggleDocsMenu)}
       >
         DOCS
