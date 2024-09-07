@@ -13,7 +13,7 @@ export default function HomeIntro() {
       } mt-5 px-4 break-keep`}
       ref={ref}
     >
-      <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold mb-10">
+      <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold mt-20 mb-14">
         <span className="text-gray-300">{"{ "}</span>Korean Dummy JSON{" "}
         <span className="text-gray-300">{" }"}</span>
       </h2>

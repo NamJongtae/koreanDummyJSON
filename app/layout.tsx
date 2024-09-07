@@ -36,7 +36,7 @@ export default function RootLayout({
     <html lang="ko-KR">
       <body className={inter.className}>
         <Layout>
-          <main className="pt-[66px] max-w-[1024px] mx-auto w-full">
+          <main className="pt-[76px] max-w-[1024px] mx-auto w-full">
             {children}
           </main>
         </Layout>

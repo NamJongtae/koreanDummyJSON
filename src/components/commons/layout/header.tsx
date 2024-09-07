@@ -8,7 +8,7 @@ export default function Header() {
       <div className="flex justify-between items-center w-full max-w-[1024px] mx-auto">
         <h1>
           <Link className="flex items-center gap-3" href={"/"}>
-            <Image src={"/icons/logo-icon.svg"} width={50} height={50} alt="" />
+            <Image src={"/icons/logo-icon.svg"} width={60} height={60} alt="" />
             <span className="text-xl font-semibold">Korean Dummy JSON</span>
           </Link>
         </h1>
