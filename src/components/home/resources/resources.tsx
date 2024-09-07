@@ -19,7 +19,7 @@ export default function Resources() {
       <h2 className="section-title">Resources</h2>
 
       <p className="section-text mb-2">
-        users, posts, comments, todos, books, reviews 6개의 리소스가 제공됩니다.
+        users, posts, comments, todos, books, reviews, auth 7개의 리소스가 제공됩니다.
       </p>
       <p className="section-text mb-5">
         각 데이터는 서로 관계를 맺고 있으며, 이를 통해 다양한 데이터를
