@@ -18,6 +18,12 @@ export default function useSectionNavigator() {
   const handleClickSection = (sectionId: string) => {
     const encodedData = `#${encodeURI(sectionId)}`;
     window.location.hash = encodedData;
+    if (sectionId === "소개") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
   };
 
   return {
