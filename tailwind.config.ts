@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import defaultTheme from "tailwindcss/defaulttheme";
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 const config: Config = {
   content: [
