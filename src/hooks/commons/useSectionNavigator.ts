@@ -9,7 +9,7 @@ export default function useSectionNavigator() {
   };
 
   const leaveNavigator = () => {
-    navigatorRef.current?.classList.add("animate-steeperSlideRight");
+    navigatorRef.current?.classList.add("animate-sectionNavSlideRight");
     setTimeout(() => {
       setHovered(false);
     }, 400);

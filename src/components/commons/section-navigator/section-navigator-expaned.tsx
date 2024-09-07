@@ -15,7 +15,7 @@ export default function SectionNavigatorExpanded({
 }: IProps) {
   return (
     <ul
-      className="px-5 py-5 border animate-steeperSlideLeft shadow-md w-full bg-white rounded-md cursor-pointer max-h-[300px] overflow-auto"
+      className="px-5 py-5 border animate-sectionNavSlideLeft shadow-md w-full bg-white rounded-md cursor-pointer max-h-[300px] overflow-auto"
       ref={navigatorRef}
       onMouseLeave={leaveNavigator}
     >

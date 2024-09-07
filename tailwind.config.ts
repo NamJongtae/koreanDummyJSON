@@ -47,6 +47,14 @@ const config: Config = {
             "background-color": "#3b82f6",
             transform: "scale(1)"
           }
+        },
+        sectionNavSlideRight: {
+          "0%": { transform: "translateX(0%)", opacity: "1" },
+          "100%": { transform: "translateX(50%)", opacity: "0" }
+        },
+        sectionNavSlideLeft: {
+          "0%": { transform: "translateX(50%)", opacity: "0" },
+          "100%": { transform: "translateX(0%)", opacity: "1" }
         }
       },
       animation: {
@@ -54,7 +62,9 @@ const config: Config = {
         leaving: "fadeOutDown 200ms ease-in",
         slideOutRight: "slideOutRight 0.5s ease-in-out",
         slideOutLeft: "slideOutLeft 0.5s",
-        buttonCopyAnimation: "buttonCopyAnimation 0.5s ease"
+        buttonCopyAnimation: "buttonCopyAnimation 0.5s ease",
+        sectionNavSlideRight: "sectionNavSlideRight 0.5s ease-in-out",
+        sectionNavSlideLeft: "sectionNavSlideLeft 0.5s"
       }
     }
   },
