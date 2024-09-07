@@ -13,7 +13,8 @@ interface IProps {
   title: string;
   endpoint?: string;
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  body?: object;
+  headers?: Record<string, any>;
+  body?: Record<string, any>;
   descriptions: React.ReactElement;
   fetchUrl: string;
   className?: string;
@@ -26,6 +27,7 @@ export default function FetchSection({
   title,
   endpoint,
   method,
+  headers,
   body,
   descriptions,
   fetchUrl,
@@ -34,7 +36,7 @@ export default function FetchSection({
 }: IProps) {
   const { data, fetchData, isLoading } = useFetch();
 
-  const code = generateCodeSnippet(fetchUrl, method, body);
+  const code = generateCodeSnippet(fetchUrl, method, body, headers);
 
   return (
     <section
@@ -59,7 +61,7 @@ export default function FetchSection({
       <CodeSnippet code={code} />
 
       <FetchButton
-        fetchData={() => fetchData(`/api${fetchUrl}`, method, body)}
+        fetchData={() => fetchData(`/api${fetchUrl}`, method, body, headers)}
       />
 
       <CopyBtn target={code} />

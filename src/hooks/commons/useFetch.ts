@@ -4,13 +4,19 @@ function useFetch() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchData = (url: string, method = "GET", body?: object) => {
+  const fetchData = (
+    url: string,
+    method = "GET",
+    body?: Record<string, any>,
+    headers?: Record<string, any>
+  ) => {
     setIsLoading(true);
     fetch(url, {
       method,
       body: body ? JSON.stringify(body) : null,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...headers
       }
     })
       .then((response) => response.json())

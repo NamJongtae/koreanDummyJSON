@@ -1,33 +1,38 @@
 export function generateCodeSnippet(
   fetchUrl: string,
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-  body?: object
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
+  body?: object,
+  headers?: object
 ) {
-  let code = `fetch('${process.env.NEXT_PUBLIC_BASE_URL}/api${fetchUrl}'`;
+  let code = `fetch("${process.env.NEXT_PUBLIC_BASE_URL}/api${fetchUrl}"`;
 
-  const needOptions = method && (method !== "GET" || body);
+  const needOptions = method !== "GET" || body || headers;
 
   if (needOptions) {
     code += `, {\n`;
 
-    if (method && method !== "GET") {
-      code += `  method: '${method}'${body ? "," : ""}\n`;
+    if (method !== "GET") {
+      code += `  method: "${method}"${body ? "," : ""}\n`;
     }
 
-    // body가 있을 때만 추가
     if (body) {
-      code += `  body: JSON.stringify({\n`;
-      Object.entries(body).forEach(([key, value]) => {
-        code += `    "${key}": ${JSON.stringify(value)},\n`;
-      });
-      code = code.trimEnd().slice(0, -1); // 마지막 쉼표 제거
-      code += `\n  })${method !== "GET" ? "," : ""}\n`;
+      code += `  body: JSON.stringify(${JSON.stringify(body, null, 4)}),\n`;
     }
 
-    if (method && method !== "GET" && method !== "DELETE") {
+    if (headers || (method !== "GET" && method !== "DELETE")) {
       code += `  headers: {\n`;
-      code += `    "Content-Type": "application/json"\n`;
-      code += `  }\n`;
+      code += `    "Content-Type": "application/json"`;
+
+      if (headers) {
+        code += `,\n`;
+        Object.entries(headers).forEach(([key, value], index, array) => {
+          code += `    "${key}": ${JSON.stringify(value)}`;
+          if (index < array.length - 1) {
+            code += `,\n`;
+          }
+        });
+      }
+      code += `\n  }\n`;
     }
 
     code += `}`;
