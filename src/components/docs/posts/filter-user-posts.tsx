@@ -14,7 +14,7 @@ export default function FilterUserPosts() {
           </p>
           <p className="section-text mb-4">
             코드를 복사하여 Fetch URL의
-            <span className="font-medium"> userId</span>를 변경해보세요.
+            <span className="font-medium"> userId</span>를 변경해 보세요.
           </p>
         </>
       }

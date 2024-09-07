@@ -15,7 +15,7 @@ export default function GetReviewsPaging() {
           <p className="section-text mb-4">
             코드를 복사하여 Fetch URL의{" "}
             <span className="font-medium">page</span>와
-            <span className="font-medium">limit</span>을 변경해보세요.
+            <span className="font-medium">limit</span>을 변경해 보세요.
           </p>
         </>
       }

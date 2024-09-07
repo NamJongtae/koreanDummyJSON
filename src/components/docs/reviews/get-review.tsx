@@ -12,7 +12,7 @@ export default function GetReview() {
           <p className="section-text mb-2">리뷰를 조회합니다.</p>
           <p className="section-text mb-4">
             코드를 복사하여 Fetch URL의 <span className="font-medium"> id</span>
-            를 변경해보세요.
+            를 변경해 보세요.
           </p>
         </>
       }

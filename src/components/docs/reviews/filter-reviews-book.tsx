@@ -15,7 +15,7 @@ export default function GetReviewBooks() {
           </p>
           <p className="section-text mb-4">
             코드를 복사하여 Fetch URL의{" "}
-            <span className="font-medium"> bookId</span>를 변경해보세요.
+            <span className="font-medium"> bookId</span>를 변경해 보세요.
           </p>
         </>
       }
