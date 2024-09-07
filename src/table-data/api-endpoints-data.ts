@@ -269,5 +269,25 @@ export const API_ENDPOINT_DATA = [
     url: "/reviews/1",
     method: "DELETE",
     action: "리뷰 삭제"
+  },
+  
+  // auth endpoints
+  {
+    endpoint: "/auth/login",
+    url: "/auth/login",
+    method: "POST",
+    action: "로그인"
+  },
+  {
+    endpoint: "/auth/user",
+    url: "/auth",
+    method: "GET",
+    action: "유저 조회"
+  },
+  {
+    endpoint: "/auth/refresh",
+    url: "/auth/refresh",
+    method: "GET",
+    action: "토큰 재발급"
   }
 ];
