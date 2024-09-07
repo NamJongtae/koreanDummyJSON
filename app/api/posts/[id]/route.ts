@@ -107,6 +107,20 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 }
 
-export async function DELETE(req: NextRequest) {
-  return NextResponse.json({ message: "게시물 삭제 성공" }, { status: 200 });
+export async function DELETE(req: NextRequest, { params }: IParams) {
+  const { id } = params;
+  const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
+    id
+  ])) as Comment[];
+
+  if (posts.length === 0) {
+    return NextResponse.json(
+      { message: "게시물 존재하지 않습니다. id 값을 확인해주세요." },
+      { status: 200 }
+    );
+  }
+  return NextResponse.json(
+    { message: `${id}번 게시물 삭제 성공` },
+    { status: 200 }
+  );
 }

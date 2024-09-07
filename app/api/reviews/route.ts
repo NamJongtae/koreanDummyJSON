@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         message: "리뷰 생성 성공",
-        comment: dummyData
+        review: dummyData
       },
       { status: 201 }
     );
