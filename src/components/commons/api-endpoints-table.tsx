@@ -26,6 +26,7 @@ export default function ApiEndPointsTable({ data }: IProps) {
               <Link
                 className="text-blue-600 hover:underline"
                 href={row.url ? `/api/${row.url}` : `/api/${row.endpoint}`}
+                prefetch={false}
               >
                 {row.endpoint}
               </Link>
