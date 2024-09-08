@@ -15,7 +15,7 @@ export default function HomeIntro() {
       } mt-5 px-4 break-keep`}
       ref={ref}
     >
-      <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold mt-20 mb-14">
+      <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-semibold mt-10 mb-7 md:mt-20 md:mb-14">
         <span className="text-gray-300">{"{ "}</span>Korean Dummy JSON{" "}
         <span className="text-gray-300">{" }"}</span>
       </h2>
@@ -46,8 +46,8 @@ export default function HomeIntro() {
           추가로 JWT 기반 로그인 및 인증/인가 더미 API가 제공됩니다.
         </p>
         <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-500">
-          GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고
-          학습해 보세요.
+          GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해
+          보세요.
         </p>
         <Image
           className="absolute right-3 -bottom-4 sm:-bottom-5 lg:-bottom-6 bg-white w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] lg:w-[50px] lg:h-[50px]"
@@ -57,7 +57,7 @@ export default function HomeIntro() {
           height="50"
         />
 
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap gap-6 justify-between items-center">
           <ApiRequestCount />
 
           <Link
@@ -70,7 +70,7 @@ export default function HomeIntro() {
               width={32}
               height={32}
             />
-            <span className="sr-only sm:not-sr-only">GitHub</span>
+            GitHub
           </Link>
         </div>
       </div>
