@@ -4,5 +4,6 @@ export const RESOURCES_DATA = [
   { resource: "/comments", info: "댓글 500개" },
   { resource: "/todos", info: "할 일 200개" },
   { resource: "/books", info: "책 100개" },
-  { resource: "/reviews", info: "리뷰 500개" }
+  { resource: "/reviews", info: "리뷰 500개" },
+  { resource: "/auth", info: "로그인 및 인증/인가" }
 ];

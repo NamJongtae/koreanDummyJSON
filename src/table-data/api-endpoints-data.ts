@@ -196,6 +196,7 @@ export const API_ENDPOINT_DATA = [
   },
 
   // Books Endpoints
+  { endpoint: "/books/:id", url: "/books/1", method: "GET", action: "책 조회" },
   { endpoint: "/books", method: "GET", action: "책 목록" },
   {
     endpoint: "/books?page={page}&limit={limit}",
@@ -203,7 +204,6 @@ export const API_ENDPOINT_DATA = [
     method: "GET",
     action: "책 목록 페이지"
   },
-  { endpoint: "/books/:id", url: "/books/1", method: "GET", action: "책 조회" },
   {
     endpoint: "/books/:id/reviews",
     url: "/books/1/reviews",
@@ -226,18 +226,18 @@ export const API_ENDPOINT_DATA = [
   },
 
   // Reviews Endpoints
+  {
+    endpoint: "/reviews/:id",
+    url: "/reviews/1",
+    method: "GET",
+    action: "리뷰 조회"
+  },
   { endpoint: "/reviews", method: "GET", action: "리뷰 목록" },
   {
     endpoint: "/reviews?page={page}&limit={limit}",
     url: "/reviews?page=1&limit=10",
     method: "GET",
     action: "리뷰 목록 페이지"
-  },
-  {
-    endpoint: "/reviews/:id",
-    url: "/reviews/1",
-    method: "GET",
-    action: "리뷰 조회"
   },
   {
     endpoint: "/reviews?userId={userId}",
@@ -270,7 +270,7 @@ export const API_ENDPOINT_DATA = [
     method: "DELETE",
     action: "리뷰 삭제"
   },
-  
+
   // auth endpoints
   {
     endpoint: "/auth/login",
