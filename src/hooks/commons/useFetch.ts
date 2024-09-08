@@ -17,7 +17,8 @@ function useFetch() {
       headers: {
         "Content-Type": "application/json",
         ...headers
-      }
+      },
+      cache: "force-cache"
     })
       .then((response) => response.json())
       .then((data) => setData(data))
