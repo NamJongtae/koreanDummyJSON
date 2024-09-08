@@ -1,8 +1,9 @@
-import FetchSection from '../commons/fetch-section/fetch-section';
+import FetchSection from "../commons/fetch-section/fetch-section";
 
 export default function PostResource() {
   return (
     <FetchSection
+      id="Resource-생성하기"
       title="Resource 생성하기"
       descriptions={
         <p className="section-text mb-4">새로운 게시물을 생성합니다.</p>

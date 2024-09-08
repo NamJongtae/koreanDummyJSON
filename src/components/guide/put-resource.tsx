@@ -1,8 +1,9 @@
-import FetchSection from '../commons/fetch-section/fetch-section';
+import FetchSection from "../commons/fetch-section/fetch-section";
 
 export default function PutResource() {
   return (
     <FetchSection
+      id="Resource-전체-수정하기"
       title="Resource 전체 수정하기"
       descriptions={
         <p className="section-text mb-4">id가 1인 게시물 전체를 수정합니다.</p>

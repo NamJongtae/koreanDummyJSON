@@ -2,7 +2,10 @@ import Link from "next/link";
 
 export default function GuideIntro() {
   return (
-    <section className="relative mt-20 px-7 py-8 border-8 mx-5 border-double break-keep">
+    <section
+      id="소개"
+      className="relative mt-20 px-7 py-8 border-8 mx-5 border-double break-keep"
+    >
       <h2 className="absolute -top-8 bg-white left-10 text-4xl font-semibold mb-5 px-2">
         🚀 Guide
       </h2>
@@ -21,7 +24,8 @@ export default function GuideIntro() {
       </p>
 
       <p className="section-text mb-2">
-        Auth-Resource에 대한 설명은 가이드에서 제공되지 않으며, Docs에서 확인하실 수 있습니다.
+        Auth-Resource에 대한 설명은 가이드에서 제공되지 않으며, Docs에서
+        확인하실 수 있습니다.
       </p>
 
       <p className="section-text mb-6">
@@ -31,7 +35,8 @@ export default function GuideIntro() {
           href={"/docs/users"}
         >
           Docs
-        </Link>를 참고해주세요.
+        </Link>
+        를 참고해주세요.
       </p>
 
       <p className="relative flex section-text bg-yellow-100 p-3 border-l-4 border-yellow-500 text-yellow-900 font-semibold ">

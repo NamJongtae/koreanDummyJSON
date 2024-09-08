@@ -1,11 +1,12 @@
 import { NESTED_ENDPOINTS_DATA } from "@/src/table-data/nested-endpoints-data";
 import ApiEndPointsTable from "../commons/api-endpoints-table";
-import FetchSection from '../commons/fetch-section/fetch-section';
+import FetchSection from "../commons/fetch-section/fetch-section";
 
 export default function NestedResources() {
   return (
     <FetchSection
       className="mb-20"
+      id="하위-Resource-조회하기"
       title="하위 Resource 조회하기"
       descriptions={
         <p className="section-text mb-2">

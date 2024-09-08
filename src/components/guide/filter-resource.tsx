@@ -1,10 +1,11 @@
 import { FILTER_ENDPOINTS_DATA } from "@/src/table-data/filter-endpoints-data";
 import ApiEndPointsTable from "../commons/api-endpoints-table";
-import FetchSection from '../commons/fetch-section/fetch-section';
+import FetchSection from "../commons/fetch-section/fetch-section";
 
 export default function FilterResources() {
   return (
     <FetchSection
+      id="Resource-필터링하기"
       title="Resource 필터링하기"
       descriptions={
         <p className="section-text mb-2">
