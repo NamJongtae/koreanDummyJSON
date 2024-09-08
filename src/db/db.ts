@@ -1,28 +1,32 @@
-import { Pool, createPool } from "mysql2";
-
-/* eslint-disable */
-declare global {
-  var db: Pool | undefined;
+import { Pool, createPool } from 'mysql2';
+/**
+ * check, globalObject, registerService
+ * Next.js는 개발 모드에서 API 경로를 지속적으로 재구축하는데, initFn()의 경로를 전역으로 지정하여 변경되지 않도록 합니다.
+ */
+function check(it: false | (Window & typeof globalThis) | typeof globalThis) {
+  return it && it.Math === Math && it;
 }
 
-/**
- * registerService는 주어진 서비스 이름과 초기화 함수를 기반으로
- * 개발 환경에서 전역 변수를 사용하여 풀을 캐시합니다.
- */
-const registerService = (name: string, initFn: () => Pool): Pool => {
-  if (process.env.NODE_ENV === "development") {
-    // 글로벌 객체에 데이터베이스 연결 풀을 캐싱
-    if (!(globalThis as any)[name]) {
-      (globalThis as any)[name] = initFn();
+const globalObject =
+  check(typeof window === 'object' && window) ||
+  check(typeof self === 'object' && self) ||
+  check(typeof global === 'object' && global) ||
+  (() => {
+    return this;
+  })() ||
+  Function('return this')();
+
+const registerService = (name: string, initFn: any) => {
+  if (process.env.NODE_ENV === 'development') {
+    if (!(name in globalObject)) {
+      globalObject[name] = initFn();
     }
-    return (globalThis as any)[name];
+    return globalObject[name];
   }
-  // 프로덕션 환경에서는 매번 새로운 풀 생성
   return initFn();
 };
 
-/* eslint-disable */
-let db: Pool;
+export let db: Pool;
 
 try {
   // "db"라는 이름으로 등록된 풀을 글로벌 캐시 또는 새로 생성
