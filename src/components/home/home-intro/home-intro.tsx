@@ -70,7 +70,7 @@ export default function HomeIntro() {
               width={32}
               height={32}
             />
-            <span className="sr-only sm:block">GitHub</span>
+            <span className="sr-only sm:not-sr-only">GitHub</span>
           </Link>
         </div>
       </div>
