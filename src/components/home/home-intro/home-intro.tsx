@@ -47,7 +47,7 @@ export default function HomeIntro() {
         </p>
         <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-500">
           GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고
-          학습해보세요.
+          학습해 보세요.
         </p>
         <Image
           className="absolute right-3 -bottom-4 sm:-bottom-5 lg:-bottom-6 bg-white w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] lg:w-[50px] lg:h-[50px]"
@@ -66,11 +66,11 @@ export default function HomeIntro() {
           >
             <Image
               src={"/icons/github-icon.svg"}
-              alt="github"
+              alt=""
               width={32}
               height={32}
             />
-            <span className="hidden sm:block">GitHub</span>
+            <span className="sr-only sm:block">GitHub</span>
           </Link>
         </div>
       </div>
