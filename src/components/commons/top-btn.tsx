@@ -50,6 +50,7 @@ const TopBtn = () => {
             d="M5 15l7-7 7 7"
           />
         </svg>
+        <span className="sr-only">scroll to top</span>
       </button>
     </div>
   );

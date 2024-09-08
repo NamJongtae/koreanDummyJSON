@@ -12,6 +12,7 @@ export default function MobileNavBtn() {
       <MenuIcon
         className={`${isOpenMenu ? "fill-blue-400" : "fill-black"} transition-all delay-75`}
       />
+      <span className="sr-only">mobile nav button</span>
     </button>
   );
 }
