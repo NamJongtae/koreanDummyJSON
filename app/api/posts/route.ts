@@ -39,6 +39,7 @@ export async function GET(req: NextRequest) {
     let sql;
     let values: Array<number> = [];
     let offset: number | null = null;
+    let hasNextPage: boolean | null = null;
 
     if (page && limit) {
       // 페이지네이션 계산
@@ -48,6 +49,11 @@ export async function GET(req: NextRequest) {
       // /api/posts?page={page}&limit={limit} 게시물 목록 페이지
       sql = "SELECT * FROM posts LIMIT ? OFFSET ?";
       values = [parseInt(limit), offset];
+
+      // hasNextPage 계산
+      const totalPosts = 100;
+
+      hasNextPage = offset !== null && offset + parseInt(limit) < totalPosts;
     } else {
       // page 또는 limit가 없으면 전체 데이터를 조회
       // /api/posts 게시물 목록
@@ -56,11 +62,6 @@ export async function GET(req: NextRequest) {
 
     // 데이터베이스 쿼리 실행
     const data = await executeQuery(sql, values);
-
-    // hasNextPage 계산
-    const totalPosts = 200;
-    const hasNextPage =
-      offset !== null && offset + parseInt(limit || "0") < totalPosts;
 
     // 응답 객체 생성
     const response: {
@@ -73,7 +74,7 @@ export async function GET(req: NextRequest) {
       message: "게시물 목록 조회 성공",
       posts: data as Post[]
     };
-
+    console.log(hasNextPage);
     // 조건에 따라 page, limit, hasNextPage 추가
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);

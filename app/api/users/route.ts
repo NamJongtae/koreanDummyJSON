@@ -26,8 +26,8 @@ export async function GET(req: NextRequest) {
       values = [parseInt(limit), offset];
 
       // hasNextPage 계산
-      const totalTodos = 200;
-      hasNextPage = offset + parseInt(limit) < totalTodos;
+      const totalUsers = 20;
+      hasNextPage = offset + parseInt(limit) < totalUsers;
     } else {
       // page 또는 limit가 없으면 전체 데이터를 조회
       sql = "SELECT * FROM users";

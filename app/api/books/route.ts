@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
     let sql;
     let values: Array<number> = [];
     let offset: number | null = null;
+    let hasNextPage: boolean | null = null;
 
     if (page && limit) {
       // 페이지네이션 계산
@@ -23,6 +24,11 @@ export async function GET(req: NextRequest) {
       // /api/books?page={page}&limit={limit} 책 목록 페이지
       sql = "SELECT * FROM books LIMIT ? OFFSET ?";
       values = [parseInt(limit), offset];
+
+      // hasNextPage 계산
+      const totalBooks = 100;
+      hasNextPage =
+        offset !== null && offset + parseInt(limit || "0") < totalBooks;
     } else {
       // page 또는 limit가 없으면 전체 데이터를 조회
       // /api/posts 책 목록
@@ -31,11 +37,6 @@ export async function GET(req: NextRequest) {
 
     // 데이터베이스 쿼리 실행
     const data = await executeQuery(sql, values);
-
-    // hasNextPage 계산
-    const totalBooks = 200;
-    const hasNextPage =
-      offset !== null && offset + parseInt(limit || "0") < totalBooks;
 
     // 응답 객체 생성
     const response: {
