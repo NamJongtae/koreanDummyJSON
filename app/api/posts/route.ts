@@ -74,7 +74,7 @@ export async function GET(req: NextRequest) {
       message: "게시물 목록 조회 성공",
       posts: data as Post[]
     };
-    console.log(hasNextPage);
+
     // 조건에 따라 page, limit, hasNextPage 추가
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);
