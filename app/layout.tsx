@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     }
   },
   icons: {
-    icon: "/icons/logo.svg"
+    icon: "/icons/logo-icon.svg"
   },
   openGraph: {
     url: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description: `한국어로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를 제공 받을 수 있습니다. 
     GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해보세요.`,
     images: {
-      url: "/icons/logo.svg"
+      url: "/icons/logo-icon.svg"
     }
   }
 };
