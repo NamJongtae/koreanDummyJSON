@@ -49,6 +49,9 @@ export default function HomeIntro() {
           GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해
           보세요.
         </p>
+        <p id="tags" className="sr-only">
+          #korean json, #dummy json, #한국어 더미 데이터
+        </p>
         <Image
           className="absolute right-3 -bottom-4 sm:-bottom-5 lg:-bottom-6 bg-white w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] lg:w-[50px] lg:h-[50px]"
           src="/icons/double-quotes-right-icon.svg"
