@@ -33,9 +33,9 @@ export default function GenerateImageSection({
   const pathnameArr = fetchUrl.split("/");
   const size = pathnameArr[2] || "150x150";
   console.log(fetchUrl, pathnameArr[2]);
-  let [widthStr, heightStr] = size.split("x");
-  let width = parseInt(widthStr, 10);
-  let height = heightStr ? parseInt(heightStr, 10) : width;
+  const [widthStr, heightStr] = size.split("x");
+  const width = parseInt(widthStr, 10);
+  const height = heightStr ? parseInt(heightStr, 10) : width;
 
   const code = generateCodeSnippet({
     fetchUrl,

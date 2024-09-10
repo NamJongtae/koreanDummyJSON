@@ -31,7 +31,7 @@ export function GET(
   const MAX_HEIGHT = 2560;
 
   // size에서 가로와 세로 값 추출
-  let [widthStr, heightStr] = size.split("x");
+  const [widthStr, heightStr] = size.split("x");
   let width = parseInt(widthStr, 10);
   let height = heightStr ? parseInt(heightStr, 10) : width;
 
