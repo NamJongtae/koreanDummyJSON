@@ -43,7 +43,7 @@ export default function HomeIntro() {
           제공 받을 수 있습니다.
         </p>
         <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
-          추가로 JWT 기반 로그인 및 인증/인가 더미 API가 제공됩니다.
+          추가로 JWT 기반 로그인 및 인증/인가 더미 API 및 동적 더미 이미지 API가 제공됩니다.
         </p>
         <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-500">
           GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해

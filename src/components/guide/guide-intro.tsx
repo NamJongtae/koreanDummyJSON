@@ -20,11 +20,11 @@ export default function GuideIntro() {
       </p>
 
       <p className="section-text mb-2">
-        Auth-Resource를 제외한 모든 리소스에 대해 동일한 사용 방법을 따릅니다.
+        Auth-Resource, Image-Resource를 제외한 모든 리소스에 대해 동일한 사용 방법을 따릅니다.
       </p>
 
       <p className="section-text mb-2">
-        Auth-Resource에 대한 설명은 가이드에서 제공되지 않으며, Docs에서
+        Auth-Resource, Image-Resource에 대한 설명은 가이드에서 제공되지 않으며, Docs에서
         확인하실 수 있습니다.
       </p>
 
