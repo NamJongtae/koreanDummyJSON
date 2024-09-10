@@ -36,7 +36,7 @@ export default function FetchSection({
 }: IProps) {
   const { data, fetchData, isLoading } = useFetch();
 
-  const code = generateCodeSnippet(fetchUrl, method, body, headers);
+  const code = generateCodeSnippet({ fetchUrl, method, body, headers });
 
   return (
     <section
