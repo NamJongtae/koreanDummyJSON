@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { createCanvas } from "canvas";
+import { createCanvas, registerFont } from "canvas";
+import path from "path";
 
 // Hex 코드를 유효한지 확인하는 함수
 function isValidHexColor(color: string) {
@@ -49,6 +50,11 @@ export function GET(
   const textLength = displayText.length;
   const fontSize = Math.min(width, height) / (textLength > 10 ? 15 : 10);
 
+  // 폰트 등록 
+  registerFont(path.join(process.cwd(), "public/fonts/NotoSansKR-Regular.ttf"), {
+    family: "Noto Sans KR",
+  });
+
   let buffer: Buffer | string;
   let contentType: string;
 
@@ -56,7 +62,7 @@ export function GET(
     buffer = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
         <rect width="100%" height="100%" fill="${backgroundColor}" />
-        <text x="50%" y="50%" font-size="${fontSize}" fill="${fontColor}" text-anchor="middle" dominant-baseline="middle" font-family="Arial">
+        <text x="50%" y="50%" font-size="${fontSize}" fill="${fontColor}" text-anchor="middle" dominant-baseline="middle" font-family="Noto Sans KR">
           ${displayText}
         </text>
       </svg>`;
@@ -71,7 +77,7 @@ export function GET(
 
     // 텍스트 그리기
     ctx.fillStyle = fontColor;
-    ctx.font = `${fontSize}px Arial`;
+    ctx.font = `${fontSize}px "Noto Sans KR"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(displayText, width / 2, height / 2);
@@ -86,6 +92,6 @@ export function GET(
   }
 
   return new NextResponse(buffer, {
-    headers: { "Content-Type": contentType }
+    headers: { "Content-Type": contentType },
   });
 }
