@@ -22,7 +22,7 @@ export default function ApiEndPointsTable({ data }: IProps) {
       <tbody className="bg-white text-xs xs:text-sm sm:text-base break-keep">
         {data.map((row, rowIndex) => (
           <tr key={rowIndex} className="hover:bg-gray-50">
-            <td className="py-4 px-6 border-b border-gray-200">
+            <td className="py-4 px-6 border-b border-gray-200 break-all">
               <Link
                 className="text-blue-600 hover:underline"
                 href={row.url ? `/api/${row.url}` : `/api/${row.endpoint}`}
