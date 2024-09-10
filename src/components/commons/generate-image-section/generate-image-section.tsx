@@ -32,7 +32,7 @@ export default function GenerateImageSection({
 }: IProps) {
   const pathnameArr = fetchUrl.split("/");
   const size = pathnameArr[2] || "150x150";
-  console.log(fetchUrl, pathnameArr[2]);
+
   const [widthStr, heightStr] = size.split("x");
   const width = parseInt(widthStr, 10);
   const height = heightStr ? parseInt(heightStr, 10) : width;
