@@ -9,7 +9,8 @@ export const DOCS_MENU = [
   "Comments",
   "Books",
   "Reviews",
-  "Auth"
+  "Auth",
+  "Image"
 ];
 
 export default function NavDocsMenu() {
