@@ -20,6 +20,8 @@ export const config = {
     "/api/posts/:path*",
     "/api/comments/:path*",
     "/api/books/:path*",
-    "/api/reviews/:path*"
+    "/api/reviews/:path*",
+    "/api/auth/:path*",
+    "/api/image/:path*"
   ]
 };
