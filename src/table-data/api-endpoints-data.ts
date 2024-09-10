@@ -289,5 +289,11 @@ export const API_ENDPOINT_DATA = [
     url: "/auth/refresh",
     method: "GET",
     action: "토큰 재발급"
-  }
+  },
+  {
+    endpoint: "/image/:size/:bgColor/:text.ext/:textColor",
+    url: "/image/500",
+    method: "GET",
+    action: "동적 이미지 생성"
+  },
 ];
