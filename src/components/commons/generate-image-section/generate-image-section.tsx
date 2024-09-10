@@ -73,7 +73,7 @@ export default function GenerateImageSection({
       {generateImage && (
         <Image
           className="mt-5"
-          src={`/api${fetchUrl}`}
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}/api${fetchUrl}`}
           alt=""
           width={width}
           height={height}
