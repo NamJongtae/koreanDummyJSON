@@ -1,9 +1,16 @@
-export function generateCodeSnippet(
-  fetchUrl: string,
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-  body?: object,
-  headers?: object
-) {
+export function generateCodeSnippet({
+  fetchUrl,
+  method,
+  body,
+  headers,
+  isBlob
+}: {
+  fetchUrl: string;
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  body?: object;
+  headers?: object;
+  isBlob?: boolean;
+}) {
   let code = `fetch("${process.env.NEXT_PUBLIC_BASE_URL}/api${fetchUrl}"`;
 
   const needOptions = method !== "GET" || body || headers;
@@ -38,7 +45,7 @@ export function generateCodeSnippet(
     code += `}`;
   }
 
-  code += `)\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error('Error fetching data:', error));\n`;
+  code += `)\n  .then(response => ${isBlob ? "response.blob()" : "response.json()"})\n  .then(${isBlob ? "blob" : "data"} => console.log(${isBlob ? "blob" : "data"}))\n  .catch(error => console.error('Error fetching ${isBlob ? "blob" : "data"}:', error));\n`;
 
   return code;
 }
