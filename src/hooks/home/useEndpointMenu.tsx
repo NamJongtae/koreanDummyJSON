@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useDropdownMenu from "../commons/useDropDownMenu";
-import { generateCodeSnippet } from '@/src/lib/generateCodeSnippet';
+import { generateCodeSnippet } from "@/src/lib/generateCodeSnippet";
 
 const ENDPOINTS = [
   "/users/1",
@@ -23,8 +23,7 @@ export default function useEndpointMenu() {
   const code =
     endpoint === "Endpoint"
       ? "조회할 데이터의 Endpoint를 선택해주세요."
-      : generateCodeSnippet(endpoint, "GET");
-
+      : generateCodeSnippet({ fetchUrl: endpoint, method: "GET" });
 
   const selectEndpoint = (value: string) => {
     if (endpoint === value) return;
