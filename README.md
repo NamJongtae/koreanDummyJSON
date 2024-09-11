@@ -25,7 +25,7 @@
 
 한국어로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를 제공 받을 수 있습니다.
 
-추가로 JWT 기반 로그인 및 인증/인가 더미 API가 제공됩니다.
+추가로 JWT 기반 로그인 및 인증/인가 더미 API 및 동적 더미 이미지 생성 API가 제공됩니다.
 
 가입할 필요없이 간편하게 바로 사용할 수 있습니다.
 
@@ -55,6 +55,7 @@ GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학
 | <a href="https://koreandummyjson.site/api/books">/books</a>    | 책 100개         |
 | <a href="https://koreandummyjson.site/api/reviews">/reviews</a>    | 리뷰 500개       |
 | <a href="/#">/auth</a>    | 로그인 및 인증/인가      |
+| <a href="https://koreandummyjson.site/api/image">/image</a>    | 동적 더미 이미지 생성     |
 
 <br/>
 
@@ -438,65 +439,66 @@ fetch("https://koreandummyjson.site/api/posts/1/comments")
 <br/>
 
 ### 📜 All API Endpoints
-| Endpoint                           | Method | Action                    |
-|------------------------------------|--------|---------------------------|
-| <a href="https://koreandummyjson.site/api/users/1">/users/:id</a>                         | GET    | 유저 조회                 |
-| <a href="https://koreandummyjson.site/api/users">/users</a>                             | GET    | 유저 목록                 |
-| <a href="https://koreandummyjson.site/api/users?page=1&limit=10">/users?page={page}&limit={limit}</a>   | GET    | 유저 목록 페이지           |
-| <a href="https://koreandummyjson.site/api/users/1/todos">/users/:id/todos</a>                     | GET    | 유저 할 일 목록 조회       |
-| <a href="https://koreandummyjson.site/api/users/1/posts">/users/:id/posts</a>                   | GET    | 유저 게시물 목록 조회      |
-| <a href="https://koreandummyjson.site/api/users/1/comments">/users/:id/comments</a>                | GET    | 유저 댓글 목록 조회        |
-| <a href="https://koreandummyjson.site/api/users/1/books">/users/:id/books</a>                   | GET    | 유저 책 목록 조회          |
-| <a href="https://koreandummyjson.site/api/users/1/reviews">/users/:id/reviews</a>                 | GET    | 유저 리뷰 목록 조회        |
-| <a href="https://koreandummyjson.site/api/users">/users</a>                             | POST   | 유저 생성                 |
-| <a href="https://koreandummyjson.site/api/users/1">/users/:id</a>                         | PUT    | 유저 수정                 |
-| <a href="https://koreandummyjson.site/api/users/1">/users/:id</a>                             | PATCH  | 유저 수정                 |
-| <a href="https://koreandummyjson.site/api/users/1">/users/:id</a>                             | DELETE | 유저 삭제                 |
-| <a href="https://koreandummyjson.site/api/todos/1">/todos/:id</a>                        | GET    | 할 일 조회                |
-| <a href="https://koreandummyjson.site/api/todos">/todos</a>                             | GET    | 할 일 목록                |
-| <a href="https://koreandummyjson.site/api/todos?userId=1">/todos?userId={userId}</a>             | GET    | 유저 할 일 목록 필터링     |
-| <a href="https://koreandummyjson.site/api/todos?page=1&limit=10">/todos?page={page}&limit={limit}</a>   | GET    | 할 일 목록 페이지          |
-| <a href="https://koreandummyjson.site/api/todos">/todos</a>                             | POST   | 할 일 생성                |
-| <a href="https://koreandummyjson.site/api/todos/1">/todos/:id</a>                        | PUT    | 할 일 수정                |
-| <a href="https://koreandummyjson.site/api/todos/1">/todos/:id</a>                         | PATCH  | 할 일 수정                |
-| <a href="https://koreandummyjson.site/api/todos/1">/todos/:id</a>                         | DELETE | 할 일 삭제                |
-| <a href="https://koreandummyjson.site/api/posts/1">/posts/:id</a>                        | GET    | 게시물 조회               |
-| <a href="https://koreandummyjson.site/api/posts">/posts</a>                             | GET    | 게시물 목록               |
-| <a href="https://koreandummyjson.site/api/posts?page=1&limit=10">/posts?page={page}&limit={limit}</a>   | GET    | 게시물 목록 페이지         |
-| <a href="https://koreandummyjson.site/api/posts/comments">/posts/:id/comments</a>                | GET    | 게시물 댓글 목록 조회      |
-| <a href="https://koreandummyjson.site/api/posts?userId=1">/posts?userId={userId}</a>             | GET    | 유저 게시물 목록 필터링    |
-| <a href="https://koreandummyjson.site/api/posts">/posts</a>                             | POST   | 게시물 생성               |
-| <a href="https://koreandummyjson.site/api/posts/1">/posts/:id</a>                         | PUT    | 게시물 수정               |
-| <a href="https://koreandummyjson.site/api/posts/1">/posts/:id</a>                         | PATCH  | 게시물 수정               |
-| <a href="https://koreandummyjson.site/api/posts/1">/posts/:id</a>                         | DELETE | 게시물 삭제               |
-| <a href="https://koreandummyjson.site/api/comments/1">/comments/:id</a>                      | GET    | 댓글 조회                 |
-| <a href="https://koreandummyjson.site/api/comments">/comments</a>                          | GET    | 댓글 목록                 |
-| <a href="https://koreandummyjson.site/api/comments?page=1&limit=10">/comments?page={page}&limit={limit}</a> | GET    | 댓글 목록 페이지           |
-| <a href="https://koreandummyjson.site/api/comments?userId=1">/comments?userId={userId}</a>          | GET    | 유저 댓글 목록 필터링      |
-| <a href="https://koreandummyjson.site/api/comments?postId=1">/comments?postId={postId}</a>          | GET    | 게시물 댓글 목록 필터링    |
-| <a href="https://koreandummyjson.site/api/comments">/comments</a>                          | POST   | 댓글 생성                 |
-| <a href="https://koreandummyjson.site/api/comments/1">/comments/:id</a>                      | PUT    | 댓글 수정                 |
-| <a href="https://koreandummyjson.site/api/comments/1">/comments/:id</a>                      | PATCH  | 댓글 수정                 |
-| <a href="https://koreandummyjson.site/api/comments/1">/comments/:id</a>                      | DELETE | 댓글 삭제                 |
-| <a href="https://koreandummyjson.site/api/books/1">/books/:id</a>                          | GET    | 책 조회                   |
-| <a href="https://koreandummyjson.site/api/books/1">/books</a>                             | GET    | 책 목록                   |
-| <a href="https://koreandummyjson.site/api/books?page=1&limit=10">/books?page={page}&limit={limit}</a>    | GET    | 책 목록 페이지             |
-| <a href="https://koreandummyjson.site/api/books/1/reviews">/books/:id/reviews</a>                 | GET    | 책 리뷰 목록 조회          |
-| <a href="https://koreandummyjson.site/api/books">/books</a> | POST   | 책 생성                   |
-| <a href="https://koreandummyjson.site/api/books/1">/books/:id</a> | PUT    | 책 수정                   |
-| <a href="https://koreandummyjson.site/api/books/1">/books/:id</a> | PATCH  | 책 수정                   |
-| <a href="https://koreandummyjson.site/api/books/1">/books/:id</a> | DELETE | 책 삭제                   |
-| <a href="https://koreandummyjson.site/api/reviews/1">/reviews/:id</a>                       | GET    | 리뷰 조회                 |
-| <a href="https://koreandummyjson.site/api/reviews">/reviews</a>                           | GET    | 리뷰 목록                 |
-| <a href="https://koreandummyjson.site/api/reviews?page=1&limit=10">/reviews?page={page}&limit={limit}</a> | GET    | 리뷰 목록 페이지           |
-| <a href="https://koreandummyjson.site/api/reviews?userId=1">/reviews?userId={userId}</a>           | GET    | 유저 리뷰 필터링           |
-| <a href="https://koreandummyjson.site/api/reviews?bookId=1">/reviews?bookId={bookId}</a>           | GET    | 책 리뷰 필터링             |
-| <a href="https://koreandummyjson.site/api/reviews">/reviews</a>                           | POST   | 리뷰 생성                 |
-| <a href="https://koreandummyjson.site/api/reviews/1">/reviews/:id</a>                       | PUT    | 리뷰 수정                 |
-| <a href="https://koreandummyjson.site/api/reviews/1">/reviews/:id</a>                       | PATCH  | 리뷰 수정                 |
-| <a href="https://koreandummyjson.site/api/reviews/1">/reviews/:id</a>                       | DELETE | 리뷰 삭제                 |
-| <a href="https://koreandummyjson.site/api/auth/login">/auth/login</a>                       | POST   | 로그인                    |
-| <a href="https://koreandummyjson.site/api/auth/user">/auth/user</a>                         | GET    | 유저 조회                 |
-| <a href="https://koreandummyjson.site/api/auth/refreshToken">/auth/refresh</a>                      | GET    | 토큰 재발급               |
 
+| Endpoint | Method | Action |
+|------------------------------------|--------|---------------------------|
+| [/users/:id](https://koreandummyjson.site/api/users/1) | GET | 유저 조회 |
+| [/users](https://koreandummyjson.site/api/users) | GET | 유저 목록 |
+| [/users?page={page}&limit={limit}](https://koreandummyjson.site/api/users?page=1&limit=10) | GET | 유저 목록 페이지 |
+| [/users/:id/todos](https://koreandummyjson.site/api/users/1/todos) | GET | 유저 할 일 목록 조회 |
+| [/users/:id/posts](https://koreandummyjson.site/api/users/1/posts) | GET | 유저 게시물 목록 조회 |
+| [/users/:id/comments](https://koreandummyjson.site/api/users/1/comments) | GET | 유저 댓글 목록 조회 |
+| [/users/:id/books](https://koreandummyjson.site/api/users/1/books) | GET | 유저 책 목록 조회 |
+| [/users/:id/reviews](https://koreandummyjson.site/api/users/1/reviews) | GET | 유저 리뷰 목록 조회 |
+| [/users](https://koreandummyjson.site/api/users) | POST | 유저 생성 |
+| [/users/:id](https://koreandummyjson.site/api/users/1) | PUT | 유저 수정 |
+| [/users/:id](https://koreandummyjson.site/api/users/1) | PATCH | 유저 수정 |
+| [/users/:id](https://koreandummyjson.site/api/users/1) | DELETE | 유저 삭제 |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1) | GET | 할 일 조회 |
+| [/todos](https://koreandummyjson.site/api/todos) | GET | 할 일 목록 |
+| [/todos?userId={userId}](https://koreandummyjson.site/api/todos?userId=1) | GET | 유저 할 일 목록 필터링 |
+| [/todos?page={page}&limit={limit}](https://koreandummyjson.site/api/todos?page=1&limit=10) | GET | 할 일 목록 페이지 |
+| [/todos](https://koreandummyjson.site/api/todos) | POST | 할 일 생성 |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1) | PUT | 할 일 수정 |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1) | PATCH | 할 일 수정 |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1) | DELETE | 할 일 삭제 |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1) | GET | 게시물 조회 |
+| [/posts](https://koreandummyjson.site/api/posts) | GET | 게시물 목록 |
+| [/posts?page={page}&limit={limit}](https://koreandummyjson.site/api/posts?page=1&limit=10) | GET | 게시물 목록 페이지 |
+| [/posts/:id/comments](https://koreandummyjson.site/api/posts/comments) | GET | 게시물 댓글 목록 조회 |
+| [/posts?userId={userId}](https://koreandummyjson.site/api/posts?userId=1) | GET | 유저 게시물 목록 필터링 |
+| [/posts](https://koreandummyjson.site/api/posts) | POST | 게시물 생성 |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1) | PUT | 게시물 수정 |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1) | PATCH | 게시물 수정 |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1) | DELETE | 게시물 삭제 |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1) | GET | 댓글 조회 |
+| [/comments](https://koreandummyjson.site/api/comments) | GET | 댓글 목록 |
+| [/comments?page={page}&limit={limit}](https://koreandummyjson.site/api/comments?page=1&limit=10) | GET | 댓글 목록 페이지 |
+| [/comments?userId={userId}](https://koreandummyjson.site/api/comments?userId=1) | GET | 유저 댓글 목록 필터링 |
+| [/comments?postId={postId}](https://koreandummyjson.site/api/comments?postId=1) | GET | 게시물 댓글 목록 필터링 |
+| [/comments](https://koreandummyjson.site/api/comments) | POST | 댓글 생성 |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1) | PUT | 댓글 수정 |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1) | PATCH | 댓글 수정 |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1) | DELETE | 댓글 삭제 |
+| [/books/:id](https://koreandummyjson.site/api/books/1) | GET | 책 조회 |
+| [/books](https://koreandummyjson.site/api/books) | GET | 책 목록 |
+| [/books?page={page}&limit={limit}](https://koreandummyjson.site/api/books?page=1&limit=10) | GET | 책 목록 페이지 |
+| [/books/:id/reviews](https://koreandummyjson.site/api/books/1/reviews) | GET | 책 리뷰 목록 조회 |
+| [/books](https://koreandummyjson.site/api/books) | POST | 책 생성 |
+| [/books/:id](https://koreandummyjson.site/api/books/1) | PUT | 책 수정 |
+| [/books/:id](https://koreandummyjson.site/api/books/1) | PATCH | 책 수정 |
+| [/books/:id](https://koreandummyjson.site/api/books/1) | DELETE | 책 삭제 |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | GET | 리뷰 조회 |
+| [/reviews](https://koreandummyjson.site/api/reviews) | GET | 리뷰 목록 |
+| [/reviews?page={page}&limit={limit}](https://koreandummyjson.site/api/reviews?page=1&limit=10) | GET | 리뷰 목록 페이지 |
+| [/reviews?userId={userId}](https://koreandummyjson.site/api/reviews?userId=1) | GET | 유저 리뷰 필터링 |
+| [/reviews?bookId={bookId}](https://koreandummyjson.site/api/reviews?bookId=1) | GET | 책 리뷰 필터링 |
+| [/reviews](https://koreandummyjson.site/api/reviews) | POST | 리뷰 생성 |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | PUT | 리뷰 수정 |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | PATCH | 리뷰 수정 |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | DELETE | 리뷰 삭제 |
+| [/auth/login](https://koreandummyjson.site/api/auth/login) | POST | 로그인 |
+| [/auth/user](https://koreandummyjson.site/api/auth/user) | GET | 유저 조회 |
+| [/auth/refreshToken](https://koreandummyjson.site/api/auth/refresh) | GET | 토큰 재발급 |
+| [/image/:size/:bgColor/:text.{ext}/:textColor](https://koreandummyjson.site/api/image) | GET | 동적 더미 이미지 생성 |
 
