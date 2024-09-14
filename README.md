@@ -1,4 +1,4 @@
-# <img src="https://github.com/user-attachments/assets/5247b4cb-6780-496b-8015-f66e81d36c15" width="70" height="70" align="center"/> Korean dummy JSON
+# <img src="https://github.com/user-attachments/assets/5247b4cb-6780-496b-8015-f66e81d36c15" width="70" height="70" align="center"/> Korean Dummy JSON
 
 ### 📃 목차 (클릭 시 해당 목차로 이동합니다.)
 
@@ -15,12 +15,13 @@
 - [🗜 Filter Endpoints](#-filter-endpoints)
 
 - [⛓ Nested Endpoints](#-nested-endpoints)
-    
+
 - [📜 All API Endpoints](#-all-api-endpoints)
 
 <br/>
 
 ### 👋 프로젝트 소개
+
 **Korean Dummy JSON**은 한국어 기반의 더미 데이터를 제공하기 위해 제작된 프로젝트로, <a href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a>에 영감을 받아 개발되었습니다.
 
 한국어로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를 제공 받을 수 있습니다.
@@ -31,35 +32,37 @@
 
 GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해 보세요.
 
-#### 🔗 배포 URL : [Korean Dummy JSON](https://koreandummyjson.site/)
+#### 🔗 배포 URL : [📚 Korean Dummy JSON](https://koreandummyjson.site/)
 
 <br/>
 
 ### ⚙ 개발환경
 
-| 프론트엔드                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 벡엔드                                                                                                                                                                                                                                                                                | 디자인                                                                                    | 배포, 관리                                                                                                                                                            |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 프론트엔드                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | 벡엔드                                                                                                                                                                                          | 디자인                                                                           | 배포, 관리                                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img alt="Html" src ="https://img.shields.io/badge/HTML5-E34F26?logo=HTML5&logoColor=white"/> <img alt="CSS" src ="https://img.shields.io/badge/CSS3-1572B6?logo=CSS3&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/react-61DAFB?logo=react&logoColor=black"> <img src ="https://img.shields.io/badge/next.js-000000?logo=nextdotjs&logoColor=white"/> <img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss"> | <img src ="https://img.shields.io/badge/next.js_API_Routes-000000?logo=nextdotjs&logoColor=white"/> <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"> | <img src="https://img.shields.io/badge/figma-F24E1E?logo=figma&logoColor=white"> | <img src="https://img.shields.io/badge/vercel-000000?logo=vercel&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?logo=github&logoColor=white"> |
 
 <br/>
 
 ### 📚 제공 리소스
+
 **users, posts, comments, todos, books, reviews, auth** 7개의 리소스가 제공됩니다.
 
-| Resource   | Information     |
-|------------|-----------------|
-| <a href="https://koreandummyjson.site/api/users">/users</a>     | 유저 20명        |
-| <a href="https://koreandummyjson.site/api/posts">/posts</a>     | 게시물 100개     |
-| <a href="https://koreandummyjson.site/api/comments">/comments</a>  | 댓글 500개       |
-| <a href="https://koreandummyjson.site/api/todos">/todos</a>    | 할 일 200개      |
-| <a href="https://koreandummyjson.site/api/books">/books</a>    | 책 100개         |
-| <a href="https://koreandummyjson.site/api/reviews">/reviews</a>    | 리뷰 500개       |
-| <a href="/#">/auth</a>    | 로그인 및 인증/인가      |
-| <a href="https://koreandummyjson.site/api/image">/image</a>    | 동적 더미 이미지 생성     |
+| Resource                                                          | Information           |
+| ----------------------------------------------------------------- | --------------------- |
+| <a href="https://koreandummyjson.site/api/users">/users</a>       | 유저 20명             |
+| <a href="https://koreandummyjson.site/api/posts">/posts</a>       | 게시물 100개          |
+| <a href="https://koreandummyjson.site/api/comments">/comments</a> | 댓글 500개            |
+| <a href="https://koreandummyjson.site/api/todos">/todos</a>       | 할 일 200개           |
+| <a href="https://koreandummyjson.site/api/books">/books</a>       | 책 100개              |
+| <a href="https://koreandummyjson.site/api/reviews">/reviews</a>   | 리뷰 500개            |
+| <a href="/#">/auth</a>                                            | 로그인 및 인증/인가   |
+| <a href="https://koreandummyjson.site/api/image">/image</a>       | 동적 더미 이미지 생성 |
 
 <br/>
 
 ### ✨ 사용 예시 코드
+
 예시 코드에서는 Fetch API를 사용합니다.
 
 각 예시 코드를 복사한 후 브라우저 콘솔에서 실행해 보세요.
@@ -70,11 +73,13 @@ GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학
 
 ```javascript
 fetch("https://koreandummyjson.site/api/posts/1")
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 조회 성공",
@@ -95,11 +100,13 @@ fetch("https://koreandummyjson.site/api/posts/1")
 
 ```javascript
 fetch("https://koreandummyjson.site/api/posts")
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 목록 조회 성공",
@@ -128,13 +135,16 @@ fetch("https://koreandummyjson.site/api/posts")
 <br/>
 
 #### 3 ) 데이터 페이지네이션
+
 ```javascript
 fetch("https://koreandummyjson.site/api/posts?page=1&limit=10")
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 목록 조회 성공",
@@ -171,20 +181,22 @@ fetch("https://koreandummyjson.site/api/posts?page=1&limit=10")
 fetch("https://koreandummyjson.site/api/posts", {
   method: "POST",
   body: JSON.stringify({
-    "title": "테스트 글",
-    "content": "테스트 글 입니다.",
-    "imgUrl": "https://picsum.photos/id/1/300/300",
-    "userId": 1
-}),
+    title: "테스트 글",
+    content: "테스트 글 입니다.",
+    imgUrl: "https://picsum.photos/id/1/300/300",
+    userId: 1
+  }),
   headers: {
     "Content-Type": "application/json"
   }
 })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 생성 성공",
@@ -207,19 +219,21 @@ fetch("https://koreandummyjson.site/api/posts", {
 fetch("https://koreandummyjson.site/api/posts/1", {
   method: "PUT",
   body: JSON.stringify({
-    "title": "테스트 글",
-    "contnet": "테스트 글 입니다.",
-    "imgUrl": "https://picsum.photos/id/2/300/300"
-}),
+    title: "테스트 글",
+    contnet: "테스트 글 입니다.",
+    imgUrl: "https://picsum.photos/id/2/300/300"
+  }),
   headers: {
     "Content-Type": "application/json"
   }
 })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 수정 성공",
@@ -241,17 +255,19 @@ fetch("https://koreandummyjson.site/api/posts/1", {
 fetch("https://koreandummyjson.site/api/posts/1", {
   method: "PATCH",
   body: JSON.stringify({
-    "title": "테스트 글"
-}),
+    title: "테스트 글"
+  }),
   headers: {
     "Content-Type": "application/json"
   }
 })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 수정 성공",
@@ -274,12 +290,13 @@ fetch("https://koreandummyjson.site/api/posts/1", {
 fetch("https://koreandummyjson.site/api/posts/1", {
   method: "DELETE"
 })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
-
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "1번 게시물 삭제 성공"
@@ -292,11 +309,13 @@ fetch("https://koreandummyjson.site/api/posts/1", {
 
 ```javascript
 fetch("https://koreandummyjson.site/api/posts/?userId=1")
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
   "message": "게시물 목록 조회 성공",
@@ -351,11 +370,13 @@ fetch("https://koreandummyjson.site/api/posts/?userId=1")
 
 ```javascript
 fetch("https://koreandummyjson.site/api/posts/1/comments")
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error fetching data:', error));
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error fetching data:", error));
 ```
+
 결과
+
 ```json
 {
 {
@@ -399,106 +420,109 @@ fetch("https://koreandummyjson.site/api/posts/1/comments")
 <br/>
 
 ### 📖 Pagination Endpoints
+
 아래와 같은 페이지네이션 endpoints를 제공합니다.
 
-| Endpoint | Method | Action |
-|----------|--------|--------|
-| <a href="/api/users?page=1&limit=10" class="text-blue-600 hover:underline">/users?page={page}&limit={limit}</a> | GET | 유저 목록 페이징 |
-| <a href="/api/todos?page=1&limit=10" class="text-blue-600 hover:underline">/todos?page={page}&limit={limit}</a> | GET | 할 일 목록 페이징 |
-| <a href="/api/posts?page=1&limit=10" class="text-blue-600 hover:underline">/posts?page={page}&limit={limit}</a> | GET | 게시물 목록 페이징 |
-| <a href="/api/comments?page=1&limit=10" class="text-blue-600 hover:underline">/comments?page={page}&limit={limit}</a> | GET | 댓글 목록 페이징 |
-| <a href="/api/books?page=1&limit=10" class="text-blue-600 hover:underline">/books?page={page}&limit={limit}</a> | GET | 책 목록 페이징 |
-| <a href="/api/reviews?page=1&limit=10" class="text-blue-600 hover:underline">/reviews?page={page}&limit={limit}</a> | GET | 리뷰 목록 페이징 |
+| Endpoint                                                                                                              | Method | Action             |
+| --------------------------------------------------------------------------------------------------------------------- | ------ | ------------------ |
+| <a href="/api/users?page=1&limit=10">/users?page={page}&limit={limit}</a>       | GET    | 유저 목록 페이징   |
+| <a href="/api/todos?page=1&limit=10">/todos?page={page}&limit={limit}</a>       | GET    | 할 일 목록 페이징  |
+| <a href="/api/posts?page=1&limit=10">/posts?page={page}&limit={limit}</a>       | GET    | 게시물 목록 페이징 |
+| <a href="/api/comments?page=1&limit=10">/comments?page={page}&limit={limit}</a> | GET    | 댓글 목록 페이징   |
+| <a href="/api/books?page=1&limit=10">/books?page={page}&limit={limit}</a>       | GET    | 책 목록 페이징     |
+| <a href="/api/reviews?page=1&limit=10">/reviews?page={page}&limit={limit}</a>   | GET    | 리뷰 목록 페이징   |
 
 <br/>
 
 ### 🗜 Filter Endpoints
+
 아래와 같은 필터링 endpoints를 제공합니다.
 
-| Endpoint | Method | Action |
-|----------|--------|--------|
-| <a href="/api/todos?userId=1" class="text-blue-600 hover:underline">/todos?userId={userId}</a> | GET | 유저별 할 일 목록 |
-| <a href="/api/comments?userId=1" class="text-blue-600 hover:underline">/comments?userId={userId}</a> | GET | 유저별 댓글 목록 |
-| <a href="/api/comments?postId=1" class="text-blue-600 hover:underline">/comments?postId={postId}</a> | GET | 게시물별 댓글 목록 |
-| <a href="/api/reviews?bookId=1" class="text-blue-600 hover:underline">/reviews?bookId={bookId}</a> | GET | 책별 리뷰 목록 |
-| <a href="/api/reviews?userId=1" class="text-blue-600 hover:underline">/reviews?userId={userId}</a> | GET | 유저별 리뷰 목록 |
+| Endpoint                                                                                             | Method | Action             |
+| ---------------------------------------------------------------------------------------------------- | ------ | ------------------ |
+| <a href="/api/todos?userId=1">/todos?userId={userId}</a>       | GET    | 유저별 할 일 목록  |
+| <a href="/api/comments?userId=1">/comments?userId={userId}</a> | GET    | 유저별 댓글 목록   |
+| <a href="/api/comments?postId=1">/comments?postId={postId}</a> | GET    | 게시물별 댓글 목록 |
+| <a href="/api/reviews?bookId=1">/reviews?bookId={bookId}</a>   | GET    | 책별 리뷰 목록     |
+| <a href="/api/reviews?userId=1">/reviews?userId={userId}</a>   | GET    | 유저별 리뷰 목록   |
 
 <br/>
 
 ### ⛓ Nested Endpoints
+
 아래와 같은 하위 endpoints를 제공합니다.
 
-| Endpoint | Method | Action |
-|----------|--------|--------|
-| <a href="/api/users/1/todos" class="text-blue-600 hover:underline">/users/:id/todos</a> | GET | 유저별 할 일 목록 조회 |
-| <a href="/api/users/1/posts" class="text-blue-600 hover:underline">/users/:id/posts</a> | GET | 유저별 게시물 목록 조회 |
-| <a href="/api/users/1/comment" class="text-blue-600 hover:underline">/users/:id/comment</a> | GET | 유저별 댓글 목록 조회 |
-| <a href="/api/users/1/reviews" class="text-blue-600 hover:underline">/users/:id/reviews</a> | GET | 유저별 리뷰 목록 조회 |
-| <a href="/api/books/1/reviews" class="text-blue-600 hover:underline">/books/:id/reviews</a> | GET | 책별 리뷰 목록 조회 |
+| Endpoint                                                                                    | Method | Action                  |
+| ------------------------------------------------------------------------------------------- | ------ | ----------------------- |
+| <a href="/api/users/1/todos">/users/:id/todos</a>     | GET    | 유저별 할 일 목록 조회  |
+| <a href="/api/users/1/posts">/users/:id/posts</a>     | GET    | 유저별 게시물 목록 조회 |
+| <a href="/api/users/1/comment">/users/:id/comment</a> | GET    | 유저별 댓글 목록 조회   |
+| <a href="/api/users/1/reviews">/users/:id/reviews</a> | GET    | 유저별 리뷰 목록 조회   |
+| <a href="/api/posts/1/comments">/posts/:id/comments</a> | GET  | 게시물별 댓글 목록 조회 |
+| <a href="/api/books/1/reviews">/books/:id/reviews</a> | GET    | 책별 리뷰 목록 조회     |
 
 <br/>
 
 ### 📜 All API Endpoints
 
-| Endpoint | Method | Action |
-|------------------------------------|--------|---------------------------|
-| [/users/:id](https://koreandummyjson.site/api/users/1) | GET | 유저 조회 |
-| [/users](https://koreandummyjson.site/api/users) | GET | 유저 목록 |
-| [/users?page={page}&limit={limit}](https://koreandummyjson.site/api/users?page=1&limit=10) | GET | 유저 목록 페이지 |
-| [/users/:id/todos](https://koreandummyjson.site/api/users/1/todos) | GET | 유저 할 일 목록 조회 |
-| [/users/:id/posts](https://koreandummyjson.site/api/users/1/posts) | GET | 유저 게시물 목록 조회 |
-| [/users/:id/comments](https://koreandummyjson.site/api/users/1/comments) | GET | 유저 댓글 목록 조회 |
-| [/users/:id/books](https://koreandummyjson.site/api/users/1/books) | GET | 유저 책 목록 조회 |
-| [/users/:id/reviews](https://koreandummyjson.site/api/users/1/reviews) | GET | 유저 리뷰 목록 조회 |
-| [/users](https://koreandummyjson.site/api/users) | POST | 유저 생성 |
-| [/users/:id](https://koreandummyjson.site/api/users/1) | PUT | 유저 수정 |
-| [/users/:id](https://koreandummyjson.site/api/users/1) | PATCH | 유저 수정 |
-| [/users/:id](https://koreandummyjson.site/api/users/1) | DELETE | 유저 삭제 |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1) | GET | 할 일 조회 |
-| [/todos](https://koreandummyjson.site/api/todos) | GET | 할 일 목록 |
-| [/todos?userId={userId}](https://koreandummyjson.site/api/todos?userId=1) | GET | 유저 할 일 목록 필터링 |
-| [/todos?page={page}&limit={limit}](https://koreandummyjson.site/api/todos?page=1&limit=10) | GET | 할 일 목록 페이지 |
-| [/todos](https://koreandummyjson.site/api/todos) | POST | 할 일 생성 |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1) | PUT | 할 일 수정 |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1) | PATCH | 할 일 수정 |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1) | DELETE | 할 일 삭제 |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1) | GET | 게시물 조회 |
-| [/posts](https://koreandummyjson.site/api/posts) | GET | 게시물 목록 |
-| [/posts?page={page}&limit={limit}](https://koreandummyjson.site/api/posts?page=1&limit=10) | GET | 게시물 목록 페이지 |
-| [/posts/:id/comments](https://koreandummyjson.site/api/posts/comments) | GET | 게시물 댓글 목록 조회 |
-| [/posts?userId={userId}](https://koreandummyjson.site/api/posts?userId=1) | GET | 유저 게시물 목록 필터링 |
-| [/posts](https://koreandummyjson.site/api/posts) | POST | 게시물 생성 |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1) | PUT | 게시물 수정 |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1) | PATCH | 게시물 수정 |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1) | DELETE | 게시물 삭제 |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1) | GET | 댓글 조회 |
-| [/comments](https://koreandummyjson.site/api/comments) | GET | 댓글 목록 |
-| [/comments?page={page}&limit={limit}](https://koreandummyjson.site/api/comments?page=1&limit=10) | GET | 댓글 목록 페이지 |
-| [/comments?userId={userId}](https://koreandummyjson.site/api/comments?userId=1) | GET | 유저 댓글 목록 필터링 |
-| [/comments?postId={postId}](https://koreandummyjson.site/api/comments?postId=1) | GET | 게시물 댓글 목록 필터링 |
-| [/comments](https://koreandummyjson.site/api/comments) | POST | 댓글 생성 |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1) | PUT | 댓글 수정 |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1) | PATCH | 댓글 수정 |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1) | DELETE | 댓글 삭제 |
-| [/books/:id](https://koreandummyjson.site/api/books/1) | GET | 책 조회 |
-| [/books](https://koreandummyjson.site/api/books) | GET | 책 목록 |
-| [/books?page={page}&limit={limit}](https://koreandummyjson.site/api/books?page=1&limit=10) | GET | 책 목록 페이지 |
-| [/books/:id/reviews](https://koreandummyjson.site/api/books/1/reviews) | GET | 책 리뷰 목록 조회 |
-| [/books](https://koreandummyjson.site/api/books) | POST | 책 생성 |
-| [/books/:id](https://koreandummyjson.site/api/books/1) | PUT | 책 수정 |
-| [/books/:id](https://koreandummyjson.site/api/books/1) | PATCH | 책 수정 |
-| [/books/:id](https://koreandummyjson.site/api/books/1) | DELETE | 책 삭제 |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | GET | 리뷰 조회 |
-| [/reviews](https://koreandummyjson.site/api/reviews) | GET | 리뷰 목록 |
-| [/reviews?page={page}&limit={limit}](https://koreandummyjson.site/api/reviews?page=1&limit=10) | GET | 리뷰 목록 페이지 |
-| [/reviews?userId={userId}](https://koreandummyjson.site/api/reviews?userId=1) | GET | 유저 리뷰 필터링 |
-| [/reviews?bookId={bookId}](https://koreandummyjson.site/api/reviews?bookId=1) | GET | 책 리뷰 필터링 |
-| [/reviews](https://koreandummyjson.site/api/reviews) | POST | 리뷰 생성 |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | PUT | 리뷰 수정 |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | PATCH | 리뷰 수정 |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1) | DELETE | 리뷰 삭제 |
-| [/auth/login](https://koreandummyjson.site/api/auth/login) | POST | 로그인 |
-| [/auth/user](https://koreandummyjson.site/api/auth/user) | GET | 유저 조회 |
-| [/auth/refreshToken](https://koreandummyjson.site/api/auth/refresh) | GET | 토큰 재발급 |
-| [/image/:size/:bgColor/:text.{ext}/:textColor](https://koreandummyjson.site/api/image) | GET | 동적 더미 이미지 생성 |
-
+| Endpoint                                                                                         | Method | Action                  |
+| ------------------------------------------------------------------------------------------------ | ------ | ----------------------- |
+| [/users/:id](https://koreandummyjson.site/api/users/1)                                           | GET    | 유저 조회               |
+| [/users](https://koreandummyjson.site/api/users)                                                 | GET    | 유저 목록               |
+| [/users?page={page}&limit={limit}](https://koreandummyjson.site/api/users?page=1&limit=10)       | GET    | 유저 목록 페이지        |
+| [/users/:id/todos](https://koreandummyjson.site/api/users/1/todos)                               | GET    | 유저 할 일 목록 조회    |
+| [/users/:id/posts](https://koreandummyjson.site/api/users/1/posts)                               | GET    | 유저 게시물 목록 조회   |
+| [/users/:id/comments](https://koreandummyjson.site/api/users/1/comments)                         | GET    | 유저 댓글 목록 조회     |
+| [/users/:id/books](https://koreandummyjson.site/api/users/1/books)                               | GET    | 유저 책 목록 조회       |
+| [/users/:id/reviews](https://koreandummyjson.site/api/users/1/reviews)                           | GET    | 유저 리뷰 목록 조회     |
+| [/users](https://koreandummyjson.site/api/users)                                                 | POST   | 유저 생성               |
+| [/users/:id](https://koreandummyjson.site/api/users/1)                                           | PUT    | 유저 수정               |
+| [/users/:id](https://koreandummyjson.site/api/users/1)                                           | PATCH  | 유저 수정               |
+| [/users/:id](https://koreandummyjson.site/api/users/1)                                           | DELETE | 유저 삭제               |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                           | GET    | 할 일 조회              |
+| [/todos](https://koreandummyjson.site/api/todos)                                                 | GET    | 할 일 목록              |
+| [/todos?userId={userId}](https://koreandummyjson.site/api/todos?userId=1)                        | GET    | 유저 할 일 목록 필터링  |
+| [/todos?page={page}&limit={limit}](https://koreandummyjson.site/api/todos?page=1&limit=10)       | GET    | 할 일 목록 페이지       |
+| [/todos](https://koreandummyjson.site/api/todos)                                                 | POST   | 할 일 생성              |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                           | PUT    | 할 일 수정              |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                           | PATCH  | 할 일 수정              |
+| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                           | DELETE | 할 일 삭제              |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                           | GET    | 게시물 조회             |
+| [/posts](https://koreandummyjson.site/api/posts)                                                 | GET    | 게시물 목록             |
+| [/posts?page={page}&limit={limit}](https://koreandummyjson.site/api/posts?page=1&limit=10)       | GET    | 게시물 목록 페이지      |
+| [/posts/:id/comments](https://koreandummyjson.site/api/posts/1/comments)                           | GET    | 게시물 댓글 목록 조회   |
+| [/posts?userId={userId}](https://koreandummyjson.site/api/posts?userId=1)                        | GET    | 유저 게시물 목록 필터링 |
+| [/posts](https://koreandummyjson.site/api/posts)                                                 | POST   | 게시물 생성             |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                           | PUT    | 게시물 수정             |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                           | PATCH  | 게시물 수정             |
+| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                           | DELETE | 게시물 삭제             |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                     | GET    | 댓글 조회               |
+| [/comments](https://koreandummyjson.site/api/comments)                                           | GET    | 댓글 목록               |
+| [/comments?page={page}&limit={limit}](https://koreandummyjson.site/api/comments?page=1&limit=10) | GET    | 댓글 목록 페이지        |
+| [/comments?userId={userId}](https://koreandummyjson.site/api/comments?userId=1)                  | GET    | 유저 댓글 목록 필터링   |
+| [/comments?postId={postId}](https://koreandummyjson.site/api/comments?postId=1)                  | GET    | 게시물 댓글 목록 필터링 |
+| [/comments](https://koreandummyjson.site/api/comments)                                           | POST   | 댓글 생성               |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                     | PUT    | 댓글 수정               |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                     | PATCH  | 댓글 수정               |
+| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                     | DELETE | 댓글 삭제               |
+| [/books/:id](https://koreandummyjson.site/api/books/1)                                           | GET    | 책 조회                 |
+| [/books](https://koreandummyjson.site/api/books)                                                 | GET    | 책 목록                 |
+| [/books?page={page}&limit={limit}](https://koreandummyjson.site/api/books?page=1&limit=10)       | GET    | 책 목록 페이지          |
+| [/books/:id/reviews](https://koreandummyjson.site/api/books/1/reviews)                           | GET    | 책 리뷰 목록 조회       |
+| [/books](https://koreandummyjson.site/api/books)                                                 | POST   | 책 생성                 |
+| [/books/:id](https://koreandummyjson.site/api/books/1)                                           | PUT    | 책 수정                 |
+| [/books/:id](https://koreandummyjson.site/api/books/1)                                           | PATCH  | 책 수정                 |
+| [/books/:id](https://koreandummyjson.site/api/books/1)                                           | DELETE | 책 삭제                 |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                       | GET    | 리뷰 조회               |
+| [/reviews](https://koreandummyjson.site/api/reviews)                                             | GET    | 리뷰 목록               |
+| [/reviews?page={page}&limit={limit}](https://koreandummyjson.site/api/reviews?page=1&limit=10)   | GET    | 리뷰 목록 페이지        |
+| [/reviews?userId={userId}](https://koreandummyjson.site/api/reviews?userId=1)                    | GET    | 유저 리뷰 필터링        |
+| [/reviews?bookId={bookId}](https://koreandummyjson.site/api/reviews?bookId=1)                    | GET    | 책 리뷰 필터링          |
+| [/reviews](https://koreandummyjson.site/api/reviews)                                             | POST   | 리뷰 생성               |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                       | PUT    | 리뷰 수정               |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                       | PATCH  | 리뷰 수정               |
+| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                       | DELETE | 리뷰 삭제               |
+| [/auth/login](https://koreandummyjson.site/api/auth/login)                                       | POST   | 로그인                  |
+| [/auth/user](https://koreandummyjson.site/api/auth/user)                                         | GET    | 유저 조회               |
+| [/auth/refresh](https://koreandummyjson.site/api/auth/refresh)                              | GET    | 토큰 재발급             |
+| [/image/:size/:bgColor/:text.{ext}/:textColor](https://koreandummyjson.site/api/image)           | GET    | 동적 더미 이미지 생성   |
