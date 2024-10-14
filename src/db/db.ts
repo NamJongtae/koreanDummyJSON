@@ -36,7 +36,7 @@ try {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      port: 3306,
+      port: Number(process.env.DB_PORT),
       waitForConnections: true,
       connectionLimit: 10, // 최대 연결 수 제한
       queueLimit: 0 // 대기열 제한 없음
