@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json(
           {
-            message: "댓글 목록 조회 성공",
+            message: "유저 댓글 목록 조회 성공",
             comments: data
           },
           { status: 200 }
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json(
           {
-            message: "댓글 목록 조회 성공",
+            message: "게시물 댓글 목록 조회 성공",
             comments: data
           },
           { status: 200 }

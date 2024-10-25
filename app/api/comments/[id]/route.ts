@@ -35,7 +35,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   const id = params.id;
-  const { title, content, imgUrl } = await req.json().catch(() => ({}));
+  const { content } = await req.json().catch(() => ({}));
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -54,9 +54,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
     const dummyData = {
       id: comments[0].id,
-      title,
       content,
-      imgUrl,
       createdAt: comments[0].createdAt,
       userId: comments[0].userId,
       postId: comments[0].postId
@@ -77,7 +75,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const id = params.id;
-  const { title, content, imgUrl } = await req.json().catch(() => ({}));
+  const { content } = await req.json().catch(() => ({}));
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -96,9 +94,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
     const dummyData = {
       ...comments[0],
-      ...(title !== undefined && { title }),
-      ...(content !== undefined && { content }),
-      ...(imgUrl !== undefined && { imgUrl })
+      ...(content !== undefined && { content })
     };
 
     return NextResponse.json(
@@ -114,7 +110,6 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 }
 
-
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = params;
   const posts = (await executeQuery("SELECT * FROM comments WHERE id = ?", [
@@ -127,7 +122,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
       { status: 200 }
     );
   }
-  
+
   return NextResponse.json(
     { message: `${id}번 댓글 삭제 성공` },
     { status: 200 }
