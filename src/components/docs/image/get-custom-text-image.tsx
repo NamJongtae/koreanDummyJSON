@@ -5,20 +5,11 @@ export default function GetCustomTextImage() {
     <GenerateImageSection
       id="이미지-텍스트-커스텀하기"
       title="이미지 텍스트 커스텀하기"
-      endpoint="/image/:size/:bgColor/:text.{ext}/:textColor"
+      endpoint="/image/:size/:bgColor/:text"
       method="GET"
       fetchUrl="/image/300/2E64FE/KoeanDummyJSON"
       descriptions={
         <>
-          <p className="section-text mb-2">
-            <span className="font-medium">Endpoint</span> :
-            {` /image/:size/:bgColor:/textColor?text={text}`}
-          </p>
-
-          <p className="section-text mb-2">
-            <span className="font-medium">Method</span> : GET
-          </p>
-
           <p className="section-text mb-2">
             텍스트의 기본값은 size로 설정했던{" "}
             <span className="font-medium">너비x높이</span> 값입니다.

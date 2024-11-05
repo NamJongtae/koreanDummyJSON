@@ -12,15 +12,6 @@ export default function GetCustomExtImage() {
       descriptions={
         <>
           <p className="section-text mb-2">
-            <span className="font-medium">Endpoint</span> :
-            {` /image/:size/:bgColor:/text.{ext}`}
-          </p>
-
-          <p className="section-text mb-2">
-            <span className="font-medium">Method</span> : GET
-          </p>
-
-          <p className="section-text mb-2">
             확장자의 기본값은 <span className="font-medium">.png</span>입니다.
           </p>
 

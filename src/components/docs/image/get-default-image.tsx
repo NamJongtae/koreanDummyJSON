@@ -11,14 +11,6 @@ export default function GetDefaultImage() {
       descriptions={
         <>
           <p className="section-text mb-2">
-            <span className="font-medium">Endpoint</span> : {`/image`}
-          </p>
-
-          <p className="section-text mb-2">
-            <span className="font-medium">Method</span> : GET
-          </p>
-
-          <p className="section-text mb-2">
             기본 이미지를 생성합니다. 기본 이미지는 아래와 같은 기본값을
             가집니다.
           </p>

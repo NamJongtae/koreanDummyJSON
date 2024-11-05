@@ -11,12 +11,6 @@ export default function GetCustomSizeImage() {
       descriptions={
         <>
           <p className="section-text mb-2">
-            <span className="font-medium">Endpoint</span> : /image/:size
-          </p>
-          <p className="section-text mb-2">
-            <span className="font-medium">Method</span> : GET
-          </p>
-          <p className="section-text mb-2">
             사이즈 값은{" "}
             <span className="font-medium">단일 size(너비=높이) </span>
             혹은 <span className="font-medium">너비x높이</span>로 설정가능하며,

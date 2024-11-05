@@ -11,15 +11,6 @@ export default function GetCustomBgColorImage() {
       descriptions={
         <>
           <p className="section-text mb-2">
-            <span className="font-medium">Endpoint</span> :
-            /image/:size/:bgColor
-          </p>
-
-          <p className="section-text mb-2">
-            <span className="font-medium">Method</span> : GET
-          </p>
-
-          <p className="section-text mb-2">
             배경 색상은 HEX 코드로 설정할 수 있습니다.
           </p>
 

@@ -12,15 +12,6 @@ export default function GetCustomTextColorImage() {
       descriptions={
         <>
           <p className="section-text mb-2">
-            <span className="font-medium">Endpoint</span> :
-            /image/:size/:bgColor:/textColor
-          </p>
-
-          <p className="section-text mb-2">
-            <span className="font-medium">Method</span> : GET
-          </p>
-
-          <p className="section-text mb-2">
             텍스트 색상의 기본값은{" "}
             <span className="font-medium relative before:left-1 before:top-[6px] before:w-4 before:h-4 before:absolute before:bg-[#000000] before:border pl-6">
               #000000
