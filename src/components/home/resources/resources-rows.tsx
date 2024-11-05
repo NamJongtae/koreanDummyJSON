@@ -12,6 +12,7 @@ export default function ResourcesRows({ resource, info }: IProps) {
         <Link
           href={`/api${resource}`}
           className="text-blue-600 hover:underline"
+          target="_blank"
           prefetch={false}
         >
           {resource}
