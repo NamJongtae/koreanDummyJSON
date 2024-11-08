@@ -7,7 +7,7 @@ export default function GetCustomTextImage() {
       title="이미지 텍스트 커스텀하기"
       endpoint="/image/:size/:bgColor/:text"
       method="GET"
-      fetchUrl="/image/300/2E64FE/KoeanDummyJSON"
+      fetchUrl="/image/300/2E64FE/KoreanDummyJSON"
       descriptions={
         <>
           <p className="section-text mb-2">
