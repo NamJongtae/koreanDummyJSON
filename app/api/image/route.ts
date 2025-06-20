@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createCanvas, registerFont } from "canvas";
 import path from "path";
 
@@ -7,19 +7,14 @@ function isValidHexColor(color: string) {
   return /^([0-9A-F]{6})$/i.test(color);
 }
 
-export function GET(
-  request: Request,
-  { params }: { params: { imageData: string[] } }
-) {
-  const { imageData = [] } = params;
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
 
-  const size = imageData[0] || "150x150";
-  const bgColor = imageData[1] || "CCCCCC";
-  const textWithExt = imageData[2] || "";
-  const textColor = imageData[3] || "000000";
-
-  // textWithExt에서 텍스트와 확장자 분리
-  const [text = "", ext = "png"] = textWithExt.split(".");
+  const size = searchParams.get("size") || "150x150";
+  const bgColor = searchParams.get("bgColor") || "CCCCCC";
+  const text = searchParams.get("text") || "";
+  const textColor = searchParams.get("textColor") || "000000";
+  const ext = searchParams.get("ext") || "png";
 
   // 지원되는 포맷 체크
   const supportedFormats = ["png", "jpeg", "jpg", "svg"];
@@ -50,10 +45,13 @@ export function GET(
   const textLength = displayText.length;
   const fontSize = Math.min(width, height) / (textLength > 10 ? 15 : 10);
 
-  // 폰트 등록 
-  registerFont(path.join(process.cwd(), "public/fonts/NotoSansKR-Regular.ttf"), {
-    family: "Noto Sans KR",
-  });
+  // 폰트 등록
+  registerFont(
+    path.join(process.cwd(), "public/fonts/NotoSansKR-Regular.ttf"),
+    {
+      family: "Noto Sans KR"
+    }
+  );
 
   let buffer: Buffer | string;
   let contentType: string;
@@ -92,6 +90,6 @@ export function GET(
   }
 
   return new NextResponse(buffer, {
-    headers: { "Content-Type": contentType },
+    headers: { "Content-Type": contentType }
   });
 }

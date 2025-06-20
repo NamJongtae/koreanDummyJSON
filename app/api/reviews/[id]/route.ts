@@ -4,15 +4,15 @@ import { Review } from "@/src/types/review-type";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // /api/reviews/:id
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql = "SELECT * FROM reviews where id = ?";
     const reviews = (await executeQuery(sql, [id])) as Review[];
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const { rating, content } = await req.json().catch(() => ({}));
 
     // 데이터베이스에서 실제 데이터를 조회
@@ -72,7 +72,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 }
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
-  const id = params.id;
+  const { id } = await params;
   const { rating, content } = await req.json().catch(() => ({}));
 
   try {
@@ -108,9 +108,8 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 }
 
-
 export async function DELETE(req: NextRequest, { params }: IParams) {
-  const { id } = params;
+  const { id } = await params;
 
   const reviews = (await executeQuery("SELECT * FROM reviews WHERE id = ?", [
     id

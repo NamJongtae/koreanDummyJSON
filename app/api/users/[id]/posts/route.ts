@@ -3,11 +3,11 @@ import { Post } from "@/src/types/post-type";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql =
       "SELECT users.id, posts.id AS postId, posts.title, posts.content, posts.imgUrl, posts.createdAt FROM users INNER JOIN posts ON users.id = posts.userId where users.id = ?;";

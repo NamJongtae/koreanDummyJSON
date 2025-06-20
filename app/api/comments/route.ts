@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
     // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit");
+    const limit = searchParams.get("limit") || "10";
     const userId = searchParams.get("userId");
     const postId = searchParams.get("postId");
 
@@ -68,19 +68,18 @@ export async function GET(req: NextRequest) {
     if (page && limit) {
       // 페이지네이션 계산
       offset = (parseInt(page) - 1) * parseInt(limit);
-
-      // SQL 쿼리에 LIMIT과 OFFSET 적용
-      // /api/comments?page={page}&limit={limit} 댓글 목록 페이지
       sql = "SELECT * FROM comments ORDER by id LIMIT ? OFFSET ?";
       values = [parseInt(limit), offset];
-
       // hasNextPage 계산
       const totalComments = 500;
       hasNextPage =
         offset !== null && offset + parseInt(limit || "0") < totalComments;
+    } else if (!page && limit) {
+      // limit만 있을 때 처음부터 limit개만 반환
+      sql = "SELECT * FROM comments ORDER by id LIMIT ?";
+      values = [parseInt(limit)];
     } else {
-      // page 또는 limit가 없으면 전체 데이터를 조회
-      // /api/comments 댓글 목록
+      // page, limit 모두 없으면 전체 데이터를 조회
       sql = "SELECT * FROM comments ORDER by id";
     }
 
@@ -104,13 +103,21 @@ export async function GET(req: NextRequest) {
     if (limit) response.limit = parseInt(limit);
     if (hasNextPage !== null) response.hasNextPage = hasNextPage;
 
-    return NextResponse.json(response, { status: 200 });
+    const res = NextResponse.json(response, { status: 200 });
+    res.headers.set("Access-Control-Allow-Origin", "*");
+    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return res;
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
+    const res = NextResponse.json(
       { message: "댓글 목록 조회 실패" },
       { status: 500 }
     );
+    res.headers.set("Access-Control-Allow-Origin", "*");
+    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+    return res;
   }
 }
 
@@ -136,4 +143,15 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
 }

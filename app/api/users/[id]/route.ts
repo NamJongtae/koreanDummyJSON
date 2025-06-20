@@ -3,15 +3,15 @@ import { User } from "@/src/types/user-type";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // /api/user/:id
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql = "SELECT * FROM users where id = ?";
     const users = (await executeQuery(sql, [id])) as User[];
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const { username, email, phone, address } = await req
       .json()
       .catch(() => ({}));
@@ -73,7 +73,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 }
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
-  const id = params.id;
+  const { id } = await params;
   const { username, email, phone, address } = await req
     .json()
     .catch(() => ({}));
@@ -114,7 +114,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 }
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
-  const { id } = params;
+  const { id } = await params;
 
   const users = (await executeQuery("SELECT * FROM users WHERE id = ?", [
     id

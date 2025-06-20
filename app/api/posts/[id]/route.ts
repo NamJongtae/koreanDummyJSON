@@ -3,15 +3,15 @@ import { Post } from "@/src/types/post-type";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // /api/posts/:id
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql = "SELECT * FROM posts where id = ?";
     const posts = (await executeQuery(sql, [id])) as Post[];
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const { title, content, imgUrl } = await req.json().catch(() => ({}));
 
     // 데이터베이스에서 실제 데이터를 조회
@@ -71,7 +71,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 }
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
-  const id = params.id;
+  const { id } = await params;
   const { title, content, imgUrl } = await req.json().catch(() => ({}));
 
   try {
@@ -108,7 +108,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 }
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
-  const { id } = params;
+  const { id } = await params;
   const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
     id
   ])) as Comment[];

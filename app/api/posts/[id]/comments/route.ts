@@ -2,11 +2,12 @@ import executeQuery from "@/src/db/db";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
+
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql =
       "SELECT posts.id, comments.id AS commentId, comments.content, comments.createdAt FROM posts INNER JOIN comments ON posts.id = comments.postId where posts.id = ?;";

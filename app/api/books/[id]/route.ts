@@ -4,15 +4,15 @@ import { Book } from "@/src/types/book-type";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // /api/books/:id
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql = "SELECT * FROM books where id = ?";
     const books = (await executeQuery(sql, [id])) as Book[];
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 }
 
 export async function PUT(req: NextRequest, { params }: IParams) {
-  const id = params.id;
+  const { id } = await params;
   const { author, genre, title, publicationDate, totalPage } = await req
     .json()
     .catch(() => ({}));
@@ -76,7 +76,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 }
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
-  const id = params.id;
+  const { id } = await params;
   const { author, genre, title, publicationDate, totalPage } = await req
     .json()
     .catch(() => ({}));
@@ -119,7 +119,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 }
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
-  const { id } = params;
+  const { id } = await params;
   const books = (await executeQuery("SELECT * FROM books WHERE id = ?", [
     id
   ])) as Book[];

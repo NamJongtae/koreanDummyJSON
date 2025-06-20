@@ -3,11 +3,14 @@ import { Review } from "@/src/types/review-type";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IParams {
-  params: { id: string };
+  params: Promise<{
+    id: string;
+  }>;
 }
+
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
-    const id = params.id;
+    const { id } = await params;
 
     const sql =
       "SELECT books.id, reviews.id AS reviewId, reviews.rating, reviews.content, reviews.createdAt FROM books INNER JOIN reviews ON books.id = reviews.bookId where books.id = ?;";

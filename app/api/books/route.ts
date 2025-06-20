@@ -7,9 +7,8 @@ export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
 
-    // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit");
+    const limit = searchParams.get("limit") || "10";
 
     let sql;
     let values: Array<number> = [];
@@ -29,8 +28,12 @@ export async function GET(req: NextRequest) {
       const totalBooks = 100;
       hasNextPage =
         offset !== null && offset + parseInt(limit || "0") < totalBooks;
+    } else if (!page && limit) {
+      // limit만 있을 때 처음부터 limit개만 반환
+      sql = "SELECT * FROM books LIMIT ?";
+      values = [parseInt(limit)];
     } else {
-      // page 또는 limit가 없으면 전체 데이터를 조회
+      // page, limit 모두 없으면 전체 데이터를 조회
       // /api/posts 책 목록
       sql = "SELECT * FROM books";
     }

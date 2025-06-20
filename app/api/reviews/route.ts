@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
     // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit");
+    const limit = searchParams.get("limit") || "10";
     const userId = searchParams.get("userId");
     const bookId = searchParams.get("bookId");
 
@@ -69,19 +69,18 @@ export async function GET(req: NextRequest) {
     if (page && limit) {
       // 페이지네이션 계산
       offset = (parseInt(page) - 1) * parseInt(limit);
-
-      // SQL 쿼리에 LIMIT과 OFFSET 적용
-      // /api/reviews?page={page}&limit={limit} 리뷰 목록 페이지
       sql = "SELECT * FROM reviews ORDER BY id LIMIT ? OFFSET ?";
       values = [parseInt(limit), offset];
-
       // hasNextPage 계산
       const totalReviews = 500;
       hasNextPage =
         offset !== null && offset + parseInt(limit || "0") < totalReviews;
+    } else if (!page && limit) {
+      // limit만 있을 때 처음부터 limit개만 반환
+      sql = "SELECT * FROM reviews ORDER BY id LIMIT ?";
+      values = [parseInt(limit)];
     } else {
-      // page 또는 limit가 없으면 전체 데이터를 조회
-      // /api/reviews 댓글 목록
+      // page, limit 모두 없으면 전체 데이터를 조회
       sql = "SELECT * FROM reviews ORDER BY id";
     }
 

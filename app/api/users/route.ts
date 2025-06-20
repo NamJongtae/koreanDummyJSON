@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
     // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit");
+    const limit = searchParams.get("limit") || "10";
 
     // 기본값 설정
     let sql;
@@ -20,16 +20,17 @@ export async function GET(req: NextRequest) {
     if (page && limit) {
       // 페이지네이션 계산
       offset = (parseInt(page) - 1) * parseInt(limit);
-
-      // SQL 쿼리에 LIMIT과 OFFSET 적용
       sql = "SELECT * FROM users LIMIT ? OFFSET ?";
       values = [parseInt(limit), offset];
-
       // hasNextPage 계산
       const totalUsers = 20;
       hasNextPage = offset + parseInt(limit) < totalUsers;
+    } else if (!page && limit) {
+      // limit만 있을 때 처음부터 limit개만 반환
+      sql = "SELECT * FROM users LIMIT ?";
+      values = [parseInt(limit)];
     } else {
-      // page 또는 limit가 없으면 전체 데이터를 조회
+      // page, limit 모두 없으면 전체 데이터를 조회
       sql = "SELECT * FROM users";
     }
 
