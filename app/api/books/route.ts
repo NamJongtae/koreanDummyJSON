@@ -8,12 +8,17 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
 
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit") || "10";
+    let limit = searchParams.get("limit");
 
     let sql;
     let values: Array<number> = [];
     let offset: number | null = null;
     let hasNextPage: boolean | null = null;
+
+    if (page && !limit) {
+      // page만 있을 때 limit 기본값 10 적용
+      limit = "10";
+    }
 
     if (page && limit) {
       // 페이지네이션 계산

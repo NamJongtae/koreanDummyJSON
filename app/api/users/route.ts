@@ -9,13 +9,18 @@ export async function GET(req: NextRequest) {
 
     // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
-    const limit = searchParams.get("limit") || "10";
+    let limit = searchParams.get("limit");
 
     // 기본값 설정
     let sql;
     let values: Array<number> = [];
     let offset: number | null = null;
     let hasNextPage: boolean | null = null;
+
+    if (page && !limit) {
+      // page만 있을 때 limit 기본값 10 적용
+      limit = "10";
+    }
 
     if (page && limit) {
       // 페이지네이션 계산
