@@ -22,13 +22,13 @@ export async function POST(req: NextRequest) {
     expiresIn: ATExp || 60 * 60
   });
 
-  const refreshToekn = jwt.sign({ id }, "REFRESH_TOKEN", {
+  const refreshToken = jwt.sign({ id }, "REFRESH_TOKEN", {
     expiresIn: RTExp || 60 * 60 * 24
   });
 
   return NextResponse.json({
     message: "로그인 성공",
     accessToken,
-    refreshToekn
+    refreshToken
   });
 }
