@@ -1,6 +1,5 @@
 "use client";
 
-import SectionNavigator from "@/src/components/commons/section-navigator/section-navigator";
 import DocsTemplate from "@/src/components/docs/docs-template";
 import GetCustomBgColorImage from "@/src/components/docs/image/get-custom-bg-color-image";
 import GetCustomExtImage from "@/src/components/docs/image/get-custom-ext-image";
