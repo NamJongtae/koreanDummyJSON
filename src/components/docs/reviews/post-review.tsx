@@ -18,6 +18,8 @@ export default function PostReview() {
         </>
       }
       body={{
+        userId: 1,
+        bookId: 1,
         rating: 4,
         content: "흥미진진하고 재미있는 내용입니다."
       }}

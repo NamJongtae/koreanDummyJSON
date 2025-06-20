@@ -127,7 +127,11 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { content = "" } = await req.json().catch(() => ({}));
+  const {
+    content = "",
+    userId = 1,
+    postId = 1
+  } = await req.json().catch(() => ({}));
 
   try {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
@@ -135,8 +139,8 @@ export async function POST(req: NextRequest) {
       id: 501,
       content,
       createdAt: new Date(),
-      userId: 1,
-      postId: 1
+      userId,
+      postId
     };
     return NextResponse.json(
       {

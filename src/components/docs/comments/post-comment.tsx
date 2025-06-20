@@ -17,6 +17,8 @@ export default function PostComment() {
         </>
       }
       body={{
+        userId: 1,
+        postId: 1,
         content: "테스트 댓글 입니다."
       }}
       fetchUrl="/comments"
