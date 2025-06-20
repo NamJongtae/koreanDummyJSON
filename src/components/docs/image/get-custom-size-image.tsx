@@ -5,9 +5,9 @@ export default function GetCustomSizeImage() {
     <GenerateImageSection
       id="이미지-사이즈-커스텀하기"
       title="이미지 사이즈 커스텀하기"
-      endpoint="/image/:size"
+      endpoint="?size={size}"
       method="GET"
-      fetchUrl="/image/300"
+      fetchUrl="/image?size=500x300"
       descriptions={
         <>
           <p className="section-text mb-2">
@@ -18,11 +18,8 @@ export default function GetCustomSizeImage() {
             <span className="font-medium"> 150x150</span>입니다.
           </p>
           <p className="section-text mb-2">
-            만약, 사이즈가 너비가 500 높이가 300인 이미지를 생성하려면 500x300를
-            size 값으로 설정하면됩니다.
-          </p>
-          <p className="section-text mb-2">
-            사이즈가 300x300인 이미지를 생성합니다.
+            만약, 너비가 500, 높이가 300인 이미지를 생성하려면 500x300을 size
+            값으로 설정하면됩니다.
           </p>
           <p className="section-text mb-4">
             아래 Fetch URL를 복사하여 브라우저 주소창에 URL를 붙여넣고, size

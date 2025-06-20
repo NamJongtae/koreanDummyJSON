@@ -6,9 +6,9 @@ export default function GetCustomTextColorImage() {
       className="pb-20"
       id="이미지-텍스트-색상-커스텀하기"
       title="이미지 텍스트 색상 커스텀하기"
-      endpoint="/image/:size/:bgColor/:text.{ext}/:textColor"
+      endpoint="?text={text}&textColor={textColor}"
       method="GET"
-      fetchUrl="/image/300/2E64FE/KoreanDummyJSON.jpg/FFFFFF"
+      fetchUrl="/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE"
       descriptions={
         <>
           <p className="section-text mb-2">

@@ -5,9 +5,9 @@ export default function GetCustomBgColorImage() {
     <GenerateImageSection
       id="이미지-배경-색상-커스텀하기"
       title="이미지 배경 색상 커스텀하기"
-      endpoint="/image/:size/:bgColor"
+      endpoint="?bgColor={bgColor}"
       method="GET"
-      fetchUrl="/image/300/2E64FE"
+      fetchUrl="/image?bgColor=2E64FE"
       descriptions={
         <>
           <p className="section-text mb-2">

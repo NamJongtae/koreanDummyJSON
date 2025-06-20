@@ -30,12 +30,15 @@ export default function GenerateImageSection({
   className,
   children
 }: IProps) {
-  const pathnameArr = fetchUrl.split("/");
-  const size = pathnameArr[2] || "150x150";
+  const urlParams = new URLSearchParams(fetchUrl.split("?")[1]);
+  const size = urlParams.get("size") || "150x150";
 
   const [widthStr, heightStr] = size.split("x");
-  const width = parseInt(widthStr, 10);
-  const height = heightStr ? parseInt(heightStr, 10) : width;
+  let width = parseInt(widthStr, 10);
+  let height = heightStr ? parseInt(heightStr, 10) : width;
+
+  if (isNaN(width)) width = 150;
+  if (isNaN(height)) height = 150;
 
   const code = generateCodeSnippet({
     fetchUrl,
@@ -77,6 +80,7 @@ export default function GenerateImageSection({
           alt=""
           width={width}
           height={height}
+          unoptimized
         />
       )}
       {children}

@@ -291,9 +291,10 @@ export const API_ENDPOINT_DATA = [
     action: "토큰 재발급"
   },
   {
-    endpoint: "/image/:size/:bgColor/:text.ext/:textColor",
-    url: "/image/500",
+    endpoint:
+      "/image?size={size}&bgColor={bgColor}&text={text}&ext={ext}&textColor={textColor}",
+    url: "/image?size=500&bgColor=2E64FE&text=KoreanDummyJSON&ext=jpg&textColor=FFFFFF",
     method: "GET",
     action: "동적 이미지 생성"
-  },
+  }
 ];

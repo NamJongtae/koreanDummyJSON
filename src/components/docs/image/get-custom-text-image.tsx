@@ -5,9 +5,9 @@ export default function GetCustomTextImage() {
     <GenerateImageSection
       id="이미지-텍스트-커스텀하기"
       title="이미지 텍스트 커스텀하기"
-      endpoint="/image/:size/:bgColor/:text"
+      endpoint="?text={text}"
       method="GET"
-      fetchUrl="/image/300/2E64FE/KoreanDummyJSON"
+      fetchUrl="/image?size=300x300&text=KoreanDummyJSON"
       descriptions={
         <>
           <p className="section-text mb-2">
@@ -16,7 +16,7 @@ export default function GetCustomTextImage() {
           </p>
 
           <p className="section-text mb-2">
-            텍스트가 <span className="font-medium">korean dummy JSON</span>인
+            텍스트가 <span className="font-medium">Korean Dummy JSON</span>인
             이미지를 생성합니다.
           </p>
 

@@ -5,7 +5,7 @@ export default function GetDefaultImage() {
     <GenerateImageSection
       id="기본-이미지-생성하기"
       title="기본 이미지 생성하기"
-      endpoint="/image"
+      endpoint=""
       method="GET"
       fetchUrl="/image"
       descriptions={
