@@ -23,6 +23,8 @@ export async function middleware(req: NextRequest) {
       "Access-Control-Allow-Headers",
       "Content-Type, Authorization"
     );
+    response.headers.set("Cache-Control", "public, s-maxage=86400");
+
     return response;
   }
   return NextResponse.next();
