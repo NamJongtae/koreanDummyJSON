@@ -4,6 +4,8 @@
 
 - [👋 프로젝트 소개](#-프로젝트-소개)
 
+- [🎈 Npm package](#-npm-package)
+
 - [⚙ 개발환경](#-개발환경)
 
 - [📚 제공 리소스](#-제공-리소스)
@@ -30,13 +32,37 @@
 
 가입할 필요없이 간편하게 바로 사용할 수 있습니다.
 
-GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해 보세요.
+`GET`, `POST`, `PUT`, `PATCH`, `DELETE` 요청을 보내고 직접 테스트 해보고 학습해 보세요.
 
 📅 **개발 기간 : 2024. 08. 27. ~ 2024. 09. 14.**
 
 #### 🔗 배포 URL : [📚 Korean Dummy JSON](https://koreandummyjson.site/)
 
 **⚠ 현재 프로젝트는 무료 DB 서버를 사용하고 있어, 일시적으로 API 요청이 중단될 수 있습니다.**
+
+<br/>
+
+### 🎈 Npm Package
+
+[Korean Dummy Json Fetcher](https://www.npmjs.com/package/korean-dummy-json-fetcher/)
+
+> `KoreanDummyJsonFetcher`는 비동기 API를 직접 호출하지 않아도, 현재 프로젝트에서 더미 JSON 데이터를 손쉽게 활용할 수 있도록 도와주는 라이브러리입니다.
+
+#### 설치
+
+```bash
+npm install korean-dummy-json-fetcher
+```
+
+#### CDN
+
+```html
+<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.0.3"></script>
+```
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.0.3"></script>
+```
 
 <br/>
 
