@@ -43,11 +43,22 @@ export default function HomeIntro() {
           제공 받을 수 있습니다.
         </p>
         <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
-          추가로 JWT 기반 로그인 및 인증/인가 더미 API 및 동적 더미 이미지 API가 제공됩니다.
+          추가로 JWT 기반 로그인 및 인증/인가 더미 API 및 동적 더미 이미지 API가
+          제공됩니다.
         </p>
-        <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-500">
+        <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
           GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해
           보세요.
+        </p>
+        <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-500">
+          <Link
+            href={"https://www.npmjs.com/package/korean-dummy-json-fetcher"}
+            className="text-blue-600 betterhover:hover:underline underline-offset-2 mr-1"
+          >
+            Korean Dummy JSON Fetcher
+          </Link>
+          라이브러리를 통해 직접 비동기 API 호출 없이 더미 데이터를 쉽게 사용할
+          수 있습니다.
         </p>
         <p id="tags" className="sr-only">
           #korean json, #dummy json, #한국어 더미 데이터
@@ -63,18 +74,32 @@ export default function HomeIntro() {
         <div className="flex flex-wrap gap-6 justify-between items-center">
           <ApiRequestCount />
 
-          <Link
-            href={"https://github.com/NamJongtae/korean_dummy_JSON"}
-            className="inline-flex items-center gap-2 rounded-full border px-2 sm:px-3 py-2 transition-colors betterhover:hover:bg-gray-100"
-          >
-            <Image
-              src={"/icons/github-icon.svg"}
-              alt=""
-              width={32}
-              height={32}
-            />
-            GitHub
-          </Link>
+          <div className="flex flex-col gap-2 items-start">
+            <Link
+              href={"https://github.com/NamJongtae/korean_dummy_JSON"}
+              className="inline-flex items-center gap-2 rounded-full border px-2 sm:px-3 py-2 transition-colors betterhover:hover:bg-gray-100"
+            >
+              <Image
+                src={"/icons/github-icon.svg"}
+                alt=""
+                width={32}
+                height={32}
+              />
+              GitHub
+            </Link>
+            <Link
+              href={"https://www.npmjs.com/package/korean-dummy-json-fetcher"}
+              className="inline-flex items-center gap-2 rounded-full border px-2 sm:px-3 py-2 transition-colors betterhover:hover:bg-gray-100"
+            >
+              <Image
+                src={"/icons/npm-icon.svg"}
+                alt=""
+                width={26}
+                height={26}
+              />
+              Korean Dummy JSON Fetcher
+            </Link>
+          </div>
         </div>
       </div>
     </section>
