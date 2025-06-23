@@ -1,10 +1,17 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
 import { Review } from "@/src/types/review-type";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
+
+const reviewDbFile = path.resolve(process.cwd(), "src/db/reviews.json");
+const reviewDbPromise = JSONFilePreset<{ reviews: Review[] }>(reviewDbFile, {
+  reviews: []
+});
+
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
@@ -16,9 +23,15 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql =
-      "SELECT users.id, reviews.id AS reviewId, reviews.rating, reviews.content, reviews.createdAt FROM users INNER JOIN reviews ON users.id = reviews.userId where users.id = ?;";
-    const reviews = (await executeQuery(sql, [id])) as Review[];
+    const reviewDb = await reviewDbPromise;
+    const reviews = reviewDb.data.reviews
+      .filter((r) => r.userId === parseInt(id, 10))
+      .map((r) => ({
+        reviewId: r.id,
+        rating: r.rating,
+        content: r.content,
+        createdAt: r.createdAt
+      }));
 
     return NextResponse.json(
       { message: "유저 리뷰 목록 조회 성공", reviews },

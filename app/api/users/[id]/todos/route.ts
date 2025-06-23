@@ -1,10 +1,17 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
 import { Todo } from "@/src/types/todo-type";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
+
+const todoDbFile = path.resolve(process.cwd(), "src/db/todos.json");
+const todoDbPromise = JSONFilePreset<{ todos: Todo[] }>(todoDbFile, {
+  todos: []
+});
+
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
@@ -16,12 +23,14 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql =
-      "SELECT users.id, todos.id AS todoId, todos.content, todos.completed FROM users INNER JOIN todos ON users.id = todos.userId where users.id = ?;";
-    const todos = (await executeQuery(sql, [id])) as Todo[];
-    todos.forEach((todo) => {
-      todo.completed = Boolean(todo.completed);
-    });
+    const todoDb = await todoDbPromise;
+    const todos = todoDb.data.todos
+      .filter((t) => t.userId === parseInt(id, 10))
+      .map((t) => ({
+        todoId: t.id,
+        content: t.content,
+        completed: Boolean(t.completed)
+      }));
 
     return NextResponse.json(
       { message: "유저 할 일 목록 조회 성공", todos },

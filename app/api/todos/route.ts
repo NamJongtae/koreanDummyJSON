@@ -1,77 +1,44 @@
-import executeQuery from "@/src/db/db";
-import { Todo } from "@/src/types/todo-type";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Todo } from "@/src/types/todo-type";
 
-// /api/todos
+const dbFile = path.resolve(process.cwd(), "src/db/todos.json");
+const dbPromise = JSONFilePreset<{ todos: Todo[] }>(dbFile, { todos: [] });
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-
-    // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
 
-    // /api/todos?userId={userId} 유저 아이디별 할 일 목록
+    const db = await dbPromise;
+    let todos = db.data.todos;
+
+    // userId로 필터
     if (userId) {
-      try {
-        const todos = (await executeQuery(
-          "SELECT * FROM todos where userId = ?",
-          [userId]
-        )) as Todo[];
-
-        todos.forEach((todo) => {
-          todo.completed = Boolean(todo.completed);
-        });
-
-        return NextResponse.json(
-          {
-            message: "할 일 목록 조회 성공",
-            todos
-          },
-          { status: 200 }
-        );
-      } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-          { message: "할 일 목록 조회 실패" },
-          { status: 500 }
-        );
-      }
+      todos = todos.filter((todo) => todo.userId === parseInt(userId, 10));
     }
 
-    let sql;
-    let values: Array<number> = [];
-    let offset: number | null = null;
+    // completed를 Boolean으로 변환
+    todos = todos.map((todo) => ({
+      ...todo,
+      completed: Boolean(todo.completed)
+    }));
+
+    // 페이지네이션
+    let pagedTodos = todos;
     let hasNextPage: boolean | null = null;
-
-    if (page && !limit) {
-      // page만 있을 때 limit 기본값 10 적용
-      limit = "10";
-    }
-
+    if (page && !limit) limit = "10";
     if (page && limit) {
-      // 페이지네이션 계산
-      offset = (parseInt(page) - 1) * parseInt(limit);
-      sql = "SELECT * FROM todos LIMIT ? OFFSET ?";
-      values = [parseInt(limit), offset];
-      // hasNextPage 계산
-      const totalTodos = 200;
-      hasNextPage =
-        offset !== null && offset + parseInt(limit || "0") < totalTodos;
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      pagedTodos = todos.slice(offset, offset + parseInt(limit));
+      hasNextPage = offset + parseInt(limit) < todos.length;
     } else if (!page && limit) {
-      // limit만 있을 때 처음부터 limit개만 반환
-      sql = "SELECT * FROM todos LIMIT ?";
-      values = [parseInt(limit)];
-    } else {
-      // page, limit 모두 없으면 전체 데이터를 조회
-      sql = "SELECT * FROM todos";
+      pagedTodos = todos.slice(0, parseInt(limit));
     }
 
-    // 데이터베이스 쿼리 실행
-    const data = await executeQuery(sql, values);
-
-    // 응답 객체 생성
     const response: {
       message: string;
       todos: Todo[];
@@ -80,17 +47,11 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "할 일 목록 조회 성공",
-      todos: data as Todo[]
+      todos: pagedTodos
     };
-
-    // 조건에 따라 page, limit, hasNextPage 추가
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);
     if (hasNextPage !== null) response.hasNextPage = hasNextPage;
-    // 숫자 형식 boolean 형식으로 변환
-    response.todos.forEach((todo) => {
-      todo.completed = Boolean(todo.completed);
-    });
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
@@ -103,7 +64,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { content } = await await req.json().catch(() => ({}));
+  const { content, userId = 1 } = await req.json().catch(() => ({}));
 
   if (!content) {
     return NextResponse.json(
@@ -113,16 +74,25 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = { id: 201, content, completed: false };
+    const db = await dbPromise;
+    const todos = db.data.todos;
+    const maxId = todos.length > 0 ? Math.max(...todos.map((t) => t.id)) : 0;
+    const newTodo: Todo = {
+      id: maxId + 1,
+      content,
+      completed: false,
+      userId,
+    };
+
     return NextResponse.json(
       {
         message: "할 일 생성 성공",
-        todo: dummyData
+        todo: newTodo
       },
       { status: 201 }
     );
   } catch (error) {
     console.error(error);
+    return NextResponse.json({ message: "할 일 생성 실패" }, { status: 500 });
   }
 }

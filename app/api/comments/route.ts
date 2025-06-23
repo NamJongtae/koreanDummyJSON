@@ -1,97 +1,69 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Comment } from "@/src/types/comment-type";
 
-// /api/posts
+const dbFile = path.resolve(process.cwd(), "src/db/comments.json");
+const dbPromise = JSONFilePreset<{ comments: Comment[] }>(dbFile, {
+  comments: []
+});
+
 export async function GET(req: NextRequest) {
   try {
-    const searchParams = req.nextUrl.searchParams;
+    const db = await dbPromise;
+    const comments: Comment[] = db.data.comments;
 
-    // page와 limit 값을 가져옵니다.
+    const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
     const postId = searchParams.get("postId");
 
-    // /api/comments?userId={userId} 유저별 댓글 목록
+    let filtered = comments;
+
+    // userId로 필터
     if (userId) {
-      try {
-        const data = await executeQuery(
-          "SELECT * FROM comments where userId = ? ORDER by id",
-          [userId]
-        );
-
-        return NextResponse.json(
-          {
-            message: "유저 댓글 목록 조회 성공",
-            comments: data
-          },
-          { status: 200 }
-        );
-      } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-          { message: "댓글 목록 조회 실패" },
-          { status: 500 }
-        );
-      }
+      filtered = filtered.filter((c) => c.userId === parseInt(userId, 10));
+      return NextResponse.json(
+        {
+          message: "유저 댓글 목록 조회 성공",
+          comments: filtered
+        },
+        { status: 200 }
+      );
     }
 
-    // /api/comments?postId={postId} 게시물별 댓글 목록
+    // postId로 필터
     if (postId) {
-      try {
-        const data = await executeQuery(
-          "SELECT * FROM comments where postId = ? ORDER by id",
-          [postId]
-        );
-
-        return NextResponse.json(
-          {
-            message: "게시물 댓글 목록 조회 성공",
-            comments: data
-          },
-          { status: 200 }
-        );
-      } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-          { message: "댓글 목록 조회 실패" },
-          { status: 500 }
-        );
-      }
+      filtered = filtered.filter((c) => c.postId === parseInt(postId, 10));
+      return NextResponse.json(
+        {
+          message: "게시물 댓글 목록 조회 성공",
+          comments: filtered
+        },
+        { status: 200 }
+      );
     }
 
-    let sql;
-    let values: Array<number> = [];
+    // 페이지네이션
     let offset: number | null = null;
     let hasNextPage: boolean | null = null;
 
     if (page && !limit) {
-      // page만 있을 때 limit 기본값 10 적용
       limit = "10";
     }
 
+    let result = filtered;
     if (page && limit) {
-      // 페이지네이션 계산
       offset = (parseInt(page) - 1) * parseInt(limit);
-      sql = "SELECT * FROM comments ORDER by id LIMIT ? OFFSET ?";
-      values = [parseInt(limit), offset];
-      // hasNextPage 계산
-      const totalComments = 500;
+      result = filtered.slice(offset, offset + parseInt(limit));
+      const totalComments = filtered.length;
       hasNextPage =
         offset !== null && offset + parseInt(limit || "0") < totalComments;
     } else if (!page && limit) {
-      // limit만 있을 때 처음부터 limit개만 반환
-      sql = "SELECT * FROM comments ORDER by id LIMIT ?";
-      values = [parseInt(limit)];
-    } else {
-      // page, limit 모두 없으면 전체 데이터를 조회
-      sql = "SELECT * FROM comments ORDER by id";
+      result = filtered.slice(0, parseInt(limit));
     }
 
-    // 데이터베이스 쿼리 실행
-    const data = await executeQuery(sql, values);
-
-    // 응답 객체 생성
     const response: {
       message: string;
       comments: Comment[];
@@ -100,23 +72,20 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "댓글 목록 조회 성공",
-      comments: data as Comment[]
+      comments: result
     };
 
-    // 조건에 따라 page, limit, hasNextPage 추가
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);
     if (hasNextPage !== null) response.hasNextPage = hasNextPage;
 
-    const res = NextResponse.json(response, { status: 200 });
-    return res;
+    return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error(error);
-    const res = NextResponse.json(
+    return NextResponse.json(
       { message: "댓글 목록 조회 실패" },
       { status: 500 }
     );
-    return res;
   }
 }
 
@@ -135,22 +104,29 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = {
-      id: 501,
+    const db = await dbPromise;
+    const comments: Comment[] = db.data.comments;
+    const newId =
+      comments.length > 0
+        ? Math.max(...comments.map((c) => c.id)) + 1
+        : 1;
+    const newComment: Comment = {
+      id: newId,
       content,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
       userId,
       postId
     };
+
     return NextResponse.json(
       {
         message: "댓글 생성 성공",
-        comment: dummyData
+        comment: newComment
       },
       { status: 201 }
     );
   } catch (error) {
     console.error(error);
+    return NextResponse.json({ message: "댓글 생성 실패" }, { status: 500 });
   }
 }

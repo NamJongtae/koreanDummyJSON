@@ -1,9 +1,22 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Comment } from "@/src/types/comment-type";
+import { Post } from "@/src/types/post-type";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
+
+const postDbFile = path.resolve(process.cwd(), "src/db/posts.json");
+const commentDbFile = path.resolve(process.cwd(), "src/db/comments.json");
+const postDbPromise = JSONFilePreset<{ posts: Post[] }>(postDbFile, {
+  posts: []
+});
+const commentDbPromise = JSONFilePreset<{ comments: Comment[] }>(
+  commentDbFile,
+  { comments: [] }
+);
 
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
@@ -16,9 +29,26 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql =
-      "SELECT posts.id, comments.id AS commentId, comments.content, comments.createdAt FROM posts INNER JOIN comments ON posts.id = comments.postId where posts.id = ?;";
-    const comments = (await executeQuery(sql, [id])) as Comment[];
+    const postDb = await postDbPromise;
+    const commentDb = await commentDbPromise;
+
+    const post = postDb.data.posts.find((p) => p.id === parseInt(id, 10));
+    if (!post) {
+      return NextResponse.json(
+        { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
+        { status: 404 }
+      );
+    }
+
+    // 해당 게시물의 댓글만 필터
+    const comments = commentDb.data.comments
+      .filter((c) => c.postId === parseInt(id, 10))
+      .map((c) => ({
+        postId: c.postId,
+        commentId: c.id,
+        content: c.content,
+        createdAt: c.createdAt
+      }));
 
     return NextResponse.json(
       { message: "게시물 댓글 목록 조회 성공", comments },

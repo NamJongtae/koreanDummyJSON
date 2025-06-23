@@ -1,15 +1,17 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
+import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 import { Review } from "@/src/types/review-type";
 
-import { NextRequest, NextResponse } from "next/server";
-
 interface IParams {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
 
-// /api/reviews/:id
+const dbFile = path.resolve(process.cwd(), "src/db/reviews.json");
+const dbPromise = JSONFilePreset<{ reviews: Review[] }>(dbFile, {
+  reviews: []
+});
+
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
@@ -21,10 +23,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql = "SELECT * FROM reviews where id = ?";
-    const reviews = (await executeQuery(sql, [id])) as Review[];
+    const db = await dbPromise;
+    const review = db.data.reviews.find((r) => r.id === parseInt(id, 10));
 
-    if (reviews.length === 0) {
+    if (!review) {
       return NextResponse.json(
         { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -32,7 +34,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
     }
 
     return NextResponse.json(
-      { message: "리뷰 조회 성공", review: reviews[0] },
+      { message: "리뷰 조회 성공", review },
       { status: 200 }
     );
   } catch (error) {
@@ -55,8 +57,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     const { rating, content } = await req.json().catch(() => ({}));
 
     const errors: string[] = [];
-
-    if (!rating) errors.push("rating");
+    if (rating === undefined) errors.push("rating");
     if (!content) errors.push("content");
 
     if (errors.length > 0) {
@@ -66,29 +67,26 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    // 데이터베이스에서 실제 데이터를 조회
-    const reviews = (await executeQuery("SELECT * FROM reviews WHERE id = ?", [
-      id
-    ])) as Review[];
+    const db = await dbPromise;
+    const idx = db.data.reviews.findIndex((r) => r.id === parseInt(id, 10));
 
-    if (reviews.length === 0) {
+    if (idx === -1) {
       return NextResponse.json(
         { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
-        { status: 200 }
+        { status: 404 }
       );
     }
+
+    const updatedReview: Review = {
+      ...db.data.reviews[idx],
+      rating,
+      content
+    };
 
     return NextResponse.json(
       {
         message: "리뷰 수정 성공",
-        review: {
-          id: reviews[0].id,
-          rating,
-          content,
-          userId: reviews[0].userId,
-          bookId: reviews[0].bookId,
-          createdAt: reviews[0].createdAt
-        }
+        review: updatedReview
       },
       { status: 200 }
     );
@@ -118,21 +116,18 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    // 데이터베이스에서 실제 데이터를 조회
-    const reviews = (await executeQuery("SELECT * FROM reviews WHERE id = ?", [
-      id
-    ])) as Review[];
+    const db = await dbPromise;
+    const idx = db.data.reviews.findIndex((r) => r.id === parseInt(id, 10));
 
-    if (reviews.length === 0) {
+    if (idx === -1) {
       return NextResponse.json(
         { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
-        { status: 200 }
+        { status: 404 }
       );
     }
 
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = {
-      ...reviews[0],
+    const updatedReview: Review = {
+      ...db.data.reviews[idx],
       ...(rating !== undefined && { rating }),
       ...(content !== undefined && { content })
     };
@@ -140,7 +135,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     return NextResponse.json(
       {
         message: "리뷰 수정 성공",
-        review: dummyData
+        review: updatedReview
       },
       { status: 200 }
     );
@@ -160,18 +155,23 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
     );
   }
 
-  const reviews = (await executeQuery("SELECT * FROM reviews WHERE id = ?", [
-    id
-  ])) as Review[];
+  try {
+    const db = await dbPromise;
+    const idx = db.data.reviews.findIndex((r) => r.id === parseInt(id, 10));
 
-  if (reviews.length === 0) {
+    if (idx === -1) {
+      return NextResponse.json(
+        { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(
-      { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
+      { message: `${id}번 리뷰 삭제 성공` },
       { status: 200 }
     );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "리뷰 삭제 실패" }, { status: 500 });
   }
-  return NextResponse.json(
-    { message: `${id}번 리뷰 삭제 성공` },
-    { status: 200 }
-  );
 }

@@ -1,12 +1,14 @@
-import executeQuery from "@/src/db/db";
-import { Post } from "@/src/types/post-type";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Post } from "@/src/types/post-type";
 
 interface IParams {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
+
+const dbFile = path.resolve(process.cwd(), "src/db/posts.json");
+const dbPromise = JSONFilePreset<{ posts: Post[] }>(dbFile, { posts: [] });
 
 // /api/posts/:id
 export async function GET(req: NextRequest, { params }: IParams) {
@@ -20,10 +22,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql = "SELECT * FROM posts where id = ?";
-    const posts = (await executeQuery(sql, [id])) as Post[];
+    const db = await dbPromise;
+    const post = db.data.posts.find((p) => p.id === parseInt(id, 10));
 
-    if (posts.length === 0) {
+    if (!post) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -31,7 +33,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
     }
 
     return NextResponse.json(
-      { message: "게시물 조회 성공", post: posts[0] },
+      { message: "게시물 조회 성공", post },
       { status: 200 }
     );
   } catch (error) {
@@ -55,7 +57,6 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
     // 에러 메시지 배열 생성
     const errors: string[] = [];
-
     if (!title) errors.push("title");
     if (!content) errors.push("content");
     if (!imgUrl) errors.push("imgUrl");
@@ -67,29 +68,27 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    // 데이터베이스에서 실제 데이터를 조회
-    const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
-      id
-    ])) as Post[];
+    const db = await dbPromise;
+    const idx = db.data.posts.findIndex((p) => p.id === parseInt(id, 10));
 
-    if (posts.length === 0) {
+    if (idx === -1) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
-        { status: 200 }
+        { status: 404 }
       );
     }
+
+    const updatedPost: Post = {
+      ...db.data.posts[idx],
+      title,
+      content,
+      imgUrl
+    };
 
     return NextResponse.json(
       {
         message: "게시물 수정 성공",
-        post: {
-          id: posts[0].id,
-          title,
-          content,
-          imgUrl,
-          createdAt: posts[0].createdAt,
-          userId: posts[0].userId
-        }
+        post: updatedPost
       },
       { status: 200 }
     );
@@ -119,21 +118,18 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    // 데이터베이스에서 실제 데이터를 조회
-    const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
-      id
-    ])) as Post[];
+    const db = await dbPromise;
+    const idx = db.data.posts.findIndex((p) => p.id === parseInt(id, 10));
 
-    if (posts.length === 0) {
+    if (idx === -1) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
 
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = {
-      ...posts[0],
+    const updatedPost: Post = {
+      ...db.data.posts[idx],
       ...(title !== undefined && { title }),
       ...(content !== undefined && { content }),
       ...(imgUrl !== undefined && { imgUrl })
@@ -142,12 +138,13 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     return NextResponse.json(
       {
         message: "게시물 수정 성공",
-        post: dummyData
+        post: updatedPost
       },
       { status: 200 }
     );
   } catch (error) {
     console.error(error);
+    return NextResponse.json({ message: "게시물 수정 실패" }, { status: 500 });
   }
 }
 
@@ -161,18 +158,23 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
     );
   }
 
-  const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
-    id
-  ])) as Comment[];
+  try {
+    const db = await dbPromise;
+    const idx = db.data.posts.findIndex((p) => p.id === parseInt(id, 10));
 
-  if (posts.length === 0) {
+    if (idx === -1) {
+      return NextResponse.json(
+        { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(
-      { message: "게시물 존재하지 않습니다. id 값을 확인해주세요." },
+      { message: `${id}번 게시물 삭제 성공` },
       { status: 200 }
     );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "게시물 삭제 실패" }, { status: 500 });
   }
-  return NextResponse.json(
-    { message: `${id}번 게시물 삭제 성공` },
-    { status: 200 }
-  );
 }

@@ -1,48 +1,32 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
 import { User } from "@/src/types/user-type";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 
-// /api/todos
+const dbFile = path.resolve(process.cwd(), "src/db/users.json");
+const dbPromise = JSONFilePreset<{ users: User[] }>(dbFile, { users: [] });
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-
-    // page와 limit 값을 가져옵니다.
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
 
-    // 기본값 설정
-    let sql;
-    let values: Array<number> = [];
-    let offset: number | null = null;
+    const db = await dbPromise;
+    const users = db.data.users;
+
+    // 페이지네이션
+    let pagedUsers = users;
     let hasNextPage: boolean | null = null;
-
-    if (page && !limit) {
-      // page만 있을 때 limit 기본값 10 적용
-      limit = "10";
-    }
-
+    if (page && !limit) limit = "10";
     if (page && limit) {
-      // 페이지네이션 계산
-      offset = (parseInt(page) - 1) * parseInt(limit);
-      sql = "SELECT * FROM users LIMIT ? OFFSET ?";
-      values = [parseInt(limit), offset];
-      // hasNextPage 계산
-      const totalUsers = 20;
-      hasNextPage = offset + parseInt(limit) < totalUsers;
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      pagedUsers = users.slice(offset, offset + parseInt(limit));
+      hasNextPage = offset + parseInt(limit) < users.length;
     } else if (!page && limit) {
-      // limit만 있을 때 처음부터 limit개만 반환
-      sql = "SELECT * FROM users LIMIT ?";
-      values = [parseInt(limit)];
-    } else {
-      // page, limit 모두 없으면 전체 데이터를 조회
-      sql = "SELECT * FROM users";
+      pagedUsers = users.slice(0, parseInt(limit));
     }
 
-    // 데이터베이스 쿼리 실행
-    const data = await executeQuery(sql, values);
-
-    // 응답 객체 생성
     const response: {
       message: string;
       users: User[];
@@ -51,10 +35,8 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "유저 목록 조회 성공",
-      users: data as User[]
+      users: pagedUsers
     };
-
-    // 조건에 따라 page, limit, hasNextPage 추가
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);
     if (hasNextPage !== null) response.hasNextPage = hasNextPage;
@@ -87,20 +69,28 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const dummyData = {
-    id: 21,
-    username,
-    phone,
-    address,
-    email,
-    createdAt: new Date()
-  };
+  try {
+    const db = await dbPromise;
+    const users = db.data.users;
+    const maxId = users.length > 0 ? Math.max(...users.map((u) => u.id)) : 0;
+    const newUser: User = {
+      id: maxId + 1,
+      username,
+      phone,
+      address,
+      email,
+      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19)
+    };
 
-  return NextResponse.json(
-    {
-      message: "유저 생성 성공",
-      user: dummyData
-    },
-    { status: 201 }
-  );
+    return NextResponse.json(
+      {
+        message: "유저 생성 성공",
+        user: newUser
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "유저 생성 실패" }, { status: 500 });
+  }
 }

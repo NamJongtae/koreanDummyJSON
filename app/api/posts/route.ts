@@ -1,72 +1,54 @@
-import executeQuery from "@/src/db/db";
-import { Post } from "@/src/types/post-type";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Post } from "@/src/types/post-type";
 
-// /api/posts
+const dbFile = path.resolve(process.cwd(), "src/db/posts.json");
+const dbPromise = JSONFilePreset<{ posts: Post[] }>(dbFile, { posts: [] });
+
 export async function GET(req: NextRequest) {
   try {
-    const searchParams = req.nextUrl.searchParams;
+    const db = await dbPromise;
+    const posts: Post[] = db.data.posts;
 
-    // page와 limit 값을 가져옵니다.
+    const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
 
-    // /api/posts?userId={userId} 유저별 게시물 목록
-    if (userId) {
-      try {
-        const data = await executeQuery(
-          "SELECT * FROM posts where userId = ?",
-          [userId]
-        );
+    let filtered = posts;
 
-        return NextResponse.json(
-          {
-            message: "게시물 목록 조회 성공",
-            posts: data
-          },
-          { status: 200 }
-        );
-      } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-          { message: "게시물 목록 조회 실패" },
-          { status: 500 }
-        );
-      }
+    // userId로 필터
+    if (userId) {
+      filtered = filtered.filter((p) => p.userId === parseInt(userId, 10));
+      return NextResponse.json(
+        {
+          message: "게시물 목록 조회 성공",
+          posts: filtered
+        },
+        { status: 200 }
+      );
     }
 
-    let sql;
-    let values: Array<number> = [];
+    // 페이지네이션
     let offset: number | null = null;
     let hasNextPage: boolean | null = null;
 
     if (page && !limit) {
-      // page만 있을 때 limit 기본값 10 적용
       limit = "10";
     }
 
+    let result = filtered;
     if (page && limit) {
-      // 페이지네이션 계산
       offset = (parseInt(page) - 1) * parseInt(limit);
-      sql = "SELECT * FROM posts LIMIT ? OFFSET ?";
-      values = [parseInt(limit), offset];
-      // hasNextPage 계산
-      const totalPosts = 100;
-      hasNextPage = offset !== null && offset + parseInt(limit) < totalPosts;
+      result = filtered.slice(offset, offset + parseInt(limit));
+      const totalPosts = filtered.length;
+      hasNextPage =
+        offset !== null && offset + parseInt(limit || "0") < totalPosts;
     } else if (!page && limit) {
-      // limit만 있을 때 처음부터 limit개만 반환
-      sql = "SELECT * FROM posts LIMIT ?";
-      values = [parseInt(limit)];
-    } else {
-      // page, limit 모두 없으면 전체 데이터를 조회
-      sql = "SELECT * FROM posts";
+      result = filtered.slice(0, parseInt(limit));
     }
 
-    // 데이터베이스 쿼리 실행
-    const data = await executeQuery(sql, values);
-
-    // 응답 객체 생성
     const response: {
       message: string;
       posts: Post[];
@@ -75,10 +57,9 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "게시물 목록 조회 성공",
-      posts: data as Post[]
+      posts: result
     };
 
-    // 조건에 따라 page, limit, hasNextPage 추가
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);
     if (hasNextPage !== null) response.hasNextPage = hasNextPage;
@@ -97,7 +78,6 @@ export async function POST(req: NextRequest) {
   const { title, content, imgUrl } = await req.json().catch(() => ({}));
 
   const errors: string[] = [];
-
   if (!title) errors.push("title");
   if (!content) errors.push("content");
   if (!imgUrl) errors.push("imgUrl");
@@ -110,23 +90,28 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = {
-      id: 101,
+    const db = await dbPromise;
+    const posts: Post[] = db.data.posts;
+    const newId =
+      posts.length > 0 ? Math.max(...posts.map((p) => p.id)) + 1 : 1;
+    const newPost: Post = {
+      id: newId,
       title,
       content,
       imgUrl,
-      createdAt: new Date(),
-      userId: 1
+      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
+      userId: 1 
     };
+
     return NextResponse.json(
       {
         message: "게시물 생성 성공",
-        post: dummyData
+        post: newPost
       },
       { status: 201 }
     );
   } catch (error) {
     console.error(error);
+    return NextResponse.json({ message: "게시물 생성 실패" }, { status: 500 });
   }
 }

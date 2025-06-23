@@ -1,37 +1,35 @@
-import executeQuery from "@/src/db/db";
-import { Comment } from "@/src/types/comment-type";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Comment } from "@/src/types/comment-type";
 
-interface IParams {
-  params: Promise<{
-    id: string;
-  }>;
-}
+const dbFile = path.resolve(process.cwd(), "src/db/comments.json");
+const dbPromise = JSONFilePreset<{ comments: Comment[] }>(dbFile, {
+  comments: []
+});
 
-// /api/comments/:id
-export async function GET(req: NextRequest, { params }: IParams) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const { id } = await params;
-
     if (!id) {
       return NextResponse.json(
         { message: "id를 입력해주세요." },
         { status: 400 }
       );
     }
-
-    const sql = "SELECT * FROM comments where id = ?";
-    const comments = (await executeQuery(sql, [id])) as Comment[];
-
-    if (comments.length === 0) {
+    const db = await dbPromise;
+    const comment = db.data.comments.find((c) => c.id === parseInt(id, 10));
+    if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
-
     return NextResponse.json(
-      { message: "댓글 조회 성공", comment: comments[0] },
+      { message: "댓글 조회 성공", comment },
       { status: 200 }
     );
   } catch (error) {
@@ -40,52 +38,42 @@ export async function GET(req: NextRequest, { params }: IParams) {
   }
 }
 
-export async function PUT(req: NextRequest, { params }: IParams) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
-
   if (!id) {
     return NextResponse.json(
       { message: "id를 입력해주세요." },
       { status: 400 }
     );
   }
-
   const { content } = await req.json().catch(() => ({}));
-
   if (!content) {
     return NextResponse.json(
       { message: "content를 입력해주세요." },
       { status: 400 }
     );
   }
-
   try {
-    // 데이터베이스에서 실제 데이터를 조회
-    const comments = (await executeQuery(
-      "SELECT * FROM comments WHERE id = ?",
-      [id]
-    )) as Comment[];
-
-    if (comments.length === 0) {
+    const db = await dbPromise;
+    const idx = db.data.comments.findIndex((c) => c.id === parseInt(id, 10));
+    if (idx === -1) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
-
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = {
-      id: comments[0].id,
-      content,
-      createdAt: comments[0].createdAt,
-      userId: comments[0].userId,
-      postId: comments[0].postId
+    const updatedComment: Comment = {
+      ...db.data.comments[idx],
+      content
     };
 
     return NextResponse.json(
       {
         message: "댓글 수정 성공",
-        comment: dummyData
+        comment: updatedComment
       },
       { status: 200 }
     );
@@ -95,49 +83,42 @@ export async function PUT(req: NextRequest, { params }: IParams) {
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: IParams) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
-
   if (!id) {
     return NextResponse.json(
       { message: "id를 입력해주세요." },
       { status: 400 }
     );
   }
-
   const { content } = await req.json().catch(() => ({}));
-
   if (!content) {
     return NextResponse.json(
       { message: "content를 입력해주세요." },
       { status: 400 }
     );
   }
-
   try {
-    // 데이터베이스에서 실제 데이터를 조회
-    const comments = (await executeQuery(
-      "SELECT * FROM comments WHERE id = ?",
-      [id]
-    )) as Comment[];
-
-    if (comments.length === 0) {
+    const db = await dbPromise;
+    const idx = db.data.comments.findIndex((c) => c.id === parseInt(id, 10));
+    if (idx === -1) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
-
-    // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
-    const dummyData = {
-      ...comments[0],
-      ...(content !== undefined && { content })
+    const updatedComment: Comment = {
+      ...db.data.comments[idx],
+      content
     };
 
     return NextResponse.json(
       {
         message: "댓글 수정 성공",
-        comment: dummyData
+        comment: updatedComment
       },
       { status: 200 }
     );
@@ -147,29 +128,33 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: IParams) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
-
   if (!id) {
     return NextResponse.json(
       { message: "id를 입력해주세요." },
       { status: 400 }
     );
   }
+  try {
+    const db = await dbPromise;
+    const idx = db.data.comments.findIndex((c) => c.id === parseInt(id, 10));
+    if (idx === -1) {
+      return NextResponse.json(
+        { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
+        { status: 404 }
+      );
+    }
 
-  const posts = (await executeQuery("SELECT * FROM comments WHERE id = ?", [
-    id
-  ])) as Comment[];
-
-  if (posts.length === 0) {
     return NextResponse.json(
-      { message: "댓글 존재하지 않습니다. id 값을 확인해주세요." },
+      { message: `${id}번 댓글 삭제 성공` },
       { status: 200 }
     );
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ message: "댓글 삭제 실패" }, { status: 500 });
   }
-
-  return NextResponse.json(
-    { message: `${id}번 댓글 삭제 성공` },
-    { status: 200 }
-  );
 }

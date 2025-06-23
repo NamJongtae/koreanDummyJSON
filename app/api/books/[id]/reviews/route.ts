@@ -1,14 +1,23 @@
-import executeQuery from "@/src/db/db";
-import { Review } from "@/src/types/review-type";
+import { JSONFilePreset } from "lowdb/node";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
+import { Review } from "@/src/types/review-type";
+import { Book } from "@/src/types/book-type";
 
-interface IParams {
-  params: Promise<{
-    id: string;
-  }>;
-}
+const reviewDbFile = path.resolve(process.cwd(), "src/db/reviews.json");
+const bookDbFile = path.resolve(process.cwd(), "src/db/books.json");
 
-export async function GET(req: NextRequest, { params }: IParams) {
+const reviewDbPromise = JSONFilePreset<{ reviews: Review[] }>(reviewDbFile, {
+  reviews: []
+});
+const bookDbPromise = JSONFilePreset<{ books: Book[] }>(bookDbFile, {
+  books: []
+});
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
     const { id } = await params;
 
@@ -19,9 +28,20 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql =
-      "SELECT books.id, reviews.id AS reviewId, reviews.rating, reviews.content, reviews.createdAt FROM books INNER JOIN reviews ON books.id = reviews.bookId where books.id = ?;";
-    const reviews = (await executeQuery(sql, [id])) as Review[];
+    const bookDb = await bookDbPromise;
+
+    const book = bookDb.data.books.find((b) => b.id === parseInt(id));
+    if (!book) {
+      return NextResponse.json(
+        { message: "해당 책이 존재하지 않습니다." },
+        { status: 404 }
+      );
+    }
+
+    const reviewDb = await reviewDbPromise;
+    const reviews = reviewDb.data.reviews.filter(
+      (r) => r.bookId === parseInt(id)
+    );
 
     return NextResponse.json(
       { message: "책 리뷰 목록 조회 성공", reviews },

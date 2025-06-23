@@ -1,10 +1,17 @@
-import executeQuery from "@/src/db/db";
+import { JSONFilePreset } from "lowdb/node";
 import { Post } from "@/src/types/post-type";
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
+
+const postDbFile = path.resolve(process.cwd(), "src/db/posts.json");
+const postDbPromise = JSONFilePreset<{ posts: Post[] }>(postDbFile, {
+  posts: []
+});
+
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
@@ -16,9 +23,16 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const sql =
-      "SELECT users.id, posts.id AS postId, posts.title, posts.content, posts.imgUrl, posts.createdAt FROM users INNER JOIN posts ON users.id = posts.userId where users.id = ?;";
-    const posts = (await executeQuery(sql, [id])) as Post[];
+    const postDb = await postDbPromise;
+    const posts = postDb.data.posts
+      .filter((p) => p.userId === parseInt(id, 10))
+      .map((p) => ({
+        postId: p.id,
+        title: p.title,
+        content: p.content,
+        imgUrl: p.imgUrl,
+        createdAt: p.createdAt
+      }));
 
     return NextResponse.json(
       { message: "유저 게시물 목록 조회 성공", posts },
