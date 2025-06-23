@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 
   if (errors.length > 0) {
     return NextResponse.json(
-      { messages: errors.join(", ") + "을(를) 입력해주세요." },
+      { message: errors.join(", ") + "을(를) 입력해주세요." },
       { status: 400 }
     );
   }
