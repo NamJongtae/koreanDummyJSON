@@ -7,6 +7,7 @@ export default function PostTodo() {
       title="할 일 생성하기"
       endpoint="/todos"
       method="POST"
+      body={{ content: "할 일 내용" }}
       descriptions={
         <>
           <p className="section-text mb-2">할 일을 생성합니다.</p>
