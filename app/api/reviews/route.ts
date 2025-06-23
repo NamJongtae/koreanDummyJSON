@@ -121,11 +121,23 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const {
-    rating = 0,
-    content = "",
+    rating,
+    content,
     userId = 1,
     bookId = 1
   } = await req.json().catch(() => ({}));
+
+  const errors: string[] = [];
+
+  if (rating === undefined) errors.push("rating");
+  if (!content) errors.push("content");
+
+  if (errors.length > 0) {
+    return NextResponse.json(
+      { messages: errors.join(", ") + "을(를) 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)

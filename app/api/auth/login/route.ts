@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken";
 export async function POST(req: NextRequest) {
   const { id, password, ATExp, RTExp } = await req.json();
 
-  if (!id.trim()) {
+  if (!id || !id.trim()) {
     return NextResponse.json(
       { message: "id를 입력해주세요." },
       { status: 422 }
     );
   }
 
-  if (!password.trim()) {
+  if (!password || !password.trim()) {
     return NextResponse.json(
       { message: "password를 입력해주세요." },
       { status: 422 }

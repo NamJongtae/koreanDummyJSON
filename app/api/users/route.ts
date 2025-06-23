@@ -70,12 +70,22 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const {
-    username = "",
-    phone = "",
-    address = "",
-    email = ""
-  } = await req.json().catch(() => ({}));
+  const { username, phone, address, email } = await req
+    .json()
+    .catch(() => ({}));
+
+  const errors: string[] = [];
+  if (!username) errors.push("username");
+  if (!phone) errors.push("phone");
+  if (!address) errors.push("address");
+  if (!email) errors.push("email");
+
+  if (errors.length > 0) {
+    return NextResponse.json(
+      { messages: errors.join(", ") + "을(를) 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   const dummyData = {
     id: 21,

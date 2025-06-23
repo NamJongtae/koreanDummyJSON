@@ -14,6 +14,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql = "SELECT * FROM reviews where id = ?";
     const reviews = (await executeQuery(sql, [id])) as Review[];
 
@@ -37,7 +44,27 @@ export async function GET(req: NextRequest, { params }: IParams) {
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const { rating, content } = await req.json().catch(() => ({}));
+
+    const errors: string[] = [];
+
+    if (!rating) errors.push("rating");
+    if (!content) errors.push("content");
+
+    if (errors.length > 0) {
+      return NextResponse.json(
+        { messages: errors.join(", ") + "을(를) 입력해주세요." },
+        { status: 400 }
+      );
+    }
 
     // 데이터베이스에서 실제 데이터를 조회
     const reviews = (await executeQuery("SELECT * FROM reviews WHERE id = ?", [
@@ -73,7 +100,22 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { rating, content } = await req.json().catch(() => ({}));
+
+  if (rating === undefined && !content) {
+    return NextResponse.json(
+      { message: "수정할 데이터가 없습니다." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -110,6 +152,13 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   const reviews = (await executeQuery("SELECT * FROM reviews WHERE id = ?", [
     id

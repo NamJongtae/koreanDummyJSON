@@ -103,7 +103,14 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { content = "" } = await await req.json().catch(() => ({}));
+  const { content } = await await req.json().catch(() => ({}));
+
+  if (!content) {
+    return NextResponse.json(
+      { message: "content를 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)

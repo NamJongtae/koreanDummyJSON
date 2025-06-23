@@ -13,6 +13,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql = "SELECT * FROM users where id = ?";
     const users = (await executeQuery(sql, [id])) as User[];
 
@@ -36,9 +43,30 @@ export async function GET(req: NextRequest, { params }: IParams) {
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const { username, email, phone, address } = await req
       .json()
       .catch(() => ({}));
+
+    const errors: string[] = [];
+    if (!username) errors.push("username");
+    if (!email) errors.push("email");
+    if (!phone) errors.push("phone");
+    if (!address) errors.push("address");
+
+    if (errors.length > 0) {
+      return NextResponse.json(
+        { messages: errors.join(", ") + "을(를) 입력해주세요." },
+        { status: 400 }
+      );
+    }
 
     // 데이터베이스에서 실제 데이터를 조회
     const users = (await executeQuery("SELECT * FROM users WHERE id = ?", [
@@ -74,9 +102,24 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { username, email, phone, address } = await req
     .json()
     .catch(() => ({}));
+
+  if (!username && !email && !phone && !address) {
+    return NextResponse.json(
+      { message: "수정할 데이터가 없습니다." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -115,6 +158,13 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   const users = (await executeQuery("SELECT * FROM users WHERE id = ?", [
     id

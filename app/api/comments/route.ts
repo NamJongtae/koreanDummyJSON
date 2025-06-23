@@ -109,9 +109,6 @@ export async function GET(req: NextRequest) {
     if (hasNextPage !== null) response.hasNextPage = hasNextPage;
 
     const res = NextResponse.json(response, { status: 200 });
-    res.headers.set("Access-Control-Allow-Origin", "*");
-    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
     return res;
   } catch (error) {
     console.error(error);
@@ -119,19 +116,23 @@ export async function GET(req: NextRequest) {
       { message: "댓글 목록 조회 실패" },
       { status: 500 }
     );
-    res.headers.set("Access-Control-Allow-Origin", "*");
-    res.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.headers.set("Access-Control-Allow-Headers", "Content-Type");
     return res;
   }
 }
 
 export async function POST(req: NextRequest) {
   const {
-    content = "",
+    content,
     userId = 1,
     postId = 1
   } = await req.json().catch(() => ({}));
+
+  if (!content) {
+    return NextResponse.json(
+      { message: "content를 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)
@@ -152,15 +153,4 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error(error);
   }
-}
-
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type"
-    }
-  });
 }

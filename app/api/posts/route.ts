@@ -94,11 +94,20 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const {
-    title = "",
-    content = "",
-    imgUrl = ""
-  } = await req.json().catch(() => ({}));
+  const { title, content, imgUrl } = await req.json().catch(() => ({}));
+
+  const errors: string[] = [];
+
+  if (!title) errors.push("title");
+  if (!content) errors.push("content");
+  if (!imgUrl) errors.push("imgUrl");
+
+  if (errors.length > 0) {
+    return NextResponse.json(
+      { messages: errors.join(", ") + "을(를) 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)

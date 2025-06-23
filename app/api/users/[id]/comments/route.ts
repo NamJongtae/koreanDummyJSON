@@ -8,6 +8,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql =
       "SELECT users.id, comments.id AS commentId, comments.content, comments.createdAt FROM users INNER JOIN comments ON users.id = comments.userId where users.id = ?;";
     const comments = (await executeQuery(sql, [id])) as Comment[];

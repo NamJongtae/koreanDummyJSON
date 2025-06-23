@@ -9,6 +9,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql =
       "SELECT users.id, posts.id AS postId, posts.title, posts.content, posts.imgUrl, posts.createdAt FROM users INNER JOIN posts ON users.id = posts.userId where users.id = ?;";
     const posts = (await executeQuery(sql, [id])) as Post[];

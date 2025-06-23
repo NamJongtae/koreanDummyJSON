@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
-  console.log(authHeader);
+
   if (!authHeader) {
     return NextResponse.json(
       { error: "토큰이 존재하지 않습니다." },

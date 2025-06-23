@@ -13,6 +13,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql = "SELECT * FROM comments where id = ?";
     const comments = (await executeQuery(sql, [id])) as Comment[];
 
@@ -35,7 +42,22 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { content } = await req.json().catch(() => ({}));
+
+  if (!content) {
+    return NextResponse.json(
+      { message: "content를 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -75,7 +97,22 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { content } = await req.json().catch(() => ({}));
+
+  if (!content) {
+    return NextResponse.json(
+      { message: "content를 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -112,6 +149,14 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const posts = (await executeQuery("SELECT * FROM comments WHERE id = ?", [
     id
   ])) as Comment[];

@@ -14,6 +14,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql = "SELECT * FROM books where id = ?";
     const books = (await executeQuery(sql, [id])) as Book[];
 
@@ -36,9 +43,32 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { author, genre, title, publicationDate, totalPage } = await req
     .json()
     .catch(() => ({}));
+
+  const errors: string[] = [];
+
+  if (!author) errors.push("author");
+  if (!genre) errors.push("genre");
+  if (!title) errors.push("title");
+  if (!publicationDate) errors.push("publicationDate");
+  if (!totalPage) errors.push("totalPage");
+
+  if (errors.length > 0) {
+    return NextResponse.json(
+      { messages: errors.join(", ") + "을(를) 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -77,9 +107,24 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { author, genre, title, publicationDate, totalPage } = await req
     .json()
     .catch(() => ({}));
+
+  if (!author && !genre && !publicationDate && !totalPage) {
+    return NextResponse.json(
+      { message: "수정할 데이터가 없습니다." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -120,6 +165,14 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const books = (await executeQuery("SELECT * FROM books WHERE id = ?", [
     id
   ])) as Book[];

@@ -71,13 +71,24 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const {
-    author = "",
-    genre = "",
-    title = "",
-    publicationDate = "",
-    totalPage = 0
-  } = await req.json().catch(() => ({}));
+  const { author, genre, title, publicationDate, totalPage } = await req
+    .json()
+    .catch(() => ({}));
+
+  const errors: string[] = [];
+
+  if (!author) errors.push("author");
+  if (!genre) errors.push("genre");
+  if (!title) errors.push("title");
+  if (!publicationDate) errors.push("publicationDate");
+  if (!totalPage) errors.push("totalPage");
+
+  if (errors.length > 0) {
+    return NextResponse.json(
+      { messages: errors.join(", ") + "을(를) 입력해주세요." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 더미 데이터를 만듭니다 (실제 DB 수정 대신)

@@ -13,6 +13,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const sql = "SELECT * FROM posts where id = ?";
     const posts = (await executeQuery(sql, [id])) as Post[];
 
@@ -36,7 +43,29 @@ export async function GET(req: NextRequest, { params }: IParams) {
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "id를 입력해주세요." },
+        { status: 400 }
+      );
+    }
+
     const { title, content, imgUrl } = await req.json().catch(() => ({}));
+
+    // 에러 메시지 배열 생성
+    const errors: string[] = [];
+
+    if (!title) errors.push("title");
+    if (!content) errors.push("content");
+    if (!imgUrl) errors.push("imgUrl");
+
+    if (errors.length > 0) {
+      return NextResponse.json(
+        { messages: errors.join(", ") + "을(를) 입력해주세요." },
+        { status: 400 }
+      );
+    }
 
     // 데이터베이스에서 실제 데이터를 조회
     const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
@@ -72,7 +101,22 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const { title, content, imgUrl } = await req.json().catch(() => ({}));
+
+  if (!title && !content && !imgUrl) {
+    return NextResponse.json(
+      { message: "수정할 데이터가 없습니다." },
+      { status: 400 }
+    );
+  }
 
   try {
     // 데이터베이스에서 실제 데이터를 조회
@@ -109,6 +153,14 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "id를 입력해주세요." },
+      { status: 400 }
+    );
+  }
+
   const posts = (await executeQuery("SELECT * FROM posts WHERE id = ?", [
     id
   ])) as Comment[];
