@@ -6,7 +6,7 @@ export interface Post {
   content: string;
   imgUrl: string;
   createdAt: string;
-  userId: string;
+  userId: number;
 }
 
 export type PostResponse = Response<Post, "post">;
