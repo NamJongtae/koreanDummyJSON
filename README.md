@@ -38,8 +38,6 @@
 
 #### 🔗 배포 URL : [📚 Korean Dummy JSON](https://koreandummyjson.site/)
 
-**⚠ 현재 프로젝트는 무료 DB 서버를 사용하고 있어, 일시적으로 API 요청이 중단될 수 있습니다.**
-
 <br/>
 
 ### 🎈 Npm Package
@@ -57,11 +55,11 @@ npm install korean-dummy-json-fetcher
 #### CDN
 
 ```html
-<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.0.3"></script>
+<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.0.7"></script>
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.0.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.0.7"></script>
 ```
 
 <br/>
@@ -70,7 +68,7 @@ npm install korean-dummy-json-fetcher
 
 | 프론트엔드                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | 벡엔드                                                                                              | DB                                                                                          | 디자인                                                                           | 배포, 관리                                                                                                                                                            |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img alt="Html" src ="https://img.shields.io/badge/HTML5-E34F26?logo=HTML5&logoColor=white"/> <img alt="CSS" src ="https://img.shields.io/badge/CSS3-1572B6?logo=CSS3&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/react-61DAFB?logo=react&logoColor=black"> <img src ="https://img.shields.io/badge/next.js-000000?logo=nextdotjs&logoColor=white"/> <img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss"> | <img src ="https://img.shields.io/badge/next.js_API_Routes-000000?logo=nextdotjs&logoColor=white"/> | <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white"> | <img src="https://img.shields.io/badge/figma-F24E1E?logo=figma&logoColor=white"> | <img src="https://img.shields.io/badge/vercel-000000?logo=vercel&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?logo=github&logoColor=white"> |
+| <img alt="Html" src ="https://img.shields.io/badge/HTML5-E34F26?logo=HTML5&logoColor=white"/> <img alt="CSS" src ="https://img.shields.io/badge/CSS3-1572B6?logo=CSS3&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/react-61DAFB?logo=react&logoColor=black"> <img src ="https://img.shields.io/badge/next.js-000000?logo=nextdotjs&logoColor=white"/> <img src="https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss"> | <img src ="https://img.shields.io/badge/next.js_API_Routes-000000?logo=nextdotjs&logoColor=white"/> | <img src="https://img.shields.io/badge/lowdb-0769AD?style=flat&logoColor=white"> | <img src="https://img.shields.io/badge/figma-F24E1E?logo=figma&logoColor=white"> | <img src="https://img.shields.io/badge/vercel-000000?logo=vercel&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?logo=github&logoColor=white"> |
 
 <br/>
 
