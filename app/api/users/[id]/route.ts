@@ -64,7 +64,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
     if (errors.length > 0) {
       return NextResponse.json(
-        { messages: errors.join(", ") + "을(를) 입력해주세요." },
+        { message: errors.join(", ") + "을(를) 입력해주세요." },
         { status: 400 }
       );
     }
@@ -77,7 +77,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     if (!user) {
       return NextResponse.json(
         { message: "유저가 존재하지 않습니다. id 값을 확인해주세요." },
-        { status: 200 }
+        { status: 404 }
       );
     }
 
@@ -131,7 +131,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     if (!user) {
       return NextResponse.json(
         { message: "유저가 존재하지 않습니다. id 값을 확인해주세요." },
-        { status: 200 }
+        { status: 404 }
       );
     }
 
@@ -174,7 +174,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   if (!user) {
     return NextResponse.json(
       { message: "유저가 존재하지 않습니다. id 값을 확인해주세요." },
-      { status: 200 }
+      { status: 404 }
     );
   }
 
