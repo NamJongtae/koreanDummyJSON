@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "better-sqlite3": "^12.1.0",
     "canvas": "^3.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
-    "lowdb": "^7.0.1",
     "next": "^15.3.3",
     "prismjs": "^1.30.0",
     "react": "^18",
@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mysql": "^2.15.26",
     "@types/node": "^22",
@@ -49,6 +50,7 @@
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10",
+    "tsm": "^2.3.0",
     "typescript": "^5"
   }
 }
