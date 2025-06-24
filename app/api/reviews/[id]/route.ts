@@ -1,16 +1,10 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Review } from "@/src/types/review-type";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
-
-const dbFile = path.resolve(process.cwd(), "src/db/reviews.json");
-const dbPromise = JSONFilePreset<{ reviews: Review[] }>(dbFile, {
-  reviews: []
-});
 
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
@@ -23,8 +17,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await dbPromise;
-    const review = db.data.reviews.find((r) => r.id === parseInt(id, 10));
+    const db = getDb();
+    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+      | Review
+      | undefined;
 
     if (!review) {
       return NextResponse.json(
@@ -67,10 +63,11 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await dbPromise;
-    const idx = db.data.reviews.findIndex((r) => r.id === parseInt(id, 10));
-
-    if (idx === -1) {
+    const db = getDb();
+    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+      | Review
+      | undefined;
+    if (!review) {
       return NextResponse.json(
         { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -78,9 +75,12 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     }
 
     const updatedReview: Review = {
-      ...db.data.reviews[idx],
+      id: Number(id),
       rating,
-      content
+      content,
+      userId: review.userId,
+      bookId: review.bookId,
+      createdAt: review.createdAt
     };
 
     return NextResponse.json(
@@ -116,10 +116,12 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.reviews.findIndex((r) => r.id === parseInt(id, 10));
-
-    if (idx === -1) {
+    // DB에서 기존 리뷰 조회
+    const db = getDb();
+    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+      | Review
+      | undefined;
+    if (!review) {
       return NextResponse.json(
         { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -127,9 +129,12 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     }
 
     const updatedReview: Review = {
-      ...db.data.reviews[idx],
-      ...(rating !== undefined && { rating }),
-      ...(content !== undefined && { content })
+      id: Number(id),
+      rating: rating ?? review.rating,
+      content: content ?? review.content,
+      userId: review.userId,
+      bookId: review.bookId,
+      createdAt: review.createdAt
     };
 
     return NextResponse.json(
@@ -156,16 +161,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.reviews.findIndex((r) => r.id === parseInt(id, 10));
-
-    if (idx === -1) {
-      return NextResponse.json(
-        { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
-        { status: 404 }
-      );
-    }
-
+    // 실제 DB 삭제 없이 더미 메시지만 반환
     return NextResponse.json(
       { message: `${id}번 리뷰 삭제 성공` },
       { status: 200 }

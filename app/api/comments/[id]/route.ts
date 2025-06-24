@@ -1,17 +1,12 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Comment } from "@/src/types/comment-type";
 
-const dbFile = path.resolve(process.cwd(), "src/db/comments.json");
-const dbPromise = JSONFilePreset<{ comments: Comment[] }>(dbFile, {
-  comments: []
-});
+interface IParams {
+  params: Promise<{ id: string }>;
+}
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
     if (!id) {
@@ -20,8 +15,10 @@ export async function GET(
         { status: 400 }
       );
     }
-    const db = await dbPromise;
-    const comment = db.data.comments.find((c) => c.id === parseInt(id, 10));
+    const db = getDb();
+    const comment = db
+      .prepare("SELECT * FROM comments WHERE id = ?")
+      .get(id) as Comment | undefined;
     if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -38,10 +35,7 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(req: NextRequest, { params }: IParams) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
@@ -57,16 +51,19 @@ export async function PUT(
     );
   }
   try {
-    const db = await dbPromise;
-    const idx = db.data.comments.findIndex((c) => c.id === parseInt(id, 10));
-    if (idx === -1) {
+    const db = getDb();
+    const comment = db
+      .prepare("SELECT * FROM comments WHERE id = ?")
+      .get(id) as Comment | undefined;
+    if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
+
     const updatedComment: Comment = {
-      ...db.data.comments[idx],
+      ...comment,
       content
     };
 
@@ -83,10 +80,7 @@ export async function PUT(
   }
 }
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
@@ -102,16 +96,19 @@ export async function PATCH(
     );
   }
   try {
-    const db = await dbPromise;
-    const idx = db.data.comments.findIndex((c) => c.id === parseInt(id, 10));
-    if (idx === -1) {
+    const db = getDb();
+    const comment = db
+      .prepare("SELECT * FROM comments WHERE id = ?")
+      .get(id) as Comment | undefined;
+    if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
+
     const updatedComment: Comment = {
-      ...db.data.comments[idx],
+      ...comment,
       content
     };
 
@@ -128,10 +125,7 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
@@ -140,9 +134,11 @@ export async function DELETE(
     );
   }
   try {
-    const db = await dbPromise;
-    const idx = db.data.comments.findIndex((c) => c.id === parseInt(id, 10));
-    if (idx === -1) {
+    const db = getDb();
+    const comment = db
+      .prepare("SELECT * FROM comments WHERE id = ?")
+      .get(id) as Comment | undefined;
+    if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }

@@ -1,10 +1,6 @@
-import { JSONFilePreset } from "lowdb/node";
-import { User } from "@/src/types/user-type";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-
-const dbFile = path.resolve(process.cwd(), "src/db/users.json");
-const dbPromise = JSONFilePreset<{ users: User[] }>(dbFile, { users: [] });
+import { User } from "@/src/types/user-type";
+import { getDb } from "@/src/db/sqlite";
 
 export async function GET(req: NextRequest) {
   try {
@@ -12,20 +8,34 @@ export async function GET(req: NextRequest) {
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
 
-    const db = await dbPromise;
-    const users = db.data.users;
+    const db = getDb();
+    const totalUsers: number = (
+      db.prepare("SELECT COUNT(*) as count FROM users").get() as {
+        count: number;
+      }
+    ).count;
 
-    // 페이지네이션
-    let pagedUsers = users;
+    let sql = "SELECT * FROM users";
+    let values: number[] = [];
+    let offset: number | null = null;
     let hasNextPage: boolean | null = null;
+
     if (page && !limit) limit = "10";
+
     if (page && limit) {
-      const offset = (parseInt(page) - 1) * parseInt(limit);
-      pagedUsers = users.slice(offset, offset + parseInt(limit));
-      hasNextPage = offset + parseInt(limit) < users.length;
+      offset = (parseInt(page) - 1) * parseInt(limit);
+      sql += " LIMIT ? OFFSET ?";
+      values = [parseInt(limit), offset];
+      hasNextPage = offset + parseInt(limit) < totalUsers;
     } else if (!page && limit) {
-      pagedUsers = users.slice(0, parseInt(limit));
+      sql += " LIMIT ?";
+      values = [parseInt(limit)];
     }
+
+    const users: User[] =
+      values.length > 0
+        ? (db.prepare(sql).all(...values) as User[])
+        : (db.prepare(sql).all() as User[]);
 
     const response: {
       message: string;
@@ -35,7 +45,7 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "유저 목록 조회 성공",
-      users: pagedUsers
+      users
     };
     if (page) response.page = parseInt(page);
     if (limit) response.limit = parseInt(limit);
@@ -55,42 +65,31 @@ export async function POST(req: NextRequest) {
   const { username, phone, address, email } = await req
     .json()
     .catch(() => ({}));
-
   const errors: string[] = [];
   if (!username) errors.push("username");
   if (!phone) errors.push("phone");
   if (!address) errors.push("address");
   if (!email) errors.push("email");
-
   if (errors.length > 0) {
     return NextResponse.json(
-      { message: errors.join(", ") + "을(를) 입력해주세요." },
+      { messages: errors.join(", ") + "을(를) 입력해주세요." },
       { status: 400 }
     );
   }
 
-  try {
-    const db = await dbPromise;
-    const users = db.data.users;
-    const maxId = users.length > 0 ? Math.max(...users.map((u) => u.id)) : 0;
-    const newUser: User = {
-      id: maxId + 1,
-      username,
-      phone,
-      address,
-      email,
-      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19)
-    };
-
-    return NextResponse.json(
-      {
-        message: "유저 생성 성공",
-        user: newUser
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "유저 생성 실패" }, { status: 500 });
-  }
+  const dummyUser: User = {
+    id: 21,
+    username,
+    phone,
+    address,
+    email,
+    createdAt: new Date().toISOString()
+  };
+  return NextResponse.json(
+    {
+      message: "유저 생성 성공",
+      user: dummyUser
+    },
+    { status: 201 }
+  );
 }

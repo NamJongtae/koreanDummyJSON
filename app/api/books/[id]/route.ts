@@ -1,15 +1,12 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Book } from "@/src/types/book-type";
 
-const dbFile = path.resolve(process.cwd(), "src/db/books.json");
-const dbPromise = JSONFilePreset<{ books: Book[] }>(dbFile, { books: [] });
+interface IParams {
+  params: Promise<{ id: string }>;
+}
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
@@ -19,8 +16,10 @@ export async function GET(
         { status: 400 }
       );
     }
-    const db = await dbPromise;
-    const book = db.data.books.find((b) => b.id === parseInt(id, 10));
+    const db = getDb();
+    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+      | Book
+      | undefined;
     if (!book) {
       return NextResponse.json(
         { message: "책이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -37,10 +36,7 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(req: NextRequest, { params }: IParams) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
@@ -67,16 +63,19 @@ export async function PUT(
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.books.findIndex((b) => b.id === parseInt(id, 10));
-    if (idx === -1) {
+    const db = getDb();
+    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+      | Book
+      | undefined;
+    if (!book) {
       return NextResponse.json(
         { message: "책이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
+
     const updatedBook: Book = {
-      id: db.data.books[idx].id,
+      id: book.id,
       author,
       genre,
       title,
@@ -97,10 +96,7 @@ export async function PUT(
   }
 }
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
@@ -126,17 +122,19 @@ export async function PATCH(
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.books.findIndex((b) => b.id === parseInt(id, 10));
-    if (idx === -1) {
+    const db = getDb();
+    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+      | Book
+      | undefined;
+    if (!book) {
       return NextResponse.json(
         { message: "책이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
-    const oldBook = db.data.books[idx];
+
     const updatedBook: Book = {
-      ...oldBook,
+      ...book,
       ...(author !== undefined && { author }),
       ...(genre !== undefined && { genre }),
       ...(title !== undefined && { title }),
@@ -157,10 +155,7 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json(
@@ -169,9 +164,11 @@ export async function DELETE(
     );
   }
   try {
-    const db = await dbPromise;
-    const idx = db.data.books.findIndex((b) => b.id === parseInt(id, 10));
-    if (idx === -1) {
+    const db = getDb();
+    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+      | Book
+      | undefined;
+    if (!book) {
       return NextResponse.json(
         { message: "책이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }

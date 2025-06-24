@@ -1,23 +1,12 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Review } from "@/src/types/review-type";
-import { Book } from "@/src/types/book-type";
 
-const reviewDbFile = path.resolve(process.cwd(), "src/db/reviews.json");
-const bookDbFile = path.resolve(process.cwd(), "src/db/books.json");
+interface IParams {
+  params: Promise<{ id: string }>;
+}
 
-const reviewDbPromise = JSONFilePreset<{ reviews: Review[] }>(reviewDbFile, {
-  reviews: []
-});
-const bookDbPromise = JSONFilePreset<{ books: Book[] }>(bookDbFile, {
-  books: []
-});
-
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
@@ -28,9 +17,8 @@ export async function GET(
       );
     }
 
-    const bookDb = await bookDbPromise;
-
-    const book = bookDb.data.books.find((b) => b.id === parseInt(id));
+    const db = getDb();
+    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id);
     if (!book) {
       return NextResponse.json(
         { message: "해당 책이 존재하지 않습니다." },
@@ -38,10 +26,9 @@ export async function GET(
       );
     }
 
-    const reviewDb = await reviewDbPromise;
-    const reviews = reviewDb.data.reviews.filter(
-      (r) => r.bookId === parseInt(id)
-    );
+    const reviews = db
+      .prepare("SELECT * FROM reviews WHERE bookId = ?")
+      .all(id) as Review[];
 
     return NextResponse.json(
       { message: "책 리뷰 목록 조회 성공", reviews },

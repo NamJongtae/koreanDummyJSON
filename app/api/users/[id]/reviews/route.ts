@@ -1,16 +1,9 @@
-import { JSONFilePreset } from "lowdb/node";
-import { Review } from "@/src/types/review-type";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
-
-const reviewDbFile = path.resolve(process.cwd(), "src/db/reviews.json");
-const reviewDbPromise = JSONFilePreset<{ reviews: Review[] }>(reviewDbFile, {
-  reviews: []
-});
 
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
@@ -23,15 +16,12 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const reviewDb = await reviewDbPromise;
-    const reviews = reviewDb.data.reviews
-      .filter((r) => r.userId === parseInt(id, 10))
-      .map((r) => ({
-        reviewId: r.id,
-        rating: r.rating,
-        content: r.content,
-        createdAt: r.createdAt
-      }));
+    const db = getDb();
+    const reviews = db
+      .prepare(
+        "SELECT id as reviewId, rating, content, createdAt FROM reviews WHERE userId = ?"
+      )
+      .all(id);
 
     return NextResponse.json(
       { message: "유저 리뷰 목록 조회 성공", reviews },

@@ -1,49 +1,31 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Comment } from "@/src/types/comment-type";
-
-const dbFile = path.resolve(process.cwd(), "src/db/comments.json");
-const dbPromise = JSONFilePreset<{ comments: Comment[] }>(dbFile, {
-  comments: []
-});
 
 export async function GET(req: NextRequest) {
   try {
-    const db = await dbPromise;
-    const comments: Comment[] = db.data.comments;
-
+    const db = getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
     const postId = searchParams.get("postId");
 
-    let filtered = comments;
+    let query = "SELECT * FROM comments";
+    const params: (string | number)[] = [];
+    let message = "댓글 목록 조회 성공";
 
-    // userId로 필터
     if (userId) {
-      filtered = filtered.filter((c) => c.userId === parseInt(userId, 10));
-      return NextResponse.json(
-        {
-          message: "유저 댓글 목록 조회 성공",
-          comments: filtered
-        },
-        { status: 200 }
-      );
+      query += " WHERE userId = ?";
+      params.push(userId);
+      message = "유저 댓글 목록 조회 성공";
+    } else if (postId) {
+      query += " WHERE postId = ?";
+      params.push(postId);
+      message = "게시물 댓글 목록 조회 성공";
     }
 
-    // postId로 필터
-    if (postId) {
-      filtered = filtered.filter((c) => c.postId === parseInt(postId, 10));
-      return NextResponse.json(
-        {
-          message: "게시물 댓글 목록 조회 성공",
-          comments: filtered
-        },
-        { status: 200 }
-      );
-    }
+    const comments = db.prepare(query).all(...params) as Comment[];
 
     // 페이지네이션
     let offset: number | null = null;
@@ -53,15 +35,15 @@ export async function GET(req: NextRequest) {
       limit = "10";
     }
 
-    let result = filtered;
+    let result = comments;
     if (page && limit) {
       offset = (parseInt(page) - 1) * parseInt(limit);
-      result = filtered.slice(offset, offset + parseInt(limit));
-      const totalComments = filtered.length;
+      result = comments.slice(offset, offset + parseInt(limit));
+      const totalComments = comments.length;
       hasNextPage =
         offset !== null && offset + parseInt(limit || "0") < totalComments;
     } else if (!page && limit) {
-      result = filtered.slice(0, parseInt(limit));
+      result = comments.slice(0, parseInt(limit));
     }
 
     const response: {
@@ -71,7 +53,7 @@ export async function GET(req: NextRequest) {
       limit?: number;
       hasNextPage?: boolean;
     } = {
-      message: "댓글 목록 조회 성공",
+      message,
       comments: result
     };
 
@@ -104,14 +86,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const db = await dbPromise;
-    const comments: Comment[] = db.data.comments;
-    const newId =
-      comments.length > 0
-        ? Math.max(...comments.map((c) => c.id)) + 1
-        : 1;
     const newComment: Comment = {
-      id: newId,
+      id: 1,
       content,
       createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
       userId,

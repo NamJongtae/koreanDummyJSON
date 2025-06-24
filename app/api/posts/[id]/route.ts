@@ -1,16 +1,11 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Post } from "@/src/types/post-type";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
 
-const dbFile = path.resolve(process.cwd(), "src/db/posts.json");
-const dbPromise = JSONFilePreset<{ posts: Post[] }>(dbFile, { posts: [] });
-
-// /api/posts/:id
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
@@ -22,8 +17,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await dbPromise;
-    const post = db.data.posts.find((p) => p.id === parseInt(id, 10));
+    const db = getDb();
+    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+      | Post
+      | undefined;
 
     if (!post) {
       return NextResponse.json(
@@ -55,7 +52,6 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
     const { title, content, imgUrl } = await req.json().catch(() => ({}));
 
-    // 에러 메시지 배열 생성
     const errors: string[] = [];
     if (!title) errors.push("title");
     if (!content) errors.push("content");
@@ -68,10 +64,11 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await dbPromise;
-    const idx = db.data.posts.findIndex((p) => p.id === parseInt(id, 10));
-
-    if (idx === -1) {
+    const db = getDb();
+    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+      | Post
+      | undefined;
+    if (!post) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -79,7 +76,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     }
 
     const updatedPost: Post = {
-      ...db.data.posts[idx],
+      ...post,
       title,
       content,
       imgUrl
@@ -118,10 +115,11 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.posts.findIndex((p) => p.id === parseInt(id, 10));
-
-    if (idx === -1) {
+    const db = getDb();
+    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+      | Post
+      | undefined;
+    if (!post) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -129,7 +127,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     }
 
     const updatedPost: Post = {
-      ...db.data.posts[idx],
+      ...post,
       ...(title !== undefined && { title }),
       ...(content !== undefined && { content }),
       ...(imgUrl !== undefined && { imgUrl })
@@ -159,10 +157,11 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.posts.findIndex((p) => p.id === parseInt(id, 10));
-
-    if (idx === -1) {
+    const db = getDb();
+    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+      | Post
+      | undefined;
+    if (!post) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }

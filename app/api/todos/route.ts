@@ -1,10 +1,6 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Todo } from "@/src/types/todo-type";
-
-const dbFile = path.resolve(process.cwd(), "src/db/todos.json");
-const dbPromise = JSONFilePreset<{ todos: Todo[] }>(dbFile, { todos: [] });
 
 export async function GET(req: NextRequest) {
   try {
@@ -13,15 +9,17 @@ export async function GET(req: NextRequest) {
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
 
-    const db = await dbPromise;
-    let todos = db.data.todos;
+    const db = getDb();
+    let query = "SELECT * FROM todos";
+    const params: string[] = [];
 
-    // userId로 필터
     if (userId) {
-      todos = todos.filter((todo) => todo.userId === parseInt(userId, 10));
+      query += " WHERE userId = ?";
+      params.push(userId);
     }
 
-    // completed를 Boolean으로 변환
+    let todos = db.prepare(query).all(...params) as Todo[];
+
     todos = todos.map((todo) => ({
       ...todo,
       completed: Boolean(todo.completed)
@@ -74,20 +72,17 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const db = await dbPromise;
-    const todos = db.data.todos;
-    const maxId = todos.length > 0 ? Math.max(...todos.map((t) => t.id)) : 0;
     const newTodo: Todo = {
-      id: maxId + 1,
+      id: 201,
       content,
       completed: false,
-      userId,
+      userId
     };
 
     return NextResponse.json(
       {
         message: "할 일 생성 성공",
-        todo: newTodo
+        todo: { ...newTodo, completed: Boolean(newTodo.completed) }
       },
       { status: 201 }
     );

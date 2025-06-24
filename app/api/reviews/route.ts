@@ -1,67 +1,39 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Review } from "@/src/types/review-type";
-
-const dbFile = path.resolve(process.cwd(), "src/db/reviews.json");
-const dbPromise = JSONFilePreset<{ reviews: Review[] }>(dbFile, {
-  reviews: []
-});
 
 export async function GET(req: NextRequest) {
   try {
-    const db = await dbPromise;
-    const reviews: Review[] = db.data.reviews;
-
+    const db = getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
     const bookId = searchParams.get("bookId");
 
-    let filtered = reviews;
+    let query = "SELECT * FROM reviews";
+    const params: string[] = [];
 
-    // userId로 필터
     if (userId) {
-      filtered = filtered.filter((r) => r.userId === parseInt(userId, 10));
-      return NextResponse.json(
-        {
-          message: "리뷰 목록 조회 성공",
-          reviews: filtered
-        },
-        { status: 200 }
-      );
+      query += " WHERE userId = ?";
+      params.push(userId);
+    } else if (bookId) {
+      query += " WHERE bookId = ?";
+      params.push(bookId);
     }
 
-    // bookId로 필터
-    if (bookId) {
-      filtered = filtered.filter((r) => r.bookId === parseInt(bookId, 10));
-      return NextResponse.json(
-        {
-          message: "리뷰 목록 조회 성공",
-          reviews: filtered
-        },
-        { status: 200 }
-      );
-    }
+    const reviews = db.prepare(query).all(...params) as Review[];
 
     // 페이지네이션
-    let offset: number | null = null;
+    let pagedReviews = reviews;
     let hasNextPage: boolean | null = null;
-
-    if (page && !limit) {
-      limit = "10";
-    }
-
-    let result = filtered;
+    if (page && !limit) limit = "10";
     if (page && limit) {
-      offset = (parseInt(page) - 1) * parseInt(limit);
-      result = filtered.slice(offset, offset + parseInt(limit));
-      const totalReviews = filtered.length;
-      hasNextPage =
-        offset !== null && offset + parseInt(limit || "0") < totalReviews;
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      pagedReviews = reviews.slice(offset, offset + parseInt(limit));
+      hasNextPage = offset + parseInt(limit) < reviews.length;
     } else if (!page && limit) {
-      result = filtered.slice(0, parseInt(limit));
+      pagedReviews = reviews.slice(0, parseInt(limit));
     }
 
     const response: {
@@ -72,7 +44,7 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "리뷰 목록 조회 성공",
-      reviews: result
+      reviews: pagedReviews
     };
 
     if (page) response.page = parseInt(page);
@@ -109,17 +81,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const db = await dbPromise;
-    const reviews: Review[] = db.data.reviews;
-    const newId =
-      reviews.length > 0 ? Math.max(...reviews.map((r) => r.id)) + 1 : 1;
+    const createdAt = new Date().toISOString().replace("T", " ").slice(0, 19);
     const newReview: Review = {
-      id: newId,
+      id: 501,
       rating,
       content,
-      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
-      userId: userId,
-      bookId: bookId
+      createdAt,
+      userId,
+      bookId
     };
 
     return NextResponse.json(

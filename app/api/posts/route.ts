@@ -1,52 +1,35 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Post } from "@/src/types/post-type";
-
-const dbFile = path.resolve(process.cwd(), "src/db/posts.json");
-const dbPromise = JSONFilePreset<{ posts: Post[] }>(dbFile, { posts: [] });
 
 export async function GET(req: NextRequest) {
   try {
-    const db = await dbPromise;
-    const posts: Post[] = db.data.posts;
-
+    const db = getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
 
-    let filtered = posts;
+    let query = "SELECT * FROM posts";
+    const params: string[] = [];
 
-    // userId로 필터
     if (userId) {
-      filtered = filtered.filter((p) => p.userId === parseInt(userId, 10));
-      return NextResponse.json(
-        {
-          message: "게시물 목록 조회 성공",
-          posts: filtered
-        },
-        { status: 200 }
-      );
+      query += " WHERE userId = ?";
+      params.push(userId);
     }
+
+    const posts = db.prepare(query).all(...params) as Post[];
 
     // 페이지네이션
-    let offset: number | null = null;
+    let pagedPosts = posts;
     let hasNextPage: boolean | null = null;
-
-    if (page && !limit) {
-      limit = "10";
-    }
-
-    let result = filtered;
+    if (page && !limit) limit = "10";
     if (page && limit) {
-      offset = (parseInt(page) - 1) * parseInt(limit);
-      result = filtered.slice(offset, offset + parseInt(limit));
-      const totalPosts = filtered.length;
-      hasNextPage =
-        offset !== null && offset + parseInt(limit || "0") < totalPosts;
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      pagedPosts = posts.slice(offset, offset + parseInt(limit));
+      hasNextPage = offset + parseInt(limit) < posts.length;
     } else if (!page && limit) {
-      result = filtered.slice(0, parseInt(limit));
+      pagedPosts = posts.slice(0, parseInt(limit));
     }
 
     const response: {
@@ -57,7 +40,7 @@ export async function GET(req: NextRequest) {
       hasNextPage?: boolean;
     } = {
       message: "게시물 목록 조회 성공",
-      posts: result
+      posts: pagedPosts
     };
 
     if (page) response.page = parseInt(page);
@@ -90,17 +73,17 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const db = await dbPromise;
-    const posts: Post[] = db.data.posts;
-    const newId =
-      posts.length > 0 ? Math.max(...posts.map((p) => p.id)) + 1 : 1;
+    const newId = 101;
+    const createdAt = new Date().toISOString().replace("T", " ").slice(0, 19);
+    const userId = 1;
+
     const newPost: Post = {
       id: newId,
       title,
       content,
       imgUrl,
-      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
-      userId: 1 
+      createdAt,
+      userId
     };
 
     return NextResponse.json(

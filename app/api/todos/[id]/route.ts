@@ -1,14 +1,10 @@
-import { JSONFilePreset } from "lowdb/node";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 import { Todo } from "@/src/types/todo-type";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
-
-const dbFile = path.resolve(process.cwd(), "src/db/todos.json");
-const dbPromise = JSONFilePreset<{ todos: Todo[] }>(dbFile, { todos: [] });
 
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
@@ -21,8 +17,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await dbPromise;
-    const todo = db.data.todos.find((t) => t.id === parseInt(id, 10));
+    const db = getDb();
+    const todo = db.prepare("SELECT * FROM todos WHERE id = ?").get(id) as
+      | Todo
+      | undefined;
 
     if (!todo) {
       return NextResponse.json(
@@ -31,7 +29,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const result = { ...todo, completed: todo.completed };
+    const result = { ...todo, completed: Boolean(todo.completed) };
 
     return NextResponse.json(
       { message: "할 일 조회 성공", todo: result },
@@ -66,10 +64,12 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await dbPromise;
-    const idx = db.data.todos.findIndex((t) => t.id === parseInt(id, 10));
+    const db = getDb();
+    const todo = db.prepare("SELECT * FROM todos WHERE id = ?").get(id) as
+      | Todo
+      | undefined;
 
-    if (idx === -1) {
+    if (!todo) {
       return NextResponse.json(
         { message: "할 일이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -77,7 +77,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     }
 
     const updatedTodo: Todo = {
-      ...db.data.todos[idx],
+      ...todo,
       content,
       completed: Boolean(completed)
     };
@@ -115,10 +115,12 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.todos.findIndex((t) => t.id === parseInt(id, 10));
+    const db = getDb();
+    const todo = db.prepare("SELECT * FROM todos WHERE id = ?").get(id) as
+      | Todo
+      | undefined;
 
-    if (idx === -1) {
+    if (!todo) {
       return NextResponse.json(
         { message: "할 일이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
@@ -126,9 +128,10 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     }
 
     const updatedTodo: Todo = {
-      ...db.data.todos[idx],
-      ...(content !== undefined && { content }),
-      ...(completed !== undefined && { completed: Boolean(completed) })
+      ...todo,
+      content: content !== undefined ? content : todo.content,
+      completed:
+        completed !== undefined ? Boolean(completed) : Boolean(todo.completed)
     };
 
     return NextResponse.json(
@@ -155,10 +158,12 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = await dbPromise;
-    const idx = db.data.todos.findIndex((t) => t.id === parseInt(id, 10));
+    const db = getDb();
+    const todo = db.prepare("SELECT * FROM todos WHERE id = ?").get(id) as
+      | Todo
+      | undefined;
 
-    if (idx === -1) {
+    if (!todo) {
       return NextResponse.json(
         { message: "할 일이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }

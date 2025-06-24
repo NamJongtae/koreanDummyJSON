@@ -1,16 +1,9 @@
-import { JSONFilePreset } from "lowdb/node";
-import { Post } from "@/src/types/post-type";
+import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
-
-const postDbFile = path.resolve(process.cwd(), "src/db/posts.json");
-const postDbPromise = JSONFilePreset<{ posts: Post[] }>(postDbFile, {
-  posts: []
-});
 
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
@@ -23,16 +16,12 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const postDb = await postDbPromise;
-    const posts = postDb.data.posts
-      .filter((p) => p.userId === parseInt(id, 10))
-      .map((p) => ({
-        postId: p.id,
-        title: p.title,
-        content: p.content,
-        imgUrl: p.imgUrl,
-        createdAt: p.createdAt
-      }));
+    const db = getDb();
+    const posts = db
+      .prepare(
+        "SELECT id as postId, title, content, imgUrl, createdAt FROM posts WHERE userId = ?"
+      )
+      .all(id);
 
     return NextResponse.json(
       { message: "유저 게시물 목록 조회 성공", posts },

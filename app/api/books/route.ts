@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { JSONFilePreset } from "lowdb/node";
-import path from "path";
+import { getDb } from "@/src/db/sqlite";
 import { Book } from "@/src/types/book-type";
-
-
-const dbFile = path.resolve(process.cwd(), "src/db/books.json");
-const dbPromise = JSONFilePreset<{ books: Book[] }>(dbFile, { books: [] });
 
 export async function GET(req: NextRequest) {
   try {
-    const db = await dbPromise;
-    const books: Book[] = db.data.books;
+    const db = getDb();
+    const books = db.prepare("SELECT * FROM books").all() as Book[];
 
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
@@ -76,12 +71,8 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const db = await dbPromise;
-    const books: Book[] = db.data.books;
-    const newId =
-      books.length > 0 ? Math.max(...books.map((b) => b.id)) + 1 : 1;
-    const newBook = {
-      id: newId,
+    const newBook: Book = {
+      id: 1,
       author,
       genre,
       title,
