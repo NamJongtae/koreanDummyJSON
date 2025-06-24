@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:init": "npx tsm src/db/setup/init-db.ts",
+    "db:users": "npx tsm src/db/setup/users.ts",
+    "db:books": "npx tsm src/db/setup/books.ts",
+    "db:posts": "npx tsm src/db/setup/posts.ts",
+    "db:todos": "npx tsm src/db/setup/todos.ts",
+    "db:comments": "npx tsm src/db/setup/comments.ts",
+    "db:reviews": "npx tsm src/db/setup/reviews.ts",
+    "db:all": "npm run db:init && npm run db:users && npm run db:books && npm run db:posts && npm run db:todos && npm run db:comments && npm run db:reviews"
   },
   "dependencies": {
     "better-sqlite3": "^12.1.0",
