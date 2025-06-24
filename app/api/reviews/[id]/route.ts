@@ -161,7 +161,16 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    // 실제 DB 삭제 없이 더미 메시지만 반환
+    const db = getDb();
+    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+      | Review
+      | undefined;
+    if (!review) {
+      return NextResponse.json(
+        { message: "리뷰가 존재하지 않습니다. id 값을 확인해주세요." },
+        { status: 404 }
+      );
+    }
     return NextResponse.json(
       { message: `${id}번 리뷰 삭제 성공` },
       { status: 200 }
