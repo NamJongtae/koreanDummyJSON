@@ -1,4 +1,4 @@
-name: Deploy to Dev and Auto-Merge to Main
+name: Test, Deploy to Dev, and Auto-Merge to Main
 
 on:
   push:
@@ -15,7 +15,21 @@ permissions:
   contents: write
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run test:api
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     if: success()
 
