@@ -7,14 +7,14 @@ export async function POST(req: NextRequest) {
   if (!id || !id.trim()) {
     return NextResponse.json(
       { message: "id를 입력해주세요." },
-      { status: 422 }
+      { status: 400 }
     );
   }
 
   if (!password || !password.trim()) {
     return NextResponse.json(
       { message: "password를 입력해주세요." },
-      { status: 422 }
+      { status: 400 }
     );
   }
 
