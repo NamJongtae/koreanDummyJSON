@@ -8,7 +8,7 @@ const createCdnLinks = (version: string) => ({
 });
 
 export const useCdnLinks = () => {
-  const fallbackVersion = "1.0.6";
+  const fallbackVersion = "@latest";
 
   const [cdnLinks, setCdnLinks] = useState(() =>
     createCdnLinks(fallbackVersion)
