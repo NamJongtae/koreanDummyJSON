@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest",
     "test:api": "cross-env TEST_MODE=1 npx playwright test",
     "db:init": "npx tsm src/db/setup/init-db.ts",
     "db:users": "npx tsm src/db/setup/users.ts",
@@ -37,7 +38,10 @@
   "devDependencies": {
     "@playwright/test": "^1.53.1",
     "@svgr/webpack": "^8.1.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@types/better-sqlite3": "^7.6.13",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mysql": "^2.15.26",
     "@types/node": "^22.15.32",
@@ -57,10 +61,13 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^30.0.3",
+    "jest-environment-jsdom": "^30.0.2",
     "lint-staged": "^15.2.9",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10",
+    "ts-jest": "^29.4.0",
     "tsm": "^2.3.0",
     "typescript": "^5.8.3"
   }
