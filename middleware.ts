@@ -4,12 +4,14 @@ export async function middleware(req: NextRequest) {
   const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0];
   console.log(clientIp);
 
-  try {
-    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request-count`, {
-      method: "POST"
-    });
-  } catch (error) {
-    console.error(error);
+  if (process.env.TEST_MODE !== "1" && process.env.NODE_ENV !== "development") {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request-count`, {
+        method: "POST"
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   if (req.nextUrl.pathname.startsWith("/api/")) {
@@ -17,7 +19,7 @@ export async function middleware(req: NextRequest) {
     response.headers.set("Access-Control-Allow-Origin", "*");
     response.headers.set(
       "Access-Control-Allow-Methods",
-      "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+      "GET,POST,PUT,PATCH,DELETE"
     );
     response.headers.set(
       "Access-Control-Allow-Headers",
