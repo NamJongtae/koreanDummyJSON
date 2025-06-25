@@ -11,6 +11,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
     const { id } = await params;
 
     const db = getDb();
+    const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id);
+    if (!user) {
+      return NextResponse.json(
+        { message: "유저가 존재하지 않습니다. id 값을 확인해주세요." },
+        { status: 404 }
+      );
+    }
     const todos = db
       .prepare(
         "SELECT id as todoId, content, completed FROM todos WHERE userId = ?"
