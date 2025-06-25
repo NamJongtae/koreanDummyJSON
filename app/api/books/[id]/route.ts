@@ -10,12 +10,6 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
-    if (!id) {
-      return NextResponse.json(
-        { message: "id를 입력해주세요." },
-        { status: 400 }
-      );
-    }
     const db = getDb();
     const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
       | Book
@@ -38,12 +32,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
 
 export async function PUT(req: NextRequest, { params }: IParams) {
   const { id } = await params;
-  if (!id) {
-    return NextResponse.json(
-      { message: "id를 입력해주세요." },
-      { status: 400 }
-    );
-  }
+
   const { author, genre, title, publicationDate, totalPage } = await req
     .json()
     .catch(() => ({}));
@@ -98,12 +87,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
-  if (!id) {
-    return NextResponse.json(
-      { message: "id를 입력해주세요." },
-      { status: 400 }
-    );
-  }
+
   const { author, genre, title, publicationDate, totalPage } = await req
     .json()
     .catch(() => ({}));
@@ -157,12 +141,7 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
-  if (!id) {
-    return NextResponse.json(
-      { message: "id를 입력해주세요." },
-      { status: 400 }
-    );
-  }
+
   try {
     const db = getDb();
     const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as

@@ -10,13 +10,6 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
-    if (!id) {
-      return NextResponse.json(
-        { message: "id를 입력해주세요." },
-        { status: 400 }
-      );
-    }
-
     const db = getDb();
     const todos = db
       .prepare(

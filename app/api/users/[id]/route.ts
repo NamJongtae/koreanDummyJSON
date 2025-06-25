@@ -12,13 +12,6 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
-    if (!id) {
-      return NextResponse.json(
-        { message: "id를 입력해주세요." },
-        { status: 400 }
-      );
-    }
-
     const db = getDb();
     const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
       | User
@@ -44,14 +37,6 @@ export async function GET(req: NextRequest, { params }: IParams) {
 export async function PUT(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
-
-    if (!id) {
-      return NextResponse.json(
-        { message: "id를 입력해주세요." },
-        { status: 400 }
-      );
-    }
-
     const { username, email, phone, address } = await req
       .json()
       .catch(() => ({}));
@@ -103,14 +88,6 @@ export async function PUT(req: NextRequest, { params }: IParams) {
 
 export async function PATCH(req: NextRequest, { params }: IParams) {
   const { id } = await params;
-
-  if (!id) {
-    return NextResponse.json(
-      { message: "id를 입력해주세요." },
-      { status: 400 }
-    );
-  }
-
   const { username, email, phone, address } = await req
     .json()
     .catch(() => ({}));
@@ -158,13 +135,6 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
-
-  if (!id) {
-    return NextResponse.json(
-      { message: "id를 입력해주세요." },
-      { status: 400 }
-    );
-  }
 
   const db = getDb();
   const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
