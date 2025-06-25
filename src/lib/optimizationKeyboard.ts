@@ -14,7 +14,6 @@ export const optimizationTabFocus = ({
 }) => {
   if (event.shiftKey && event.keyCode === 9 && previousTarget) {
     event.preventDefault();
-    console.log(previousTarget);
     previousTarget.focus();
   } else if (nextTarget && event.keyCode === 9) {
     event.preventDefault();
