@@ -1,11 +1,13 @@
-const nextJest = require("next/jest"); 
+const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
   dir: "./" // Next.js 앱의 루트 디렉토리 설정
 });
 
 const customJestConfig = {
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  testPathIgnorePatterns: ["/api-routes"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1" // 절대 경로 매핑
   },
