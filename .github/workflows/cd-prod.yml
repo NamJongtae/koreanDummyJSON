@@ -2,7 +2,7 @@ name: Deploy to Production
 
 on:
   workflow_run:
-    workflows: ["Deploy to Dev and Auto-Merge to Main"]
+    workflows: ["Test, Deploy to Dev, and Auto-Merge to Main"]
     types:
       - completed
 
