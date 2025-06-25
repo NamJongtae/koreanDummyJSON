@@ -21,7 +21,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
     const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id);
     if (!book) {
       return NextResponse.json(
-        { message: "해당 책이 존재하지 않습니다." },
+        { message: "책이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
