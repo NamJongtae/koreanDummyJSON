@@ -1,6 +1,6 @@
 import useDropdownMenu from "../commons/useDropDownMenu";
 import { useRouter } from "next/navigation";
-import { DOCS_MENU } from "@/src/components/commons/layout/nav-docs-menu";
+import { DOCS_MENU } from "@/src/constants/constants";
 import useKeyboardFocusMenu from "../commons/useKeyboardFocusMenu"; // useKeyboardOptiMenu를 import 합니다.
 
 export default function useNavDocsMenu() {

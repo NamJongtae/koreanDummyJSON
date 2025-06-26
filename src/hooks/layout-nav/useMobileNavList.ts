@@ -1,4 +1,4 @@
-import { DOCS_MENU } from "@/src/components/commons/layout/nav-docs-menu";
+import { DOCS_MENU } from "@/src/constants/constants";
 import { optimizationTabFocus } from "@/src/lib/optimizationKeyboard";
 import { useEffect, useRef, useState } from "react";
 import useKeyboardFocusMenu from "../commons/useKeyboardFocusMenu";

@@ -1,4 +1,4 @@
-import { DOCS_MENU } from "./nav-docs-menu";
+import { DOCS_MENU } from "@/src/constants/constants";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 

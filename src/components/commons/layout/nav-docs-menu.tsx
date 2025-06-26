@@ -2,17 +2,6 @@ import { usePathname } from "next/navigation";
 import NavDocsMenuList from "./nav-docs-menu-list";
 import useNavDocsMenu from "@/src/hooks/layout-nav/useNavDocsMenu";
 
-export const DOCS_MENU = [
-  "Users",
-  "Todos",
-  "Posts",
-  "Comments",
-  "Books",
-  "Reviews",
-  "Auth",
-  "Image"
-];
-
 export default function NavDocsMenu() {
   const pathname = usePathname();
 

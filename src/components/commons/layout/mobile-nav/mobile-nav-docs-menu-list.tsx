@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DOCS_MENU } from "../nav-docs-menu";
+import { DOCS_MENU } from "@/src/constants/constants";
 
 interface IProps {
   isOpenDocsMenu: boolean;
