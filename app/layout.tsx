@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Layout from "@/src/components/commons/layout/layout";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Noto_Sans_KR({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -54,6 +55,7 @@ export default function RootLayout({
             {children}
           </main>
         </Layout>
+        <Analytics />
       </body>
     </html>
   );
