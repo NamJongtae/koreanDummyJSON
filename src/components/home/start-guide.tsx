@@ -4,7 +4,7 @@ import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
 import Link from "next/link";
 import CodeSnippet from "../commons/fetch-section/code-snippet";
 import useCopy from "@/src/hooks/commons/useCopy";
-import { useCdnLinks } from "@/src/hooks/commons/useCdnLinks";
+import { useCdnLinks } from "@/src/hooks/home/useCdnLinks";
 
 const StartGuide = () => {
   const { ref, isVisible } = useSectionVisibility();
