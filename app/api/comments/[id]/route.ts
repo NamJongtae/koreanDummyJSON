@@ -1,15 +1,17 @@
 import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
 import { Comment } from "@/src/types/comment-type";
+import { Database as SqliteDatabase } from "sqlite";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
 
 export async function GET(req: NextRequest, { params }: IParams) {
+  let db: SqliteDatabase | undefined;
   try {
     const { id } = await params;
-    const db = await getDb();
+    db = await getDb();
     const comment = (await db.get(
       "SELECT * FROM comments WHERE id = ?",
       id
@@ -27,6 +29,8 @@ export async function GET(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "댓글 조회 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 
@@ -40,8 +44,9 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       { status: 400 }
     );
   }
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const comment = (await db.get(
       "SELECT * FROM comments WHERE id = ?",
       id
@@ -68,6 +73,8 @@ export async function PUT(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "댓글 수정 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 
@@ -81,8 +88,9 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
       { status: 400 }
     );
   }
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const comment = (await db.get(
       "SELECT * FROM comments WHERE id = ?",
       id
@@ -109,14 +117,17 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "댓글 수정 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const comment = (await db.get(
       "SELECT * FROM comments WHERE id = ?",
       id
@@ -127,7 +138,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json(
       { message: `${id}번 댓글 삭제 성공` },
       { status: 200 }
@@ -135,5 +146,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "댓글 삭제 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }

@@ -1,15 +1,17 @@
 import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
 import { Todo } from "@/src/types/todo-type";
+import { Database as SqliteDatabase } from "sqlite";
 
 export async function GET(req: NextRequest) {
+  let db: SqliteDatabase | undefined;
   try {
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
 
-    const db = await getDb();
+    db = await getDb();
     let query = "SELECT * FROM todos";
     const params: string[] = [];
 
@@ -58,6 +60,8 @@ export async function GET(req: NextRequest) {
       { message: "할 일 목록 조회 실패" },
       { status: 500 }
     );
+  } finally {
+    if (db) await db.close();
   }
 }
 

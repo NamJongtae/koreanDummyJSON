@@ -1,15 +1,17 @@
 import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
 import { Post } from "@/src/types/post-type";
+import { Database as SqliteDatabase } from "sqlite";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
 
 export async function GET(req: NextRequest, { params }: IParams) {
+  let db: SqliteDatabase | undefined;
   try {
     const { id } = await params;
-    const db = await getDb();
+    db = await getDb();
     const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
@@ -26,10 +28,13 @@ export async function GET(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "게시물 조회 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 
 export async function PUT(req: NextRequest, { params }: IParams) {
+  let db: SqliteDatabase | undefined;
   try {
     const { id } = await params;
     const { title, content, imgUrl } = await req.json().catch(() => ({}));
@@ -46,7 +51,7 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = await getDb();
+    db = await getDb();
     const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
@@ -74,6 +79,8 @@ export async function PUT(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "게시물 수정 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 
@@ -88,8 +95,9 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     );
   }
 
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
@@ -117,14 +125,17 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "게시물 수정 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
@@ -142,5 +153,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "게시물 삭제 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }

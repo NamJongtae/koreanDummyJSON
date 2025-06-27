@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { User } from "@/src/types/user-type";
 import { getDb } from "@/src/db/sqlite";
+import { Database as SqliteDatabase } from "sqlite";
 
 export async function GET(req: NextRequest) {
+  let db: SqliteDatabase | undefined;
   try {
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
 
-    const db = await getDb();
+    db = await getDb();
     const totalUsers: number = (
       (await db.get("SELECT COUNT(*) as count FROM users")) as {
         count: number;
@@ -58,6 +60,8 @@ export async function GET(req: NextRequest) {
       { message: "유저 목록 조회 실패" },
       { status: 500 }
     );
+  } finally {
+    if (db) await db.close();
   }
 }
 

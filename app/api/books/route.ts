@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/src/db/sqlite";
 import { Book } from "@/src/types/book-type";
+import { Database as SqliteDatabase } from "sqlite";
 
 export async function GET(req: NextRequest) {
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const books = (await db.all("SELECT * FROM books")) as Book[];
 
     const searchParams = req.nextUrl.searchParams;
@@ -48,6 +50,8 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: "책 목록 조회 실패" }, { status: 500 });
+  } finally {
+    if (db) await db.close();
   }
 }
 

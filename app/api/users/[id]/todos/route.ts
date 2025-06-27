@@ -1,16 +1,18 @@
 import { getDb } from "@/src/db/sqlite";
 import { Todo } from "@/src/types/todo-type";
 import { NextRequest, NextResponse } from "next/server";
+import { Database as SqliteDatabase } from "sqlite";
 
 interface IParams {
   params: Promise<{ id: string }>;
 }
 
 export async function GET(req: NextRequest, { params }: IParams) {
+  let db: SqliteDatabase | undefined;
   try {
     const { id } = await params;
 
-    const db = await getDb();
+    db = await getDb();
     const user = await db.get("SELECT * FROM users WHERE id = ?", id);
     if (!user) {
       return NextResponse.json(
@@ -38,5 +40,7 @@ export async function GET(req: NextRequest, { params }: IParams) {
       { message: "유저 할 일 목록 조회 실패" },
       { status: 500 }
     );
+  } finally {
+    if (db) await db.close();
   }
 }

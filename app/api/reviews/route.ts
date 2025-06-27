@@ -1,10 +1,12 @@
 import { getDb } from "@/src/db/sqlite";
 import { NextRequest, NextResponse } from "next/server";
 import { Review } from "@/src/types/review-type";
+import { Database as SqliteDatabase } from "sqlite";
 
 export async function GET(req: NextRequest) {
+  let db: SqliteDatabase | undefined;
   try {
-    const db = await getDb();
+    db = await getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
@@ -58,6 +60,8 @@ export async function GET(req: NextRequest) {
       { message: "리뷰 목록 조회 실패" },
       { status: 500 }
     );
+  } finally {
+    if (db) await db.close();
   }
 }
 
