@@ -41,7 +41,7 @@ export default function NavDocsMenu() {
       </button>
       {isOpenDocsMenu && (
         <NavDocsMenuList
-          docsMenuRef={docsMenuRef}
+          ref={docsMenuRef}
           setDocsMenuListRef={setDocsMenuListRef}
           handleKeyDownEsc={handleKeyDownEsc}
           handleKeyDownTabDocsMenu={handleKeyDownTabDocsMenu}
