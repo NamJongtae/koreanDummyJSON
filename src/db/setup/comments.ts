@@ -1,43 +1,59 @@
-import Database from "better-sqlite3";
+import sqlite3 from "sqlite3";
+import { open } from "sqlite";
 import fs from "fs";
 import path from "path";
 
 const DB_PATH = path.join(process.cwd(), "src/db/app.db");
 const JSON_PATH = path.join(process.cwd(), "src/db/json/comments.json");
 
-const db = new Database(DB_PATH);
+async function setupComments() {
+  const db = await open({
+    filename: DB_PATH,
+    driver: sqlite3.Database
+  });
 
-db.prepare("DROP TABLE IF EXISTS comments").run();
+  await db.exec("DROP TABLE IF EXISTS comments");
 
-db.prepare(
-  `CREATE TABLE comments (
-    id INTEGER NOT NULL PRIMARY KEY,
-    content VARCHAR(200) NOT NULL,
-    createdAt TIMESTAMP NOT NULL,
-    userId INTEGER NOT NULL,
-    postId INTEGER NOT NULL,
-    UNIQUE(id),
-    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
-  )`
-).run();
+  await db.exec(`
+    CREATE TABLE comments (
+      id INTEGER NOT NULL PRIMARY KEY,
+      content VARCHAR(200) NOT NULL,
+      createdAt TIMESTAMP NOT NULL,
+      userId INTEGER NOT NULL,
+      postId INTEGER NOT NULL,
+      UNIQUE(id),
+      FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
+    )
+  `);
 
-const comments = JSON.parse(fs.readFileSync(JSON_PATH, "utf-8"));
+  const comments = JSON.parse(fs.readFileSync(JSON_PATH, "utf-8"));
 
-const insert = db.prepare(
-  "INSERT INTO comments (id, content, createdAt, userId, postId) VALUES (?, ?, ?, ?, ?)"
-);
+  const insert = await db.prepare(
+    "INSERT INTO comments (id, content, createdAt, userId, postId) VALUES (?, ?, ?, ?, ?)"
+  );
 
-db.transaction(() => {
-  for (const comment of comments) {
-    insert.run(
-      comment.id,
-      comment.content,
-      comment.createdAt,
-      comment.userId,
-      comment.postId
-    );
+  try {
+    await db.run("BEGIN TRANSACTION");
+    for (const comment of comments) {
+      await insert.run(
+        comment.id,
+        comment.content,
+        comment.createdAt,
+        comment.userId,
+        comment.postId
+      );
+    }
+    await db.run("COMMIT");
+  } catch (err) {
+    await db.run("ROLLBACK");
+    throw err;
+  } finally {
+    await insert.finalize();
+    await db.close();
   }
-})();
 
-console.log("COMMENTS DB 초기화 완료!");
+  console.log("COMMENTS DB 초기화 완료!");
+}
+
+setupComments();

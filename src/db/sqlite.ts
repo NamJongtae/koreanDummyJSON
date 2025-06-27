@@ -1,12 +1,16 @@
-import Database from "better-sqlite3";
+import sqlite3 from "sqlite3";
+import { open, Database as SqliteDatabase } from "sqlite";
 import path from "path";
 
-let db: Database.Database | null = null;
+let db: SqliteDatabase | null = null;
 
-export function getDb(): Database.Database {
+export async function getDb(): Promise<SqliteDatabase> {
   if (!db) {
     const DB_PATH = path.join(process.cwd(), "src/db/app.db");
-    db = new Database(DB_PATH);
+    db = await open({
+      filename: DB_PATH,
+      driver: sqlite3.Database
+    });
   }
   return db;
 }
