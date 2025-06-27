@@ -33,6 +33,7 @@ export default function MobileNav() {
       {isOpenNavMenu && (
         <>
           <div
+            role="overlay"
             onClick={toggleNavMenu}
             className="fixed z-10 inset-0 bg-black opacity-50 top-[76px] h-full"
           ></div>
