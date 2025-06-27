@@ -20,7 +20,6 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
-    "better-sqlite3": "^12.1.0",
     "canvas": "^3.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",
@@ -28,7 +27,9 @@
     "prismjs": "^1.30.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-syntax-highlighter": "^15.5.0"
+    "react-syntax-highlighter": "^15.5.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,scss}": [
@@ -49,6 +50,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "@types/sqlite3": "^3.1.11",
+    "@types/testing-library__jest-dom": "^5.14.9",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "cross-env": "^7.0.3",
