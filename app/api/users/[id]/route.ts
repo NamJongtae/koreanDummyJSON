@@ -12,8 +12,8 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
-    const db = getDb();
-    const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
+    const db = await getDb();
+    const user = (await db.get("SELECT * FROM users WHERE id = ?", id)) as
       | User
       | undefined;
 
@@ -54,8 +54,8 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = getDb();
-    const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
+    const db = await getDb();
+    const user = (await db.get("SELECT * FROM users WHERE id = ?", id)) as
       | User
       | undefined;
 
@@ -100,8 +100,8 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = getDb();
-    const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
+    const db = await getDb();
+    const user = (await db.get("SELECT * FROM users WHERE id = ?", id)) as
       | User
       | undefined;
 
@@ -136,8 +136,8 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
 export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
-  const db = getDb();
-  const user = db.prepare("SELECT * FROM users WHERE id = ?").get(id) as
+  const db = await getDb();
+  const user = (await db.get("SELECT * FROM users WHERE id = ?", id)) as
     | User
     | undefined;
 

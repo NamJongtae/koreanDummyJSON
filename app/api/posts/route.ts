@@ -4,7 +4,7 @@ import { Post } from "@/src/types/post-type";
 
 export async function GET(req: NextRequest) {
   try {
-    const db = getDb();
+    const db = await getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       params.push(userId);
     }
 
-    const posts = db.prepare(query).all(...params) as Post[];
+    const posts = (await db.all(query, ...params)) as Post[];
 
     // 페이지네이션
     let pagedPosts = posts;
@@ -72,29 +72,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const newId = 101;
-    const createdAt = new Date().toISOString().replace("T", " ").slice(0, 19);
-    const userId = 1;
+  const createdAt = new Date().toISOString().replace("T", " ").slice(0, 19);
+  const userId = 1;
+  const newPost: Post = {
+    id: 101,
+    title,
+    content,
+    imgUrl,
+    createdAt,
+    userId
+  };
 
-    const newPost: Post = {
-      id: newId,
-      title,
-      content,
-      imgUrl,
-      createdAt,
-      userId
-    };
-
-    return NextResponse.json(
-      {
-        message: "게시물 생성 성공",
-        post: newPost
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "게시물 생성 실패" }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      message: "게시물 생성 성공",
+      post: newPost
+    },
+    { status: 201 }
+  );
 }

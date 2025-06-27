@@ -4,7 +4,7 @@ import { Review } from "@/src/types/review-type";
 
 export async function GET(req: NextRequest) {
   try {
-    const db = getDb();
+    const db = await getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       params.push(bookId);
     }
 
-    const reviews = db.prepare(query).all(...params) as Review[];
+    const reviews = (await db.all(query, ...params)) as Review[];
 
     // 페이지네이션
     let pagedReviews = reviews;
@@ -80,26 +80,21 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const createdAt = new Date().toISOString().replace("T", " ").slice(0, 19);
-    const newReview: Review = {
-      id: 501,
-      rating,
-      content,
-      createdAt,
-      userId,
-      bookId
-    };
+  const createdAt = new Date().toISOString().replace("T", " ").slice(0, 19);
+  const newReview: Review = {
+    id: 501,
+    rating,
+    content,
+    createdAt,
+    userId,
+    bookId
+  };
 
-    return NextResponse.json(
-      {
-        message: "리뷰 생성 성공",
-        review: newReview
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "리뷰 생성 실패" }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      message: "리뷰 생성 성공",
+      review: newReview
+    },
+    { status: 201 }
+  );
 }

@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     let limit = searchParams.get("limit");
     const userId = searchParams.get("userId");
 
-    const db = getDb();
+    const db = await getDb();
     let query = "SELECT * FROM todos";
     const params: string[] = [];
 
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       params.push(userId);
     }
 
-    let todos = db.prepare(query).all(...params) as Todo[];
+    let todos = (await db.all(query, ...params)) as Todo[];
 
     todos = todos.map((todo) => ({
       ...todo,
@@ -71,23 +71,18 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const newTodo: Todo = {
-      id: 201,
-      content,
-      completed: false,
-      userId
-    };
+  const newTodo: Todo = {
+    id: 201,
+    content,
+    completed: false,
+    userId
+  };
 
-    return NextResponse.json(
-      {
-        message: "할 일 생성 성공",
-        todo: { ...newTodo, completed: Boolean(newTodo.completed) }
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "할 일 생성 실패" }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      message: "할 일 생성 성공",
+      todo: { ...newTodo, completed: Boolean(newTodo.completed) }
+    },
+    { status: 201 }
+  );
 }

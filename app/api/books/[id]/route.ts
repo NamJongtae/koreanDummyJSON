@@ -9,9 +9,8 @@ interface IParams {
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
-
-    const db = getDb();
-    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+    const db = await getDb();
+    const book = (await db.get("SELECT * FROM books WHERE id = ?", id)) as
       | Book
       | undefined;
     if (!book) {
@@ -52,8 +51,8 @@ export async function PUT(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = getDb();
-    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+    const db = await getDb();
+    const book = (await db.get("SELECT * FROM books WHERE id = ?", id)) as
       | Book
       | undefined;
     if (!book) {
@@ -106,8 +105,8 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = getDb();
-    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+    const db = await getDb();
+    const book = (await db.get("SELECT * FROM books WHERE id = ?", id)) as
       | Book
       | undefined;
     if (!book) {
@@ -143,8 +142,8 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
   try {
-    const db = getDb();
-    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id) as
+    const db = await getDb();
+    const book = (await db.get("SELECT * FROM books WHERE id = ?", id)) as
       | Book
       | undefined;
     if (!book) {

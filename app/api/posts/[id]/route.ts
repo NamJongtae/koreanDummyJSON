@@ -9,19 +9,16 @@ interface IParams {
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
-
-    const db = getDb();
-    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+    const db = await getDb();
+    const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
-
     if (!post) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
-
     return NextResponse.json(
       { message: "게시물 조회 성공", post },
       { status: 200 }
@@ -49,8 +46,8 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = getDb();
-    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+    const db = await getDb();
+    const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
     if (!post) {
@@ -92,8 +89,8 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    const db = getDb();
-    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+    const db = await getDb();
+    const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
     if (!post) {
@@ -127,8 +124,8 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
   try {
-    const db = getDb();
-    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id) as
+    const db = await getDb();
+    const post = (await db.get("SELECT * FROM posts WHERE id = ?", id)) as
       | Post
       | undefined;
     if (!post) {

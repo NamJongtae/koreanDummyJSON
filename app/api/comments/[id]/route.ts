@@ -9,11 +9,11 @@ interface IParams {
 export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
-
-    const db = getDb();
-    const comment = db
-      .prepare("SELECT * FROM comments WHERE id = ?")
-      .get(id) as Comment | undefined;
+    const db = await getDb();
+    const comment = (await db.get(
+      "SELECT * FROM comments WHERE id = ?",
+      id
+    )) as Comment | undefined;
     if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -41,10 +41,11 @@ export async function PUT(req: NextRequest, { params }: IParams) {
     );
   }
   try {
-    const db = getDb();
-    const comment = db
-      .prepare("SELECT * FROM comments WHERE id = ?")
-      .get(id) as Comment | undefined;
+    const db = await getDb();
+    const comment = (await db.get(
+      "SELECT * FROM comments WHERE id = ?",
+      id
+    )) as Comment | undefined;
     if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -81,10 +82,11 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
     );
   }
   try {
-    const db = getDb();
-    const comment = db
-      .prepare("SELECT * FROM comments WHERE id = ?")
-      .get(id) as Comment | undefined;
+    const db = await getDb();
+    const comment = (await db.get(
+      "SELECT * FROM comments WHERE id = ?",
+      id
+    )) as Comment | undefined;
     if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -114,17 +116,18 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
   try {
-    const db = getDb();
-    const comment = db
-      .prepare("SELECT * FROM comments WHERE id = ?")
-      .get(id) as Comment | undefined;
+    const db = await getDb();
+    const comment = (await db.get(
+      "SELECT * FROM comments WHERE id = ?",
+      id
+    )) as Comment | undefined;
     if (!comment) {
       return NextResponse.json(
         { message: "댓글이 존재하지 않습니다. id 값을 확인해주세요." },
         { status: 404 }
       );
     }
-
+    
     return NextResponse.json(
       { message: `${id}번 댓글 삭제 성공` },
       { status: 200 }

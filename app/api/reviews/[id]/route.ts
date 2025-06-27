@@ -10,8 +10,8 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
-    const db = getDb();
-    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+    const db = await getDb();
+    const review = (await db.get("SELECT * FROM reviews WHERE id = ?", id)) as
       | Review
       | undefined;
 
@@ -48,8 +48,8 @@ export async function PUT(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = getDb();
-    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+    const db = await getDb();
+    const review = (await db.get("SELECT * FROM reviews WHERE id = ?", id)) as
       | Review
       | undefined;
     if (!review) {
@@ -93,9 +93,8 @@ export async function PATCH(req: NextRequest, { params }: IParams) {
   }
 
   try {
-    // DB에서 기존 리뷰 조회
-    const db = getDb();
-    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+    const db = await getDb();
+    const review = (await db.get("SELECT * FROM reviews WHERE id = ?", id)) as
       | Review
       | undefined;
     if (!review) {
@@ -131,8 +130,8 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
   const { id } = await params;
 
   try {
-    const db = getDb();
-    const review = db.prepare("SELECT * FROM reviews WHERE id = ?").get(id) as
+    const db = await getDb();
+    const review = (await db.get("SELECT * FROM reviews WHERE id = ?", id)) as
       | Review
       | undefined;
     if (!review) {
@@ -141,6 +140,7 @@ export async function DELETE(req: NextRequest, { params }: IParams) {
         { status: 404 }
       );
     }
+
     return NextResponse.json(
       { message: `${id}번 리뷰 삭제 성공` },
       { status: 200 }

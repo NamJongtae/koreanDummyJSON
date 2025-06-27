@@ -4,7 +4,7 @@ import { Comment } from "@/src/types/comment-type";
 
 export async function GET(req: NextRequest) {
   try {
-    const db = getDb();
+    const db = await getDb();
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
       message = "게시물 댓글 목록 조회 성공";
     }
 
-    const comments = db.prepare(query).all(...params) as Comment[];
+    const comments = (await db.all(query, ...params)) as Comment[];
 
     // 페이지네이션
     let offset: number | null = null;
@@ -85,24 +85,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const newComment: Comment = {
-      id: 1,
-      content,
-      createdAt: new Date().toISOString().replace("T", " ").slice(0, 19),
-      userId,
-      postId
-    };
+  const now = new Date().toISOString().replace("T", " ").slice(0, 19);
+  const newComment: Comment = {
+    id: 501,
+    content,
+    createdAt: now,
+    userId,
+    postId
+  };
 
-    return NextResponse.json(
-      {
-        message: "댓글 생성 성공",
-        comment: newComment
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "댓글 생성 실패" }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      message: "댓글 생성 성공",
+      comment: newComment
+    },
+    { status: 201 }
+  );
 }

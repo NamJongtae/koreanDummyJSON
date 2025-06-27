@@ -10,8 +10,8 @@ export async function GET(req: NextRequest, { params }: IParams) {
   try {
     const { id } = await params;
 
-    const db = getDb();
-    const post = db.prepare("SELECT * FROM posts WHERE id = ?").get(id);
+    const db = await getDb();
+    const post = await db.get("SELECT * FROM posts WHERE id = ?", id);
     if (!post) {
       return NextResponse.json(
         { message: "게시물이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -19,9 +19,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const comments = db
-      .prepare("SELECT * FROM comments WHERE postId = ?")
-      .all(id) as Comment[];
+    const comments = (await db.all(
+      "SELECT * FROM comments WHERE postId = ?",
+      id
+    )) as Comment[];
     const mappedComments = comments.map((c) => ({
       postId: c.postId,
       commentId: c.id,

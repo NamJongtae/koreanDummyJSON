@@ -17,8 +17,8 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const db = getDb();
-    const book = db.prepare("SELECT * FROM books WHERE id = ?").get(id);
+    const db = await getDb();
+    const book = await db.get("SELECT * FROM books WHERE id = ?", id);
     if (!book) {
       return NextResponse.json(
         { message: "책이 존재하지 않습니다. id 값을 확인해주세요." },
@@ -26,9 +26,10 @@ export async function GET(req: NextRequest, { params }: IParams) {
       );
     }
 
-    const reviews = db
-      .prepare("SELECT * FROM reviews WHERE bookId = ?")
-      .all(id) as Review[];
+    const reviews = (await db.all(
+      "SELECT * FROM reviews WHERE bookId = ?",
+      id
+    )) as Review[];
 
     return NextResponse.json(
       { message: "책 리뷰 목록 조회 성공", reviews },

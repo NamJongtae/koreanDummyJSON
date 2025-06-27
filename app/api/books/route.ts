@@ -4,8 +4,8 @@ import { Book } from "@/src/types/book-type";
 
 export async function GET(req: NextRequest) {
   try {
-    const db = getDb();
-    const books = db.prepare("SELECT * FROM books").all() as Book[];
+    const db = await getDb();
+    const books = (await db.all("SELECT * FROM books")) as Book[];
 
     const searchParams = req.nextUrl.searchParams;
     const page = searchParams.get("page");
@@ -70,25 +70,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  try {
-    const newBook: Book = {
-      id: 1,
-      author,
-      genre,
-      title,
-      publicationDate,
-      totalPage
-    };
+  const newBook: Book = {
+    id: 101,
+    author,
+    genre,
+    title,
+    publicationDate,
+    totalPage
+  };
 
-    return NextResponse.json(
-      {
-        message: "책 생성 성공",
-        book: newBook
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "책 생성 실패" }, { status: 500 });
-  }
+  return NextResponse.json(
+    {
+      message: "책 생성 성공",
+      book: newBook
+    },
+    { status: 201 }
+  );
 }

@@ -8,9 +8,9 @@ export async function GET(req: NextRequest) {
     const page = searchParams.get("page");
     let limit = searchParams.get("limit");
 
-    const db = getDb();
+    const db = await getDb();
     const totalUsers: number = (
-      db.prepare("SELECT COUNT(*) as count FROM users").get() as {
+      (await db.get("SELECT COUNT(*) as count FROM users")) as {
         count: number;
       }
     ).count;
@@ -34,8 +34,8 @@ export async function GET(req: NextRequest) {
 
     const users: User[] =
       values.length > 0
-        ? (db.prepare(sql).all(...values) as User[])
-        : (db.prepare(sql).all() as User[]);
+        ? ((await db.all(sql, ...values)) as User[])
+        : ((await db.all(sql)) as User[]);
 
     const response: {
       message: string;
