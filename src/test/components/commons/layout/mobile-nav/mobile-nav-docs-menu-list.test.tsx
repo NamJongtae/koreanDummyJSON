@@ -9,15 +9,16 @@ jest.mock("@/src/constants/constants", () => ({
 
 // next/link mock
 jest.mock("next/link", () => {
-  const MockLink = ({
-    href,
-    children,
-    ...props
-  }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  );
+  const MockLink = React.forwardRef<any, any>(function MockLink(
+    { href, children, prefetch, ...props },
+    ref
+  ) {
+    return (
+      <a href={href} ref={ref} {...props}>
+        {children}
+      </a>
+    );
+  });
   MockLink.displayName = "MockLink";
   return MockLink;
 });
