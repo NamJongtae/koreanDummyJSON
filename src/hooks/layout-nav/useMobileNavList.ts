@@ -15,12 +15,12 @@ export default function useMobileNavList() {
     lastMenuPrevRef: lastDocsMenuPrevRef,
     lastMenuRef: lastDocsMenuRef,
     setMenuListRef: setDocsMenuListRef,
-    handlMenuFocusOnTab,
+    handleMenuFocusOnTab,
     handleKeyDownEsc
   } = useKeyboardFocusMenu({ menuItems: DOCS_MENU });
 
   const handleDocsMenuFocusOnTab = (e: any, index: number) =>
-    handlMenuFocusOnTab(e, index, {
+    handleMenuFocusOnTab(e, index, {
       firstMenuRef: firstNavMenuRef,
       lastMenuPrevRef: lastDocsMenuPrevRef,
       lastMenuRef: lastNavMenuRef

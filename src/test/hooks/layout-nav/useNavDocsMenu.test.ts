@@ -32,7 +32,7 @@ describe("useNavDocsMenu hook test", () => {
     });
     mockUseKeyboardFocusMenu.mockReturnValue({
       setMenuListRef: mockSetMenuListRef,
-      handlMenuFocusOnTab: mockHandlMenuFocusOnTab,
+      handleMenuFocusOnTab: mockHandlMenuFocusOnTab,
       handleKeyDownEsc: mockHandleKeyDownEsc
     });
   });
