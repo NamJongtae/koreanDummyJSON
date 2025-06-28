@@ -24,7 +24,7 @@ describe("useKeyboardFocusMenu hook test", () => {
     expect(result.current.lastMenuPrevRef).toEqual({ current: null });
     expect(result.current.lastMenuRef).toEqual({ current: null });
     expect(typeof result.current.setMenuListRef).toBe("function");
-    expect(typeof result.current.handlMenuFocusOnTab).toBe("function");
+    expect(typeof result.current.handleMenuFocusOnTab).toBe("function");
     expect(typeof result.current.handleKeyDownEsc).toBe("function");
   });
 
@@ -37,25 +37,25 @@ describe("useKeyboardFocusMenu hook test", () => {
     expect(result.current.setMenuListRef(2)).toBe(result.current.lastMenuRef);
   });
 
-  it("handlMenuFocusOnTab 호출 시 첫 인덱스(0)에서 optimizationTabFocus를 호출한다", () => {
+  it("handleMenuFocusOnTab 호출 시 첫 인덱스(0)에서 optimizationTabFocus를 호출한다", () => {
     const { result } = renderHook(() => useKeyboardFocusMenu({ menuItems }));
     const fakeEvent = {
       preventDefault: jest.fn(),
       shiftKey: false,
       keyCode: 9
     } as unknown as React.KeyboardEvent<HTMLButtonElement>;
-    result.current.handlMenuFocusOnTab(fakeEvent, 0);
+    result.current.handleMenuFocusOnTab(fakeEvent, 0);
     expect(mockOptimizationTabFocus).toHaveBeenCalled();
   });
 
-  it("handlMenuFocusOnTab 호출 시 마지막 인덱스(menuItems.length - 1)에서 optimizationTabFocus를 호출한다", () => {
+  it("handleMenuFocusOnTab 호출 시 마지막 인덱스(menuItems.length - 1)에서 optimizationTabFocus를 호출한다", () => {
     const { result } = renderHook(() => useKeyboardFocusMenu({ menuItems }));
     const fakeEvent = {
       preventDefault: jest.fn(),
       shiftKey: false,
       keyCode: 9
     } as unknown as React.KeyboardEvent<HTMLButtonElement>;
-    result.current.handlMenuFocusOnTab(fakeEvent, menuItems.length - 1);
+    result.current.handleMenuFocusOnTab(fakeEvent, menuItems.length - 1);
     expect(mockOptimizationTabFocus).toHaveBeenCalled();
   });
 

@@ -28,7 +28,7 @@ export default function useKeyboardFocusMenu({
     return null;
   };
 
-  const handlMenuFocusOnTab = (
+  const handleMenuFocusOnTab = (
     e: React.KeyboardEvent<HTMLAnchorElement | HTMLButtonElement>,
     index: number,
     customTarget?: {
@@ -71,7 +71,7 @@ export default function useKeyboardFocusMenu({
     lastMenuPrevRef,
     lastMenuRef,
     setMenuListRef,
-    handlMenuFocusOnTab,
+    handleMenuFocusOnTab,
     handleKeyDownEsc
   };
 }

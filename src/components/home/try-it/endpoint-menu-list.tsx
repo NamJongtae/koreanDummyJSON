@@ -14,7 +14,7 @@ export default function EndpointMenuList({
   toggleEndpointMenu,
   endpointMenuRef
 }: IProps) {
-  const { setMenuListRef, handlMenuFocusOnTab } = useKeyboardFocusMenu({
+  const { setMenuListRef, handleMenuFocusOnTab } = useKeyboardFocusMenu({
     menuItems: ENDPOINTS
   });
 
@@ -34,7 +34,7 @@ export default function EndpointMenuList({
           <li key={endpoint}>
             <button
               onClick={() => selectEndpoint(endpoint)}
-              onKeyDown={(e) => handlMenuFocusOnTab(e, index)}
+              onKeyDown={(e) => handleMenuFocusOnTab(e, index)}
               ref={
                 setMenuListRef(
                   index
