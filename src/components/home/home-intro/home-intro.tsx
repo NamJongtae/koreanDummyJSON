@@ -1,9 +1,7 @@
 "use client";
 
 import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
-import Image from "next/image";
-import Link from "next/link";
-import ApiRequestCount from "./api-request-count";
+import HomeIntroContent from "./home-intro-content";
 
 export default function HomeIntro() {
   const { ref, isVisible } = useSectionVisibility();
@@ -19,89 +17,7 @@ export default function HomeIntro() {
         <span className="text-gray-300">{"{ "}</span>Korean Dummy JSON{" "}
         <span className="text-gray-300">{" }"}</span>
       </h2>
-      <div className="relative px-5 py-6 sm:px-10 sm:py-8 md:px-14 md:py-10 border-8 border-double">
-        <Image
-          className="absolute left-3 -top-4 sm:-top-5 lg:-top-6  bg-white w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] lg:w-[50px] lg:h-[50px]"
-          src="/icons/double-quotes-left-icon.svg"
-          alt='"'
-          width="50"
-          height="50"
-        />
-        <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
-          <span className="font-medium">Korean Dummy JSON</span>은 한국어 기반의
-          더미 데이터를 제공하기 위해 제작된 프로젝트로,{" "}
-          <Link
-            className="text-blue-600 betterhover:hover:underline underline-offset-2"
-            href={"https://jsonplaceholder.typicode.com/"}
-          >
-            JSONPlaceholder
-          </Link>
-          에서 영감을 받아 개발되었습니다.
-        </p>
-        <p className="text-base  sm:text-lg md:text-xl mb-3 text-gray-500">
-          한국어로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를
-          제공 받을 수 있습니다.
-        </p>
-        <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
-          추가로 JWT 기반 로그인 및 인증/인가 더미 API 및 동적 더미 이미지 API가
-          제공됩니다.
-        </p>
-        <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
-          GET, POST, PUT, PATCH, DELETE 요청을 보내고 직접 테스트 해보고 학습해
-          보세요.
-        </p>
-        <p className="text-base sm:text-lg md:text-xl mb-6 text-gray-500">
-          <Link
-            href={"https://www.npmjs.com/package/korean-dummy-json-fetcher"}
-            className="text-blue-600 betterhover:hover:underline underline-offset-2 mr-1"
-          >
-            Korean Dummy JSON Fetcher
-          </Link>
-          라이브러리를 통해 직접 비동기 API 호출 없이 더미 데이터를 쉽게 사용할
-          수 있습니다.
-        </p>
-        <p id="tags" className="sr-only">
-          #korean json, #dummy json, #한국어 더미 데이터
-        </p>
-        <Image
-          className="absolute right-3 -bottom-4 sm:-bottom-5 lg:-bottom-6 bg-white w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] lg:w-[50px] lg:h-[50px]"
-          src="/icons/double-quotes-right-icon.svg"
-          alt=""
-          width="50"
-          height="50"
-        />
-
-        <div className="flex flex-wrap gap-6 justify-between items-center">
-          <ApiRequestCount />
-
-          <div className="flex flex-col gap-2 items-start">
-            <Link
-              href={"https://github.com/NamJongtae/korean_dummy_JSON"}
-              className="inline-flex items-center gap-2 rounded-full border px-2 sm:px-3 py-2 transition-colors betterhover:hover:bg-gray-100"
-            >
-              <Image
-                src={"/icons/github-icon.svg"}
-                alt=""
-                width={32}
-                height={32}
-              />
-              GitHub
-            </Link>
-            <Link
-              href={"https://www.npmjs.com/package/korean-dummy-json-fetcher"}
-              className="inline-flex items-center gap-2 rounded-full border px-2 sm:px-3 py-2 transition-colors betterhover:hover:bg-gray-100"
-            >
-              <Image
-                src={"/icons/npm-icon.svg"}
-                alt=""
-                width={26}
-                height={26}
-              />
-              Korean Dummy JSON Fetcher
-            </Link>
-          </div>
-        </div>
-      </div>
+      <HomeIntroContent />
     </section>
   );
 }
