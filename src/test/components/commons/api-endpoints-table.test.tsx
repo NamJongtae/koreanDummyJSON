@@ -6,10 +6,12 @@ jest.mock("next/link", () => {
   const MockLink = ({
     href,
     children,
+    prefetch,
     ...props
   }: {
     href: string;
     children: React.ReactNode;
+    prefetch?: boolean;
     [key: string]: unknown;
   }) => (
     <a href={href} {...props}>
