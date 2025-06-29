@@ -1,8 +1,7 @@
-import Image from "next/image";
 import MobileNavDocsMenu from "./mobile-nav-docs-menu";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import useMobileNavList from "@/src/hooks/layout-nav/useMobileNavList";
+import MobileNavMenuLink from "./mobile-nav-menu-link";
 
 interface IProps {
   toggleNavMenu: () => void;
@@ -31,41 +30,29 @@ export default function MobileNavList({ toggleNavMenu }: IProps) {
       onKeyDown={(e) => handleKeyDownEsc(e, toggleNavMenu)}
     >
       <li>
-        <Link
-          className={`${
-            pathname === "/" ? "text-blue-400" : undefined
-          } inline-flex items-center gap-2 hover-focus-effect px-4 py-2`}
-          href={"/"}
-          onKeyDown={handleHomeLinkFocusOnTab}
+        <MobileNavMenuLink
+          href="/"
+          iconSrc="/icons/home-icon.svg"
+          iconAlt="home"
+          isActive={pathname === "/"}
           onClick={toggleNavMenu}
-          ref={firstNavMenuRef}
+          refProp={firstNavMenuRef}
+          onKeyDown={handleHomeLinkFocusOnTab}
         >
-          <Image
-            src={"/icons/home-icon.svg"}
-            alt="home"
-            width={24}
-            height={24}
-          />
           HOME
-        </Link>
+        </MobileNavMenuLink>
       </li>
       <li>
-        <Link
-          className={`${
-            pathname === "/guide" ? "text-blue-400" : undefined
-          } inline-flex items-center gap-2 px-4 py-2 hover-focus-effect`}
-          href={"/guide"}
+        <MobileNavMenuLink
+          href="/guide"
+          iconSrc="/icons/guide-icon.svg"
+          iconAlt="guide"
+          isActive={pathname === "/guide"}
           onClick={toggleNavMenu}
-          ref={lastNavMenuPreviousRef}
+          refProp={lastNavMenuPreviousRef}
         >
-          <Image
-            src={"/icons/guide-icon.svg"}
-            alt="guide"
-            width={24}
-            height={24}
-          />
           GUIDE
-        </Link>
+        </MobileNavMenuLink>
       </li>
       <li>
         <MobileNavDocsMenu
