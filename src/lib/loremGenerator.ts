@@ -34,7 +34,7 @@ export function generateWord(wordLen: number = 3): string {
  * 지정한 길이만큼 한글 문장을 생성합니다.
  */
 export function generateSentence(sentenceLen: number = 30): string {
-  const ending = getRandom(lorem.verbs.concat(lorem.adjectives)) + ".";
+  const ending = getRandom(lorem.verbs.concat(lorem.adjectives));
   const endingLen = ending.length;
   const remainLen = sentenceLen - endingLen;
   let body = "";
@@ -52,6 +52,7 @@ export function generateSentence(sentenceLen: number = 30): string {
       const particle2 = getRandom(lorem.particles);
       part = `${noun1}${particle1} ${noun2}${particle2} `;
     }
+
     const remain = remainLen - body.length;
     if (part.length > remain) {
       body += part.slice(0, remain);
@@ -59,7 +60,8 @@ export function generateSentence(sentenceLen: number = 30): string {
     }
     body += part;
   }
-  return body + ending;
+
+  return (body + ending).slice(0, sentenceLen);
 }
 
 /**
@@ -70,25 +72,40 @@ export function generateParagraph(
   sentenceLen: number
 ): string {
   let paragraph = "";
-  while (paragraph.length < paragraphLen) {
+
+  while (paragraph.length < paragraphLen - 1) {
     const sentence = generateSentence(sentenceLen);
-    if (paragraph.length + sentence.length > paragraphLen) {
-      // 마지막 문장도 앞에 문장이 있으면 반드시 공백을 붙여서 자르기
-      if (paragraph) {
-        const remain = paragraphLen - paragraph.length;
-        paragraph += " " + sentence.slice(0, remain - 1); // -1은 공백 포함
-      } else {
-        paragraph += sentence.slice(0, paragraphLen);
+    const needsSpace = paragraph.length > 0 ? 1 : 0;
+    const remain = paragraphLen - 1 - paragraph.length;
+
+    if (remain <= needsSpace) break;
+    
+    if (remain <= sentence.length + needsSpace) {
+      // 마지막 문장: 남은 공간만큼 자르되, 공백으로 끝나면 조정
+      if (needsSpace) {
+        paragraph += " ";
       }
+      const remainAfterSpace = paragraphLen - 1 - paragraph.length;
+      let slicedSentence = sentence.slice(0, remainAfterSpace);
+      
+      // 공백으로 끝나면 공백 제거하고 한 글자 더 추가
+      if (slicedSentence.endsWith(' ') && remainAfterSpace < sentence.length) {
+        slicedSentence = sentence.slice(0, remainAfterSpace + 1).trimEnd();
+      }
+      
+      paragraph += slicedSentence;
       break;
+    } else {
+      // 공백 포함해서 전체 문장 추가
+      paragraph += (needsSpace ? " " : "") + sentence;
     }
-    paragraph += (paragraph ? " " : "") + sentence;
   }
-  // 문단 마지막이 마침표로 끝나지 않으면 추가
-  if (!paragraph.trim().endsWith(".")) {
-    paragraph = paragraph.trim() + ".";
-  }
-  return paragraph;
+
+  // 마지막에 마침표 붙이기
+  paragraph += ".";
+
+  // 혹시라도 길이가 넘으면 자르기
+  return paragraph.slice(0, paragraphLen);
 }
 
 /**
