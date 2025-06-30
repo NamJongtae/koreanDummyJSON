@@ -36,7 +36,7 @@ export default function MobileNavList({ toggleNavMenu }: IProps) {
           iconAlt="home"
           isActive={pathname === "/"}
           onClick={toggleNavMenu}
-          refProp={firstNavMenuRef}
+          ref={firstNavMenuRef}
           onKeyDown={handleHomeLinkFocusOnTab}
         >
           HOME
@@ -60,7 +60,7 @@ export default function MobileNavList({ toggleNavMenu }: IProps) {
           iconAlt="guide"
           isActive={pathname === "/guide"}
           onClick={toggleNavMenu}
-          refProp={lastNavMenuPreviousRef}
+          ref={lastNavMenuPreviousRef}
         >
           GUIDE
         </MobileNavMenuLink>
