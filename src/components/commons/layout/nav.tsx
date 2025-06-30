@@ -1,14 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import MobileNavBtn from "./mobile-nav/mobile-nav-btn";
-import { usePathname } from "next/navigation";
 import NavDocsMenu from "./nav-docs-menu";
 import NavLink from "./nav-link";
 
 export default function Nav() {
-  const pathname = usePathname();
-
   return (
     <>
       <nav className="hidden md:block mr-10">
