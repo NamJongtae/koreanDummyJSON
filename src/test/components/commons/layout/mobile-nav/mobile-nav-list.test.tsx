@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import MobileNavList from "@/src/components/commons/layout/mobile-nav/mobile-nav-list";
 
-// next/image mock
 jest.mock("next/image", () => {
   const MockImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <img data-testid="mock-image" {...props} />
@@ -11,9 +10,8 @@ jest.mock("next/image", () => {
   return MockImage;
 });
 
-// next/link mock
 jest.mock("next/link", () => {
-  const MockLink = React.forwardRef<any, any>(function MockLink(
+  const MockLink = React.forwardRef<HTMLAnchorElement, any>(function MockLink(
     { href, children, prefetch, ...props },
     ref
   ) {
@@ -27,16 +25,13 @@ jest.mock("next/link", () => {
   return MockLink;
 });
 
-// usePathname mock
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn()
 }));
 
-// useMobileNavList mock
 jest.mock("@/src/hooks/layout-nav/useMobileNavList", () => jest.fn());
 
 const mockMobileNavDocsMenu = jest.fn();
-// MobileNavDocsMenu mock
 jest.mock(
   "@/src/components/commons/layout/mobile-nav/mobile-nav-docs-menu",
   () => {
@@ -52,6 +47,30 @@ jest.mock(
 
 import { usePathname } from "next/navigation";
 import useMobileNavList from "@/src/hooks/layout-nav/useMobileNavList";
+
+const mockMobileNavMenuLink = jest.fn();
+jest.mock(
+  "@/src/components/commons/layout/mobile-nav/mobile-nav-menu-link",
+  () => {
+    const MockMobileNavMenuLink = React.forwardRef<HTMLAnchorElement, any>(
+      (props: any, ref) => {
+        mockMobileNavMenuLink({ ...props, ref });
+        return (
+          <a
+            data-testid="mock-mobile-nav-menu-link"
+            onClick={props.onClick}
+            onKeyDown={props.onKeyDown}
+            ref={ref}
+          >
+            {props.children}
+          </a>
+        );
+      }
+    );
+    MockMobileNavMenuLink.displayName = "MockMobileNavMenuLink";
+    return MockMobileNavMenuLink;
+  }
+);
 
 describe("MobileNavList component test", () => {
   const toggleNavMenu = jest.fn();
@@ -75,35 +94,64 @@ describe("MobileNavList component test", () => {
     (useMobileNavList as jest.Mock).mockReturnValue(mockNavList);
   });
 
-  it("HOME, GUIDE, DOCS 메뉴와 아이콘이 렌더링된다", () => {
+  it("MobileNavMenuLink가 올바른 props와 함께 3번 렌더링된다", () => {
     render(<MobileNavList toggleNavMenu={toggleNavMenu} />);
-    expect(screen.getByText("HOME")).toBeInTheDocument();
-    expect(screen.getByText("GUIDE")).toBeInTheDocument();
-    expect(screen.getByTestId("mock-docs-menu")).toBeInTheDocument();
-    expect(screen.getAllByTestId("mock-image")).toHaveLength(2); // HOME, GUIDE 아이콘
+
+    // HOME 메뉴 검증
+    expect(mockMobileNavMenuLink).toHaveBeenCalledWith(
+      expect.objectContaining({
+        href: "/",
+        iconSrc: "/icons/home-icon.svg",
+        iconAlt: "home",
+        isActive: true,
+        onClick: toggleNavMenu,
+        ref: mockNavList.firstNavMenuRef,
+        onKeyDown: mockNavList.handleHomeLinkFocusOnTab,
+        children: "HOME"
+      })
+    );
+
+    // LOREM 메뉴 검증
+    expect(mockMobileNavMenuLink).toHaveBeenCalledWith(
+      expect.objectContaining({
+        href: "/lorem",
+        iconSrc: "/icons/lorem-icon.svg",
+        iconAlt: "lorem",
+        isActive: false,
+        onClick: toggleNavMenu,
+        children: "LOREM"
+      })
+    );
+
+    // GUIDE 메뉴 검증
+    expect(mockMobileNavMenuLink).toHaveBeenCalledWith(
+      expect.objectContaining({
+        href: "/guide",
+        iconSrc: "/icons/guide-icon.svg",
+        iconAlt: "guide",
+        isActive: false,
+        onClick: toggleNavMenu,
+        ref: mockNavList.lastNavMenuPreviousRef,
+        children: "GUIDE"
+      })
+    );
+
+    expect(mockMobileNavMenuLink).toHaveBeenCalledTimes(3);
   });
 
-  it("/ 경로일 때 HOME 링크에 파란색 스타일 클래스가 적용된다", () => {
+  it("HOME, LOREM, GUIDE 클릭 시 toggleNavMenu가 호출된다", () => {
     render(<MobileNavList toggleNavMenu={toggleNavMenu} />);
-    expect(screen.getByText("HOME").closest("a")).toHaveClass("text-blue-400");
-  });
-
-  it("/guide 경로일 때 GUIDE 링크에 파란색 스타일 클래스가 적용된다", () => {
-    (usePathname as jest.Mock).mockReturnValue("/guide");
-    render(<MobileNavList toggleNavMenu={toggleNavMenu} />);
-    expect(screen.getByText("GUIDE").closest("a")).toHaveClass("text-blue-400");
-  });
-
-  it("HOME, GUIDE 클릭 시 toggleNavMenu가 호출된다", () => {
-    render(<MobileNavList toggleNavMenu={toggleNavMenu} />);
-    fireEvent.click(screen.getByText("HOME").closest("a")!);
-    fireEvent.click(screen.getByText("GUIDE").closest("a")!);
-    expect(toggleNavMenu).toHaveBeenCalledTimes(2);
+    fireEvent.click(screen.getAllByTestId("mock-mobile-nav-menu-link")[0]);
+    fireEvent.click(screen.getAllByTestId("mock-mobile-nav-menu-link")[1]);
+    fireEvent.click(screen.getAllByTestId("mock-mobile-nav-menu-link")[2]);
+    expect(toggleNavMenu).toHaveBeenCalledTimes(3);
   });
 
   it("HOME 링크 keyDown 시 handleHomeLinkFocusOnTab이 호출된다", () => {
     render(<MobileNavList toggleNavMenu={toggleNavMenu} />);
-    fireEvent.keyDown(screen.getByText("HOME").closest("a")!, { key: "Tab" });
+    fireEvent.keyDown(screen.getAllByTestId("mock-mobile-nav-menu-link")[0], {
+      key: "Tab"
+    });
     expect(mockNavList.handleHomeLinkFocusOnTab).toHaveBeenCalled();
   });
 
