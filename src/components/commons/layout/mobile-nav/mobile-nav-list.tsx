@@ -44,6 +44,17 @@ export default function MobileNavList({ toggleNavMenu }: IProps) {
       </li>
       <li>
         <MobileNavMenuLink
+          href="/lorem"
+          iconSrc="/icons/lorem-icon.svg"
+          iconAlt="lorem"
+          isActive={pathname === "/lorem"}
+          onClick={toggleNavMenu}
+        >
+          LOREM
+        </MobileNavMenuLink>
+      </li>
+      <li>
+        <MobileNavMenuLink
           href="/guide"
           iconSrc="/icons/guide-icon.svg"
           iconAlt="guide"
