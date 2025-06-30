@@ -11,7 +11,7 @@ describe("QuoteIcon 컴포넌트", () => {
     render(<QuoteIcon position="top" />);
     const img = screen.getByTestId("mock-image");
     expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute("src", "/icons/double-quotes-left-icon.svg");
+    expect(img).toHaveAttribute("src", "/icons/double-quotes-icon.svg");
     expect(img).toHaveAttribute("alt", '"');
     expect(img).toHaveAttribute("width", "50");
     expect(img).toHaveAttribute("height", "50");
@@ -24,12 +24,13 @@ describe("QuoteIcon 컴포넌트", () => {
     render(<QuoteIcon position="bottom" />);
     const img = screen.getByTestId("mock-image");
     expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute("src", "/icons/double-quotes-left-icon.svg");
+    expect(img).toHaveAttribute("src", "/icons/double-quotes-icon.svg");
     expect(img).toHaveAttribute("alt", '"');
     expect(img).toHaveAttribute("width", "50");
     expect(img).toHaveAttribute("height", "50");
     expect(img.className).toContain("right-3");
     expect(img.className).toContain("-bottom-4");
+    expect(img.className).toContain("rotate-180");
     expect(img.className).toContain("absolute");
   });
 });
