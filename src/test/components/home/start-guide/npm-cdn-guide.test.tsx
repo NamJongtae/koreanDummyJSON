@@ -11,8 +11,8 @@ const handleJsdelivrCopy = jest.fn();
 const handleUnpkgCopy = jest.fn();
 jest.mock("@/src/hooks/commons/useCopy", () => ({
   __esModule: true,
-  default: (value: string) => {
-    if (value.includes("jsdelivr")) {
+  default: ({ target }: { target: string}) => {
+    if (target.includes("jsdelivr")) {
       return { isCopied: false, handleCopy: handleJsdelivrCopy };
     }
     return { isCopied: true, handleCopy: handleUnpkgCopy };
