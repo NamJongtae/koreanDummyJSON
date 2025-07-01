@@ -23,7 +23,7 @@ describe("HomeIntroDescription component test", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /한글 로렘 입숨 API가 새롭게 추가되었습니다. API를 직접 사용하지 않아도 LOREM 페이지에서 한글 로렘 입숨을 바로 만들 수 있습니다. 문단, 문장, 단어 모드를 선택하고 원하는 개수와 글자 수를 지정해 한글 로렘 입숨을 생성해보세요./
+        /한글 로렘 입숨 API와 한글 로렘 생성기 기능이 새롭게 추가되었습니다. API를 직접 사용하지 않아도 LOREM 페이지에서 한글 로렘 입숨을 바로 만들 수 있습니다. 문단, 문장, 단어 모드를 선택하고 원하는 개수와 글자 수를 지정해 한글 로렘 입숨을 생성해보세요./
       )
     ).toBeInTheDocument();
     expect(
@@ -57,7 +57,9 @@ describe("HomeIntroDescription component test", () => {
 
     // sr-only 태그
     expect(
-      screen.getByText("#korean json, #dummy json, #한국어 더미 데이터")
+      screen.getByText(
+        "#korean json, #dummy json, #한국어 더미 데이터, #한글 로렘 생성기, #한글 로렘 입숨, #로렘 생성기"
+      )
     ).toBeInTheDocument();
   });
 });
