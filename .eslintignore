@@ -2,3 +2,4 @@ node_modules
 next.config.mjs
 .next
 jest.*
+next-sitemap.config.js
