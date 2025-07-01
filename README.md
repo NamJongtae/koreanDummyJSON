@@ -30,6 +30,8 @@
 
 추가로 JWT 기반 로그인 및 인증/인가 더미 API 및 동적 더미 이미지 생성 API가 제공됩니다.
 
+또한, 한글 로렘 입숨 생성 API가 제공되며, 사이트에서 한글 로렘 생성기를 통해 직접 한글 로렘을 생성할 수도 있습니다.
+
 가입할 필요없이 간편하게 바로 사용할 수 있습니다.
 
 `GET`, `POST`, `PUT`, `PATCH`, `DELETE` 요청을 보내고 직접 테스트 해보고 학습해 보세요.
@@ -48,18 +50,29 @@
 
 #### 설치
 
+**npm**
 ```bash
 npm install korean-dummy-json-fetcher
+```
+
+**yarn**
+```bash
+yarn add korean-dummy-json-fetcher
+```
+
+**pnpm**
+```bash
+pnpm add korean-dummy-json-fetcher
 ```
 
 #### CDN
 
 ```html
-<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.0.8"></script>
+<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.1.0"></script>
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.0.8"></script>
+<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.1.0"></script>
 ```
 
 <br/>
@@ -86,6 +99,7 @@ npm install korean-dummy-json-fetcher
 | <a href="https://koreandummyjson.site/api/reviews">/reviews</a>   | 리뷰 500개            |
 | <a href="/#">/auth</a>                                            | 로그인 및 인증/인가   |
 | <a href="https://koreandummyjson.site/api/image">/image</a>       | 동적 더미 이미지 생성 |
+| <a href="https://koreandummyjson.site/api/lorem">/lorem</a>     | 한글 로렘 입숨 생성|
 
 <br/>
 
@@ -447,6 +461,121 @@ fetch("https://koreandummyjson.site/api/posts/1/comments")
 
 <br/>
 
+#### 10 ) 로그인
+
+```javascript
+fetch("https://koreandummyjson.site/api/auth/login", {
+  method: "POST",
+  body: JSON.stringify({
+    "id": "test",
+    "password": "1234",
+    "ATExp": 600,
+    "RTExp": 3600
+}),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error fetching data:', error));
+```
+
+결과
+
+```json
+{
+  "message": "로그인 성공",
+  "accessToken": "accessToken",
+  "refreshToken": "refreshToken"
+}
+```
+
+<br/>
+
+#### 11 ) accessToken를 통해 유저 조회
+```javascript
+fetch("https://koreandummyjson.site/api/auth/user", {
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer accessToken 입력"
+  }
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error fetching data:', error));
+```
+
+결과
+
+```json
+{
+  "message": "토큰 인증 성공",
+  "userId": "test"
+}
+```
+
+<br/>
+
+#### 12 ) accessToken 재발급
+
+```javascript
+fetch("https://koreandummyjson.site/api/auth/refresh", {
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer refershToken 입력"
+  }
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error fetching data:', error));
+```
+
+결과
+
+```json
+{
+  "message": "accessToken 재발급 성공",
+  "accessToken": "accessToken"
+}
+```
+
+<br/>
+
+#### 13 ) 동적 더미 이미지 생성
+
+```javascript
+fetch("https://koreandummyjson.site/api/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE")
+  .then(response => response.blob())
+  .then(blob => console.log(blob))
+  .catch(error => console.error('Error fetching blob:', error));
+```
+
+결과
+
+<img src="https://koreandummyjson.site/api/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE">
+
+<br/>
+
+#### 14 ) 한글 로렘 입숨 생성
+
+```javascript
+fetch("https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200")
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error fetching data:', error));
+```
+
+결과
+
+```json
+{
+  "result": "알림처럼 인터넷을 문서와도 검색로서 사용자마저호화롭다. 의자로써 여성에 치약께는 멘토에서도 쿠션께 접속께쓸다. 렌즈과도 초등학생라도 포장께 주전자만큼은 잘라내기썰다. 연수밖에는 다리미판랑 식기세척기에서 정렬마저 호화롭다. 복학생께는 카운터한테서 멘토이라도 모바일께는 총명하다. 운전사이 명함은 청중만큼은 구독치고는 사진이라운동하다. 서류으로 연수마저는 꽃커.\n\n팔로우도 결제정도는 검색에서는 외할머니커녕 방평온하다. 바닥따라는 카드마냥 농구과 바닥이랑 노트북쯤은불경하다. 삼촌나마 교육로 시장와는 커뮤니티하고 동기화이약속하다. 위치의 회원가입나마 연구원에는 목도리에 카메내성적이다. 경품으로 커튼께도 첨부든가 여행마저 학생보다 풍성하다. 어린이로써 충전기와는 판매자에 환경설정이나는구체적이다. 유통사까지 태그만은 재고."
+}
+```
+
+<br/>
+
 ### 📖 Pagination Endpoints
 
 아래와 같은 페이지네이션 endpoints를 제공합니다.
@@ -554,3 +683,4 @@ fetch("https://koreandummyjson.site/api/posts/1/comments")
 | [/auth/user](https://koreandummyjson.site/api/auth/user)                                                                   | GET    | 유저 조회               |
 | [/auth/refresh](https://koreandummyjson.site/api/auth/refresh)                                                             | GET    | 토큰 재발급             |
 | [/image?size={size}&bgColor={bgColor}&text={text}&ext={ext}&textColor={textColor}](https://koreandummyjson.site/api/image) | GET    | 동적 더미 이미지 생성   |
+| [/lorem?mode={mode}&count={count}&length={length}](https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200) | GET |한글 로렘 입숨 생성| 
