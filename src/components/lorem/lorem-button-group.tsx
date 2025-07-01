@@ -2,8 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import GenerateButton from "./generate-button";
 import CopyButton from "./copy-button";
 import ResetButton from "./reset-button";
-import useCopy from "@/src/hooks/commons/useCopy";
-import useResetLorem  from "@/src/hooks/lorem/useResetLorem";
+import useResetLorem from "@/src/hooks/lorem/useResetLorem";
 
 interface IProps {
   result: string;
@@ -22,7 +21,6 @@ const LoremButtonGroup = ({
   setResult,
   onGenerate
 }: IProps) => {
-  const { isCopied, handleCopy } = useCopy({target: result, timer: 1200});
   const { handleReset } = useResetLorem({
     mode,
     resetByMode,
@@ -33,7 +31,7 @@ const LoremButtonGroup = ({
     <div className="flex justify-between items-center mb-1 gap-2">
       <GenerateButton onGenerate={onGenerate} />
       <div className="flex gap-2">
-        <CopyButton copied={isCopied} onCopy={handleCopy} disabled={!result} />
+        <CopyButton result={result} disabled={!result} />
         <ResetButton onReset={handleReset} />
       </div>
     </div>
