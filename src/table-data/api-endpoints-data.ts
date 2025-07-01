@@ -290,11 +290,21 @@ export const API_ENDPOINT_DATA = [
     method: "GET",
     action: "토큰 재발급"
   },
+
+  // image endpoints
   {
     endpoint:
       "/image?size={size}&bgColor={bgColor}&text={text}&ext={ext}&textColor={textColor}",
     url: "/image?size=500&bgColor=2E64FE&text=KoreanDummyJSON&ext=jpg&textColor=FFFFFF",
     method: "GET",
     action: "동적 이미지 생성"
+  },
+
+  // lorem endpoints
+  {
+    endpoint: "/lorem?mode={mode}&count={count}&length={length}",
+    url: "/lorem?mode=p&count=2&length=200",
+    method: "GET",
+    action: "한글 로렘 입숨 생성"
   }
 ];
