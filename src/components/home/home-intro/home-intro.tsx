@@ -1,6 +1,6 @@
 "use client";
 
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility  from "@/src/hooks/commons/useSectionVisibility";
 import HomeIntroContent from "./home-intro-content";
 
 export default function HomeIntro() {

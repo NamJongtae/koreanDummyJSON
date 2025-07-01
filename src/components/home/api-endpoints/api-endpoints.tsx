@@ -1,6 +1,6 @@
 "use client";
 
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility  from "@/src/hooks/commons/useSectionVisibility";
 import ApiEndPointsTable from "../../commons/api-endpoints-table";
 import { API_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 

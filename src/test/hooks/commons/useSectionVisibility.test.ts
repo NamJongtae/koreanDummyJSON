@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react";
-import { useSectionVisibility } from "../../../hooks/commons/useSectionVisibility";
+import useSectionVisibility from "../../../hooks/commons/useSectionVisibility";
 
 describe("useSectionVisibility hook test", () => {
   let originalIntersectionObserver: typeof window.IntersectionObserver;

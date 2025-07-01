@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import HomeIntro from "@/src/components/home/home-intro/home-intro";
 import ApiRequestCount from "@/src/components/home/home-intro/api-request-count";
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 
 jest.mock("@/src/hooks/commons/useSectionVisibility");
 jest.mock("@/src/components/home/home-intro/api-request-count");

@@ -5,7 +5,7 @@ import {
   MAX_WORD
 } from "@/src/lib/loremGenerator";
 
-export function useLoremOptions() {
+export default function useLoremOptions() {
   const [mode, setMode] = useState<"paragraph" | "sentence" | "word">(
     "paragraph"
   );

@@ -1,12 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import ApiEndpoints from "@/src/components/home/api-endpoints/api-endpoints";
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 import { API_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 import ApiEndPointsTable from "@/src/components/commons/api-endpoints-table";
 
-jest.mock("@/src/hooks/commons/useSectionVisibility", () => ({
-  useSectionVisibility: jest.fn()
-}));
+jest.mock("@/src/hooks/commons/useSectionVisibility");
 jest.mock("@/src/components/commons/api-endpoints-table");
 
 describe("ApiEndpoints component test", () => {

@@ -5,14 +5,13 @@ import { MobileNavContext } from "@/src/store/mobile-nav-provider";
 
 // useThrottle mock
 jest.mock("@/src/hooks/commons/useThrottle", () => ({
-  useThrottle: () => (fn: any) => fn
+  __esModule: true,
+  default: () => (fn: any) => fn
 }));
 
 // MobileNavList mock
 jest.mock("@/src/components/commons/layout/mobile-nav/mobile-nav-list", () => {
-  const MockNavList = () => (
-    <div data-testid="mock-nav-list">MockNavList</div>
-  );
+  const MockNavList = () => <div data-testid="mock-nav-list">MockNavList</div>;
   MockNavList.displayName = "MockNavList";
   return MockNavList;
 });

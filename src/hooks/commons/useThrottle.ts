@@ -1,6 +1,6 @@
 import { useCallback, useRef } from "react";
 
-export const useThrottle = () => {
+const useThrottle = () => {
   const timer = useRef(false);
 
   return useCallback(
@@ -17,3 +17,5 @@ export const useThrottle = () => {
     []
   );
 };
+
+export default useThrottle;

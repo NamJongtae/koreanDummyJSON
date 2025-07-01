@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export function useSectionVisibility() {
+export default function useSectionVisibility() {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 

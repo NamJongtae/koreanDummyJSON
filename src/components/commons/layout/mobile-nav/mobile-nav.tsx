@@ -1,6 +1,6 @@
 "use client";
 
-import { useThrottle } from "@/src/hooks/commons/useThrottle";
+import useThrottle from "@/src/hooks/commons/useThrottle";
 import { MobileNavContext } from "@/src/store/mobile-nav-provider";
 import { useContext, useEffect } from "react";
 import MobileNavList from "./mobile-nav-list";

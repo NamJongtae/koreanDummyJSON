@@ -1,6 +1,6 @@
 "use client";
 
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 import PlayCode from "./play-code";
 
 export default function TryIt() {

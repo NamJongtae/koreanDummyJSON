@@ -4,8 +4,8 @@ import LoremHeader from "@/src/components/lorem/lorem-header";
 import LoremOptions from "@/src/components/lorem/lorem-options";
 import LoremResult from "@/src/components/lorem/lorem-result";
 import LoremButtonGroup from "@/src/components/lorem/lorem-button-group";
-import { useLoremOptions } from "@/src/hooks/lorem/useLoremOptions";
-import { useGenerateLorem } from "@/src/hooks/lorem/useGenerateLorem";
+import useLoremOptions from "@/src/hooks/lorem/useLoremOptions";
+import useGenerateLorem from "@/src/hooks/lorem/useGenerateLorem";
 
 const LoremPage = () => {
   const options = useLoremOptions();

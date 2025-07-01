@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { generateKoreanLipsum } from "@/src/lib/loremGenerator";
 
-export function useGenerateLorem(options: {
+export default function useGenerateLorem(options: {
   mode: "paragraph" | "sentence" | "word";
   count: number | string;
   lengthValue: number | string;

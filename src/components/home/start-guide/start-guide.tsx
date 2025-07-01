@@ -1,6 +1,6 @@
 "use client";
 
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 import NpmCdnGuide from "./npm-cdn-guide";
 import GuidePageIntro from "./guide-page-intro";
 import DocsPageIntro from "./docs-page-intro";

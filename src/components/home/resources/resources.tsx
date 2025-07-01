@@ -1,6 +1,6 @@
 "use client";
 
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 import ResourcesRows from "./resources-rows";
 import { RESOURCES_DATA } from "@/src/table-data/resources-data";
 

@@ -1,10 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import Resources from "@/src/components/home/resources/resources";
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 
-jest.mock("@/src/hooks/commons/useSectionVisibility", () => ({
-  useSectionVisibility: jest.fn()
-}));
+jest.mock("@/src/hooks/commons/useSectionVisibility");
 jest.mock("@/src/components/home/resources/resources-rows", () => ({
   __esModule: true,
   default: ({ resource, info }: { resource: string; info: string }) => (

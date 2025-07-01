@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import StartGuide from "@/src/components/home/start-guide/start-guide";
-
+import useSectionVisibility from '@/src/hooks/commons/useSectionVisibility';
 jest.mock("@/src/hooks/commons/useSectionVisibility", () => ({
-  useSectionVisibility: jest.fn()
+  __esModule: true,
+  default: jest.fn()
 }));
 jest.mock("@/src/components/home/start-guide/npm-cdn-guide", () => ({
   __esModule: true,
@@ -16,8 +17,6 @@ jest.mock("@/src/components/home/start-guide/docs-page-intro", () => ({
   __esModule: true,
   default: () => <div data-testid="mock-docs-page-intro" />
 }));
-
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
 
 describe("StartGuide component test", () => {
   const mockRef = { current: null };

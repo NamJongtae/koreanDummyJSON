@@ -1,10 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import TryIt from "@/src/components/home/try-it/try-it";
-import { useSectionVisibility } from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility  from "@/src/hooks/commons/useSectionVisibility";
 
-jest.mock("@/src/hooks/commons/useSectionVisibility", () => ({
-  useSectionVisibility: jest.fn()
-}));
+jest.mock("@/src/hooks/commons/useSectionVisibility");
 jest.mock("@/src/components/home/try-it/play-code", () => ({
   __esModule: true,
   default: () => <div data-testid="mock-play-code" />
