@@ -41,6 +41,7 @@ export const config = {
     "/api/books/:path*",
     "/api/reviews/:path*",
     "/api/auth/:path*",
-    "/api/image/:path*"
+    "/api/image/:path*",
+    "/api/lorem/:path*"
   ]
 };
