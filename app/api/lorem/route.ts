@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateKoreanLipsum } from "@/src/lib/loremGenerator";
 
+/**
+ * 최소값, 최대값 처리 함수
+ */
 function clip(val: number, min: number, max: number) {
   return Math.max(min, Math.min(max, val));
 }
@@ -10,11 +13,11 @@ export async function GET(req: NextRequest) {
   const rawMode = searchParams.get("mode");
   let mode: "paragraph" | "sentence" | "word";
 
-  if (rawMode === "paragraph" || rawMode === "p") {
+  if (rawMode === "p") {
     mode = "paragraph";
-  } else if (rawMode === "sentence" || rawMode === "s") {
+  } else if (rawMode === "s") {
     mode = "sentence";
-  } else if (rawMode === "word" || rawMode === "w") {
+  } else if (rawMode === "w") {
     mode = "word";
   } else {
     mode = "paragraph";
@@ -37,7 +40,7 @@ export async function GET(req: NextRequest) {
     length = defaultLength;
   }
 
-  // 모드별 최댓값 제한
+  // 모드별 최소값, 최대값 처리
   if (mode === "paragraph") {
     count = clip(count, 1, 20);
     length = clip(length, 30, 500);
