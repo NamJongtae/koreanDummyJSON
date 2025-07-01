@@ -99,6 +99,19 @@ describe("DocsIntro component test", () => {
     ).toBeInTheDocument();
   });
 
+  it("lorem 경로에서 로렘 입숨 소개 문구와 경고가 렌더링된다", () => {
+    setPath("/docs/lorem");
+
+    render(<DocsIntro />);
+
+    expect(
+      screen.getByText(/한글 로렘 입숨 생성 기능을 제공합니다/)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/문단 로렘 입숨 최대값/)
+    ).toBeInTheDocument();
+  });
+
   it("알 수 없는 경로에서는 소개 문구가 렌더링되지 않는다", () => {
     setPath("/docs/unknown");
 
