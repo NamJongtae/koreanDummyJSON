@@ -19,7 +19,7 @@ export default function Resources() {
       <h2 className="section-title">Resources</h2>
 
       <p className="section-text mb-5">
-        users, posts, comments, todos, books, reviews, auth, image 8개의
+        users, posts, comments, todos, books, reviews, auth, image, lorem 9개의
         리소스가 제공됩니다.
       </p>
 
