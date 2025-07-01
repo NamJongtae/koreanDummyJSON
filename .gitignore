@@ -37,3 +37,9 @@ next-env.d.ts
 
 # test
 /test-results
+
+# sitemap
+sitemap*.xml
+
+# robots
+robots.txt
