@@ -14,11 +14,7 @@ export function generateWord(wordLen: number = 3): string {
   const parts: string[] = [];
   let totalLen = 0;
   while (totalLen < wordLen) {
-    const type = Math.random();
-    let part = "";
-    if (type < 1 / 3) part = getRandom(lorem.nouns);
-    else if (type < 2 / 3) part = getRandom(lorem.verbs);
-    else part = getRandom(lorem.adjectives);
+    const part = getRandom(lorem.nouns);
     const remain = wordLen - totalLen;
     if (part.length > remain) {
       parts.push(part.slice(0, remain));
@@ -79,7 +75,7 @@ export function generateParagraph(
     const remain = paragraphLen - 1 - paragraph.length;
 
     if (remain <= needsSpace) break;
-    
+
     if (remain <= sentence.length + needsSpace) {
       // 마지막 문장: 남은 공간만큼 자르되, 공백으로 끝나면 조정
       if (needsSpace) {
@@ -87,12 +83,12 @@ export function generateParagraph(
       }
       const remainAfterSpace = paragraphLen - 1 - paragraph.length;
       let slicedSentence = sentence.slice(0, remainAfterSpace);
-      
+
       // 공백으로 끝나면 공백 제거하고 한 글자 더 추가
-      if (slicedSentence.endsWith(' ') && remainAfterSpace < sentence.length) {
+      if (slicedSentence.endsWith(" ") && remainAfterSpace < sentence.length) {
         slicedSentence = sentence.slice(0, remainAfterSpace + 1).trimEnd();
       }
-      
+
       paragraph += slicedSentence;
       break;
     } else {
