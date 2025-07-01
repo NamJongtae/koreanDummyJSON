@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-export default function useCopy(target: string) {
+export default function useCopy({
+  target,
+  timer
+}: {
+  target: string;
+  timer: number;
+}) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -8,7 +14,7 @@ export default function useCopy(target: string) {
       if (isCopied) return;
       await navigator.clipboard.writeText(target);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      setTimeout(() => setIsCopied(false), timer);
     } catch (err) {
       console.error("Failed to copy code:", err);
     }
