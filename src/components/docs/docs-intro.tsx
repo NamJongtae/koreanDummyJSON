@@ -24,10 +24,24 @@ export default function DocsIntro() {
         return "로그인 및 인증/인가 기능을 제공합니다.";
       case "image":
         return `동적 이미지 생성 기능을 제공합니다.\n이미지 값(size, bgColor, textColor, ext, text)을 직접 설정하여 이미지를 생성할 수 있습니다.`;
+      case "lorem":
+        return `한글 로렘 입숨 생성 기능을 제공합니다.\n모드(paragraph, sentence, word), 개수(count), 글자 수(length)를 직접 설정하여 한글 로렘 입숨을 생성할 수 있습니다.`;
       default:
         return null;
     }
   };
+
+  let notice = "";
+  if (pathname.includes("image")) {
+    notice =
+      "이미지의 최대 size는 2560x2560이며, 이미지 지원 형식은 .jpeg, .jpg, .png, .svg입니다.";
+  } else if (pathname.includes("lorem")) {
+    notice =
+      "문단 로렘 입숨 최대값: 문단 수(count)=20, 문단 글자 수(length)=500\n문장 로렘 입숨 최대값: 문장 수(count)=50, 문장 글자 수(length)=200\n단어 로렘 입숨 최대값: 단어 수(count)=100, 단어 글자 수(length)=10";
+  } else {
+    notice =
+      "POST, PUT, PATCH, DELETE Method는 실제 서버 DB에는 영향을 주지 않으며, 더미 데이터로 처리됩니다.";
+  }
 
   return (
     <section id="소개" className="mt-5 px-6">
@@ -36,14 +50,12 @@ export default function DocsIntro() {
         {getIntro()}
       </p>
       {
-        <p className="relative flex section-text bg-yellow-100 p-3 border-l-4 border-yellow-500 text-yellow-900 font-semibold ">
-          <span className="absolute">⚠️</span>
-          <span className="pl-8">
-            {pathname.includes("image")
-              ? "이미지의 최대 size는 2560x2560이며, 이미지 지원 형식은 .jpeg, .jpg, .png, .svg입니다."
-              : "POST, PUT, PATCH, DELETE Method는 실제 서버 DB에는 영향을 주지 않으며, 더미 데이터로 처리됩니다."}
-          </span>
-        </p>
+        <div className="flex section-text bg-yellow-100 p-3 border-l-4 border-yellow-500">
+          <span className="">⚠️</span>
+          <p className=" text-yellow-900 font-semibold whitespace-pre-line pl-4">
+            {notice}
+          </p>
+        </div>
       }
     </section>
   );
