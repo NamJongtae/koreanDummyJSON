@@ -22,7 +22,7 @@ const LoremButtonGroup = ({
   setResult,
   onGenerate
 }: IProps) => {
-  const { isCopied, handleCopy } = useCopy(result);
+  const { isCopied, handleCopy } = useCopy({target: result, timer: 1200});
   const { handleReset } = useResetLorem({
     mode,
     resetByMode,

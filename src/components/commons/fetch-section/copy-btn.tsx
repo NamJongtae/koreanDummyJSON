@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export default function CopyBtn({ target }: IProps) {
-  const { isCopied, handleCopy } = useCopy(target);
+  const { isCopied, handleCopy } = useCopy({ target, timer: 2000 });
 
   return (
     <button
