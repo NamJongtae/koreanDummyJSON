@@ -7,9 +7,11 @@ export default function NpmCdnGuide() {
   const { jsdelivr, unpkg } = useCdnLinks();
 
   const { isCopied: isJsdelivrCopied, handleCopy: handleJsdelivrCopy } =
-    useCopy(jsdelivr);
-  const { isCopied: isUnpkgCopied, handleCopy: handleUnpkgCopy } =
-    useCopy(unpkg);
+    useCopy({ target: jsdelivr, timer: 1200 });
+  const { isCopied: isUnpkgCopied, handleCopy: handleUnpkgCopy } = useCopy({
+    target: unpkg,
+    timer: 1200
+  });
 
   return (
     <>
