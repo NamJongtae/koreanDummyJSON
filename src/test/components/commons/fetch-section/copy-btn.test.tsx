@@ -30,7 +30,7 @@ describe("CopyBtn component test", () => {
   it("useCopy 훅에 올바른 target 값을 전달한다", () => {
     render(<CopyBtn target={target} />);
 
-    expect(mockUseCopy).toHaveBeenCalledWith(target);
+    expect(mockUseCopy).toHaveBeenCalledWith({"target": "console.log('hello world');", "timer": 2000});
   });
 
   it("버튼 클릭 시 handleCopy 함수가 호출된다", () => {

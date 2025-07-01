@@ -24,13 +24,17 @@ describe("useCopy hook test", () => {
   });
 
   it("초기값이 올바르게 반환된다", () => {
-    const { result } = renderHook(() => useCopy("test"));
+    const { result } = renderHook(() =>
+      useCopy({ target: "test", timer: 2000 })
+    );
     expect(result.current.isCopied).toBe(false);
     expect(typeof result.current.handleCopy).toBe("function");
   });
 
   it("handleCopy를 호출하면 isCopied가 true가 되고, 2초 후 false로 변경된다", async () => {
-    const { result } = renderHook(() => useCopy("hello"));
+    const { result } = renderHook(() =>
+      useCopy({ target: "hello", timer: 2000 })
+    );
 
     // 초기값은 false
     expect(result.current.isCopied).toBe(false);
@@ -51,7 +55,9 @@ describe("useCopy hook test", () => {
   });
 
   it("isCopied가 true일 때 handleCopy를 다시 호출해도 writeText가 실행되지 않는다", async () => {
-    const { result } = renderHook(() => useCopy("world"));
+    const { result } = renderHook(() =>
+      useCopy({ target: "test", timer: 2000 })
+    );
 
     // 첫 복사
     await act(async () => {
