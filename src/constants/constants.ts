@@ -6,5 +6,6 @@ export const DOCS_MENU = [
   "Books",
   "Reviews",
   "Auth",
-  "Image"
+  "Image",
+  "Lorem"
 ];
