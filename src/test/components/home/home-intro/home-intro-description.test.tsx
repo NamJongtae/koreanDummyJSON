@@ -8,12 +8,12 @@ describe("HomeIntroDescription component test", () => {
     expect(screen.getByText("Korean Dummy JSON")).toBeInTheDocument();
     expect(
       screen.getByText(
-        /한국어 기반의 더미 데이터를 제공하기 위해 제작된 프로젝트/
+        /한국어, 한글 기반의 더미 데이터를 제공하기 위해 제작된 프로젝트/
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /한국어로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를 제공 받을 수 있습니다/
+        /한글로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를 제공 받을 수 있습니다/
       )
     ).toBeInTheDocument();
     expect(
@@ -58,7 +58,7 @@ describe("HomeIntroDescription component test", () => {
     // sr-only 태그
     expect(
       screen.getByText(
-        "#korean json, #dummy json, #한국어 더미 데이터, #한글 로렘 생성기, #한글 로렘 입숨, #로렘 생성기"
+        "#korean json, #dummy json, #한글 더미 데이터, #한국어 더미 데이터, #한글 로렘 생성기, #한글 로렘 입숨, #로렘 생성기"
       )
     ).toBeInTheDocument();
   });
