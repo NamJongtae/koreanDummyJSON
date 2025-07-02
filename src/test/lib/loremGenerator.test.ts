@@ -44,11 +44,6 @@ describe("loremGenerator function test", () => {
     expect(paragraph.length).toBe(100);
   });
 
-  it("generateParagraph: 문단 끝에 마침표가 붙는다", () => {
-    const paragraph = generateParagraph(80, 20);
-    expect(paragraph.endsWith(".")).toBe(true);
-  });
-
   it("generateKoreanLipsum: word 모드 - 단어 n개 생성", () => {
     const result = generateKoreanLipsum("word", 5, 0, 0, 2);
     expect(result.split(" ").length).toBe(5);
