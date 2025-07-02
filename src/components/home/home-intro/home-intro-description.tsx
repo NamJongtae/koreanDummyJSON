@@ -4,7 +4,7 @@ export default function HomeIntroDescription() {
   return (
     <>
       <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
-        <span className="font-medium">Korean Dummy JSON</span>은 한국어 기반의
+        <span className="font-medium">Korean Dummy JSON</span>은 한국어, 한글 기반의
         더미 데이터를 제공하기 위해 제작된 프로젝트로,{" "}
         <Link
           className="text-blue-600 betterhover:hover:underline underline-offset-2"
@@ -15,7 +15,7 @@ export default function HomeIntroDescription() {
         에서 영감을 받아 개발되었습니다.
       </p>
       <p className="text-base  sm:text-lg md:text-xl mb-3 text-gray-500">
-        한국어로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를
+        한글로 구성된 데이터를 통해 개발자들이 보다 현실적인 더미 데이터를
         제공 받을 수 있습니다.
       </p>
       <p className="text-base sm:text-lg md:text-xl mb-3 text-gray-500">
@@ -42,7 +42,7 @@ export default function HomeIntroDescription() {
         있습니다.
       </p>
       <p id="tags" className="sr-only">
-        #korean json, #dummy json, #한국어 더미 데이터, #한글 로렘 생성기, #한글
+        #korean json, #dummy json, #한글 더미 데이터, #한국어 더미 데이터, #한글 로렘 생성기, #한글
         로렘 입숨, #로렘 생성기
       </p>
     </>
