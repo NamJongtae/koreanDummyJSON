@@ -9,11 +9,12 @@ export default function Resources() {
 
   return (
     <section
+      id="Resources"
       className={`transition-all duration-1000 ${
         isVisible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-[150px]"
-      } mt-20 px-4 mb-20`}
+      } pt-20 px-4 mb-20`}
       ref={ref}
     >
       <h2 className="section-title">Resources</h2>

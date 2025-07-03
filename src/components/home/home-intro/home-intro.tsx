@@ -1,6 +1,6 @@
 "use client";
 
-import useSectionVisibility  from "@/src/hooks/commons/useSectionVisibility";
+import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 import HomeIntroContent from "./home-intro-content";
 
 export default function HomeIntro() {
@@ -8,6 +8,7 @@ export default function HomeIntro() {
 
   return (
     <section
+      id="소개"
       className={`transition-opacity duration-1000 ${
         isVisible ? "opacity-100" : "opacity-0"
       } mt-5 px-4 break-keep`}

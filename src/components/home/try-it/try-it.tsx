@@ -8,11 +8,12 @@ export default function TryIt() {
 
   return (
     <section
+      id="직접-테스트-해보세요"
       className={`transition-all duration-1000 ${
         isVisible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-[150px]"
-      } mt-20 px-4`}
+      } pt-20 px-4`}
       ref={ref}
     >
       <h2 className="section-title">직접 테스트 해보세요</h2>
