@@ -1,4 +1,4 @@
-import { Pool, createPool } from 'mysql2';
+import { Pool, createPool } from "mysql2";
 /**
  * check, globalObject, registerService
  * Next.js는 개발 모드에서 API 경로를 지속적으로 재구축하는데, initFn()의 경로를 전역으로 지정하여 변경되지 않도록 합니다.
@@ -8,16 +8,16 @@ function check(it: false | (Window & typeof globalThis) | typeof globalThis) {
 }
 
 const globalObject =
-  check(typeof window === 'object' && window) ||
-  check(typeof self === 'object' && self) ||
-  check(typeof global === 'object' && global) ||
+  check(typeof window === "object" && window) ||
+  check(typeof self === "object" && self) ||
+  check(typeof global === "object" && global) ||
   (() => {
     return this;
   })() ||
-  Function('return this')();
+  Function("return this")();
 
 const registerService = (name: string, initFn: any) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     if (!(name in globalObject)) {
       globalObject[name] = initFn();
     }
@@ -41,7 +41,10 @@ try {
       connectionLimit: 10, // 최대 연결 수 제한
       queueLimit: 0 // 대기열 제한 없음
     });
-    console.log("Database pool created");
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Database pool created");
+    }
+
     return pool;
   });
 } catch (error) {
