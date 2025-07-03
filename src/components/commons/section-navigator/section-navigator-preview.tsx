@@ -13,7 +13,7 @@ export default function SectionNavigatorPreview({
 }: IProps) {
   return (
     <ul
-      className={`w-full bg-white cursor-pointer`}
+      className={`w-full bg-transparent cursor-pointer`}
       onMouseEnter={enterNavigator}
     >
       {sectionIds.map((id) => {
