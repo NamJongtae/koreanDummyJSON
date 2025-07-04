@@ -11,21 +11,23 @@ export default function GuideIntro() {
       </h2>
 
       <p className="section-text mb-2">
-        현재 가이드는 Fetch API를 사용하여 다양한 예시를 제공합니다.
+        현재 가이드는 <b>기본 6가지 Resource(users, todos, posts, comments, books,
+          reviews)</b>를 대상으로 Fetch API를 사용한 예시를 제공합니다.
       </p>
 
       <p className="section-text mb-2">
-        예시 코드를 복사하여 브라우저의 콘솔에 붙여 넣으면 간단하게 실행해볼 수
+        예시 코드를 복사하여 브라우저 개발자 도구 콘솔에 붙여 넣으면 간단하게 실행해볼 수
         있습니다.
       </p>
 
       <p className="section-text mb-2">
-        Auth-Resource, Image-Resource, Lorem-Resource를 제외한 모든 리소스에 대해 동일한 사용 방법을 따릅니다.
-      </p>
-
-      <p className="section-text mb-2">
-        Auth-Resource, Image-Resource, Lorem-Resource에 대한 설명은 가이드에서 제공되지 않으며, Docs에서
-        확인하실 수 있습니다.
+        <Link
+          className="text-blue-600 betterhover:hover:underline underline-offset-4"
+          href={"/guide#라이브러리로-빠르게-시작하기"}
+        >
+          korean-dummy-json-fetcher 라이브러리 혹은 CDN
+        </Link>
+        를 사용하면 더 편리하게 API를 사용할 수 있습니다.
       </p>
 
       <p className="section-text mb-6">
