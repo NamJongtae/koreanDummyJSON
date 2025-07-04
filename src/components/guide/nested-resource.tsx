@@ -1,6 +1,6 @@
-import { NESTED_ENDPOINTS_DATA } from "@/src/table-data/nested-endpoints-data";
 import ApiEndPointsTable from "../commons/api-endpoints-table";
 import FetchSection from "../commons/fetch-section/fetch-section";
+import { NESTED_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 
 export default function NestedResources() {
   return (
@@ -20,7 +20,7 @@ export default function NestedResources() {
         이 외 아래와 같은 하위 Resource를 제공합니다.
       </p>
 
-      <ApiEndPointsTable data={NESTED_ENDPOINTS_DATA} />
+      <ApiEndPointsTable data={NESTED_ENDPOINT_DATA} />
     </FetchSection>
   );
 }

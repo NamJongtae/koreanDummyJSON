@@ -1,6 +1,6 @@
-import { FILTER_ENDPOINTS_DATA } from "@/src/table-data/filter-endpoints-data";
 import ApiEndPointsTable from "../commons/api-endpoints-table";
 import FetchSection from "../commons/fetch-section/fetch-section";
+import { FILTER_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 
 export default function FilterResources() {
   return (
@@ -18,7 +18,7 @@ export default function FilterResources() {
       <p className="section-text mt-8 mb-4">
         이 외 아래와 같은 필터링 Resource를 제공합니다.
       </p>
-      <ApiEndPointsTable data={FILTER_ENDPOINTS_DATA} />
+      <ApiEndPointsTable data={FILTER_ENDPOINT_DATA} />
     </FetchSection>
   );
 }

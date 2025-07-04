@@ -1,6 +1,6 @@
-import { PAGEING_ENDPOINTS_DATA } from "@/src/table-data/paging-endpoints-data";
 import ApiEndPointsTable from "../commons/api-endpoints-table";
 import FetchSection from "../commons/fetch-section/fetch-section";
+import { PAGING_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 
 export default function GetResourcesPaging() {
   return (
@@ -24,7 +24,7 @@ export default function GetResourcesPaging() {
         이 외 아래와 같은 페이징 Resource를 제공합니다.
       </p>
 
-      <ApiEndPointsTable data={PAGEING_ENDPOINTS_DATA} />
+      <ApiEndPointsTable data={PAGING_ENDPOINT_DATA} />
     </FetchSection>
   );
 }
