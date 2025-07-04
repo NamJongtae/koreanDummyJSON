@@ -13,6 +13,7 @@ import DeleteResource from "@/src/components/guide/delete-resource";
 import FilterResources from "@/src/components/guide/filter-resource";
 import NestedResources from "@/src/components/guide/nested-resource";
 import SectionNavigator from "@/src/components/commons/section-navigator/section-navigator";
+import StartLibrary from "@/src/components/guide/start-library/start-library";
 
 jest.mock("react-syntax-highlighter", () => ({
   Prism: ({ children }: { children: React.ReactNode }) => <pre>{children}</pre>
@@ -30,6 +31,7 @@ jest.mock("@/src/components/guide/patch-resource");
 jest.mock("@/src/components/guide/delete-resource");
 jest.mock("@/src/components/guide/filter-resource");
 jest.mock("@/src/components/guide/nested-resource");
+jest.mock("@/src/components/guide/start-library/start-library");
 jest.mock("@/src/components/commons/section-navigator/section-navigator");
 jest.mock("@/src/hooks/commons/useSectionNavigatorScroller", () => () => ({
   activeSectionId: "소개"
@@ -45,6 +47,7 @@ const mockPatchResource = PatchResource as jest.Mock;
 const mockDeleteResource = DeleteResource as jest.Mock;
 const mockFilterResources = FilterResources as jest.Mock;
 const mockNestedResources = NestedResources as jest.Mock;
+const mockStartLibrary = StartLibrary as jest.Mock;
 const mockSectionNavigator = SectionNavigator as jest.Mock;
 
 beforeEach(() => {
@@ -98,6 +101,11 @@ beforeEach(() => {
       <h2>하위 Resource 조회하기</h2>
     </section>
   ));
+  mockStartLibrary.mockImplementation(() => (
+    <section id="라이브러리로-빠르게-시작하기">
+      <h2>라이브러리로 빠르게 시작하기</h2>
+    </section>
+  ));
   mockSectionNavigator.mockImplementation(() => (
     <div data-testid="section-navigator" />
   ));
@@ -134,6 +142,9 @@ describe("GuidePage component test", () => {
     expect(
       screen.getByRole("heading", { name: "하위 Resource 조회하기" })
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "라이브러리로 빠르게 시작하기" })
+    ).toBeInTheDocument();
     expect(screen.getByTestId("section-navigator")).toBeInTheDocument();
   });
 
@@ -150,7 +161,8 @@ describe("GuidePage component test", () => {
       "Resource-일부-수정하기",
       "Resource-삭제하기",
       "Resource-필터링하기",
-      "하위-Resource-조회하기"
+      "하위-Resource-조회하기",
+      "라이브러리로-빠르게-시작하기"
     ]);
     expect(props.activeSectionId).toBe("소개");
   });
