@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function useApiRequestCount() {
-  const [count, setCount] = useState({ todayCount: 0, totalCount: 0 });
+  const [count, setCount] = useState({ todayCount: null, totalCount: null });
   const [countLoading, setCountLoading] = useState({
     todayCountLoading: false,
     totalCountLoading: false
