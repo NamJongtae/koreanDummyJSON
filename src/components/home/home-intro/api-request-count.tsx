@@ -14,7 +14,7 @@ export default function ApiRequestCount() {
       <p className="mb-1 text-gray-500">
         오늘의 API 요청 횟수 :{" "}
         <span className="font-medium  inline-flex items-center">
-          {!count.todayCount || countLoading.todayCountLoading ? (
+          {count.todayCount === null || countLoading.todayCountLoading ? (
             <LoadingSkeleton />
           ) : (
             count.todayCount
@@ -25,7 +25,7 @@ export default function ApiRequestCount() {
       <p className="text-gray-500">
         총 API 요청 횟수 :{" "}
         <span className="font-medium inline-flex items-center">
-          {!count.totalCount || countLoading.totalCountLoading ? (
+          {count.totalCount === null || countLoading.totalCountLoading ? (
             <LoadingSkeleton />
           ) : (
             count.totalCount
