@@ -12,6 +12,7 @@ import PatchResource from "@/src/components/guide/patch-resource";
 import PostResource from "@/src/components/guide/post-resource";
 import PutResource from "@/src/components/guide/put-resource";
 import useSectionNavigatorScroller from "@/src/hooks/commons/useSectionNavigatorScroller";
+import StartLibrary from "./start-library/start-library";
 
 export default function GuidePage() {
   const { activeSectionId } = useSectionNavigatorScroller();
@@ -28,6 +29,7 @@ export default function GuidePage() {
       <DeleteResource />
       <FilterResources />
       <NestedResources />
+      <StartLibrary />
       <SectionNavigator
         activeSectionId={activeSectionId}
         sectionIds={[
@@ -40,7 +42,8 @@ export default function GuidePage() {
           "Resource-일부-수정하기",
           "Resource-삭제하기",
           "Resource-필터링하기",
-          "하위-Resource-조회하기"
+          "하위-Resource-조회하기",
+          "라이브러리로-빠르게-시작하기"
         ]}
       />
     </div>
