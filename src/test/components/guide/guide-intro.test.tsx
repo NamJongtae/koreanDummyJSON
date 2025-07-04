@@ -13,23 +13,20 @@ describe("GuideIntro component test", () => {
     // 안내 문구
     expect(
       screen.getByText(
-        /현재 가이드는 Fetch API를 사용하여 다양한 예시를 제공합니다./
+        "기본 6가지 Resource(users, todos, posts, comments, books, reviews)",
+        { selector: "b" }
       )
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        /예시 코드를 복사하여 브라우저의 콘솔에 붙여 넣으면 간단하게 실행해볼 수 있습니다./
-      )
+      screen.getByText(/를 대상으로 Fetch API를 사용한 예시를 제공합니다./)
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /Auth-Resource, Image-Resource, Lorem-Resource를 제외한 모든 리소스에 대해 동일한 사용 방법을 따릅니다./
+        /예시 코드를 복사하여 브라우저 개발자 도구 콘솔에 붙여 넣으면 간단하게 실행해볼 수 있습니다./
       )
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        /Auth-Resource, Image-Resource, Lorem-Resource에 대한 설명은 가이드에서 제공되지 않으며, Docs에서 확인하실 수 있습니다./
-      )
+      screen.getByText(/korean-dummy-json-fetcher 라이브러리 혹은 CDN/)
     ).toBeInTheDocument();
     expect(
       screen.getByText(/각 리소스에 대한 더 자세한 설명은/)
