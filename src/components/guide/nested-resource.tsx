@@ -5,7 +5,6 @@ import { NESTED_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 export default function NestedResources() {
   return (
     <FetchSection
-      className="mb-20"
       id="하위-Resource-조회하기"
       title="하위 Resource 조회하기"
       descriptions={
