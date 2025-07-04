@@ -1,9 +1,19 @@
 import { renderHook, act } from "@testing-library/react";
 import useSectionNavigator from "../../../hooks/commons/useSectionNavigator";
 
+// router mock을 외부에서 선언
+const pushMock = jest.fn();
+
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: pushMock
+  })
+}));
+
 describe("useSectionNavigator hook test", () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    pushMock.mockClear(); // mock 초기화
   });
 
   afterEach(() => {
@@ -52,17 +62,14 @@ describe("useSectionNavigator hook test", () => {
     expect(result.current.hovered).toBe(false);
   });
 
-  it("handleClickSection 호출 시 sectionId가 '소개'가 아닐 때 window.location.hash가 변경된다", () => {
+  it("handleClickSection 호출 시 sectionId가 '소개'가 아닐 때 router.push가 호출된다", () => {
     const { result } = renderHook(() => useSectionNavigator());
-    const originalHash = window.location.hash;
-    window.location.hash = "";
     act(() => {
       result.current.handleClickSection("테스트섹션");
     });
-    expect(window.location.hash).toBe(
+    expect(pushMock).toHaveBeenCalledWith(
       "#%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%84%B9%EC%85%98"
     );
-    window.location.hash = originalHash;
   });
 
   it("handleClickSection 호출 시 sectionId가 '소개'일 때 window.scrollTo가 호출된다", () => {
