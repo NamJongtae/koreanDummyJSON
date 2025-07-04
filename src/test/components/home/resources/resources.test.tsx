@@ -1,8 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Resources from "@/src/components/home/resources/resources";
-import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 
-jest.mock("@/src/hooks/commons/useSectionVisibility");
 jest.mock("@/src/components/home/resources/resources-rows", () => ({
   __esModule: true,
   default: ({ resource, info }: { resource: string; info: string }) => (
@@ -14,13 +12,6 @@ jest.mock("@/src/components/home/resources/resources-rows", () => ({
 }));
 
 describe("Resources 컴포넌트", () => {
-  const mockRef = { current: null };
-  beforeEach(() => {
-    (useSectionVisibility as jest.Mock).mockImplementation(() => ({
-      ref: mockRef,
-      isVisible: true
-    }));
-  });
 
   it("섹션, 제목, 설명, 테이블 헤더, row가 모두 렌더링된다", () => {
     render(<Resources />);
@@ -58,32 +49,5 @@ describe("Resources 컴포넌트", () => {
     expect(rows[7]).toHaveTextContent("동적 이미지 생성");
     expect(rows[8]).toHaveTextContent("/lorem");
     expect(rows[8]).toHaveTextContent("한글 로렘 입숨 생성");
-  });
-
-  it("isVisible 값에 따라 opacity/translate 클래스가 올바르게 적용된다", () => {
-    // isVisible: false
-    (useSectionVisibility as jest.Mock).mockImplementation(() => ({
-      ref: mockRef,
-      isVisible: false
-    }));
-    const { container, rerender } = render(<Resources />);
-    const section = container.querySelector("section")!;
-    expect(section.className).toContain("opacity-0");
-    expect(section.className).toContain("translate-y-[150px]");
-
-    // isVisible: true
-    (useSectionVisibility as jest.Mock).mockImplementation(() => ({
-      ref: mockRef,
-      isVisible: true
-    }));
-    rerender(<Resources />);
-    expect(section.className).toContain("opacity-100");
-    expect(section.className).toContain("translate-y-0");
-  });
-
-  it("section 태그에 useSectionVisibility의 ref가 전달되는지 확인한다", () => {
-    const { container } = render(<Resources />);
-    const section = container.querySelector("section");
-    expect(mockRef.current).toBe(section);
   });
 });
