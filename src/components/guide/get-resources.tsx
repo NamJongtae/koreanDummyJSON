@@ -1,4 +1,6 @@
+import ApiEndPointsTable from "../commons/api-endpoints-table";
 import FetchSection from "../commons/fetch-section/fetch-section";
+import { LIST_ENDPOINT_DATA } from "@/src/table-data/api-endpoints-data";
 
 export default function GetResources() {
   return (
@@ -10,6 +12,12 @@ export default function GetResources() {
       }
       method="GET"
       fetchUrl="/posts"
-    />
+    >
+      <p className="section-text mt-8 mb-4">
+        이 외 아래와 같은 Resource를 제공합니다.
+      </p>
+
+      <ApiEndPointsTable data={LIST_ENDPOINT_DATA} />
+    </FetchSection>
   );
 }
