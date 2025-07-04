@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function useSectionNavigator() {
+  const router = useRouter();
   const [hovered, setHovered] = useState(false);
   const navigatorRef = useRef<HTMLUListElement | null>(null);
 
@@ -17,12 +19,13 @@ export default function useSectionNavigator() {
 
   const handleClickSection = (sectionId: string) => {
     const encodedData = `#${encodeURI(sectionId)}`;
-    window.location.hash = encodedData;
     if (sectionId === "소개") {
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
+    } else {
+      router.push(encodedData);
     }
   };
 
