@@ -1,22 +1,11 @@
 "use client";
 
-import useSectionVisibility from "@/src/hooks/commons/useSectionVisibility";
 import ResourcesRows from "./resources-rows";
 import { RESOURCES_DATA } from "@/src/table-data/resources-data";
 
 export default function Resources() {
-  const { ref, isVisible } = useSectionVisibility();
-
   return (
-    <section
-      id="Resources"
-      className={`transition-all duration-1000 ${
-        isVisible
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-[150px]"
-      } pt-20 px-4 mb-20`}
-      ref={ref}
-    >
+    <section id="Resources" className={"pt-20 px-4 mb-20"}>
       <h2 className="section-title">Resources</h2>
 
       <p className="section-text mb-5">
