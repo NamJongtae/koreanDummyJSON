@@ -14,7 +14,7 @@ export default function GetResources() {
       fetchUrl="/posts"
     >
       <p className="section-text mt-8 mb-4">
-        이 외 아래와 같은 Resource를 제공합니다.
+        이 외 아래와 같은 Resources를 제공합니다.
       </p>
 
       <ApiEndPointsTable data={LIST_ENDPOINT_DATA} />

@@ -21,7 +21,7 @@ export default function GetResourcesPaging() {
       fetchUrl="/posts?page=1&limit=10"
     >
       <p className="section-text mt-8 mb-4">
-        이 외 아래와 같은 페이징 Resource를 제공합니다.
+        이 외 아래와 같은 페이징 Resources를 제공합니다.
       </p>
 
       <ApiEndPointsTable data={PAGING_ENDPOINT_DATA} />

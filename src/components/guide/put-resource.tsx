@@ -14,13 +14,13 @@ export default function PutResource() {
       method="PUT"
       body={{
         title: "테스트 글",
-        contnet: "테스트 글 입니다.",
+        content: "테스트 글 입니다.",
         imgUrl: "https://picsum.photos/id/2/300/300"
       }}
       fetchUrl="/posts/1"
     >
       <p className="section-text mt-8 mb-4">
-        이 외 아래와 같은 Resource를 제공합니다. Resource body값은 각 Resource별{" "}
+        이 외 아래와 같은 Resources를 제공합니다. Resource body값은 각 Resource별{" "}
         <Link
           className="text-blue-600 betterhover:hover:underline underline-offset-4"
           href={"/docs/users"}

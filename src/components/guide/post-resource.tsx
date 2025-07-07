@@ -20,7 +20,7 @@ export default function PostResource() {
       fetchUrl="/posts"
     >
       <p className="section-text mt-8 mb-4">
-        이 외 아래와 같은 Resource를 제공합니다. Resource body값은 각 Resource별{" "}
+        이 외 아래와 같은 Resources를 제공합니다. Resource body값은 각 Resource별{" "}
         <Link
           className="text-blue-600 betterhover:hover:underline underline-offset-4"
           href={"/docs/users"}

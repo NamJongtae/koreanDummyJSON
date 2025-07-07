@@ -11,7 +11,7 @@ export default function GuideIntro() {
       </h2>
 
       <p className="section-text mb-2">
-        현재 가이드는 <b>기본 6가지 Resource(users, todos, posts, comments, books,
+        현재 가이드는 <b>기본 6가지 Resources(users, todos, posts, comments, books,
           reviews)</b>를 대상으로 Fetch API를 사용한 예시를 제공합니다.
       </p>
 
@@ -31,7 +31,7 @@ export default function GuideIntro() {
       </p>
 
       <p className="section-text mb-6">
-        각 리소스에 대한 더 자세한 설명은{" "}
+        각 Resource에 대한 더 자세한 설명은{" "}
         <Link
           className="text-blue-600 betterhover:hover:underline underline-offset-4"
           href={"/docs/users"}

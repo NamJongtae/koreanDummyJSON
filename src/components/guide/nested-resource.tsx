@@ -16,7 +16,7 @@ export default function NestedResources() {
       fetchUrl="/posts/1/comments"
     >
       <p className="section-text mt-8 mb-4">
-        이 외 아래와 같은 하위 Resource를 제공합니다.
+        이 외 아래와 같은 하위 Resources를 제공합니다.
       </p>
 
       <ApiEndPointsTable data={NESTED_ENDPOINT_DATA} />

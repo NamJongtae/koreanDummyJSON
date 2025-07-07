@@ -16,7 +16,7 @@ export default function FilterResources() {
       fetchUrl="/posts/?userId=1"
     >
       <p className="section-text mt-8 mb-4">
-        이 외 아래와 같은 필터링 Resource를 제공합니다.
+        이 외 아래와 같은 필터링 Resources를 제공합니다.
       </p>
       <ApiEndPointsTable data={FILTER_ENDPOINT_DATA} />
     </FetchSection>
