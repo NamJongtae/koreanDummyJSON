@@ -97,8 +97,8 @@ beforeEach(() => {
     </section>
   ));
   mockNestedResources.mockImplementation(() => (
-    <section id="하위-Resource-조회하기">
-      <h2>하위 Resource 조회하기</h2>
+    <section id="하위-중첩-Resource-조회하기">
+      <h2>하위 중첩 Resource 조회하기</h2>
     </section>
   ));
   mockStartLibrary.mockImplementation(() => (
@@ -140,7 +140,7 @@ describe("GuidePage component test", () => {
       screen.getByRole("heading", { name: "Resource 필터링하기" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "하위 Resource 조회하기" })
+      screen.getByRole("heading", { name: "하위 중첩 Resource 조회하기" })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "라이브러리로 빠르게 시작하기" })
@@ -161,7 +161,7 @@ describe("GuidePage component test", () => {
       "Resource-일부-수정하기",
       "Resource-삭제하기",
       "Resource-필터링하기",
-      "하위-Resource-조회하기",
+      "하위-중첩-Resource-조회하기",
       "라이브러리로-빠르게-시작하기"
     ]);
     expect(props.activeSectionId).toBe("소개");
