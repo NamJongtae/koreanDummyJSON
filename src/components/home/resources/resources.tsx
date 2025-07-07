@@ -10,7 +10,7 @@ export default function Resources() {
 
       <p className="section-text mb-5">
         users, posts, comments, todos, books, reviews, auth, image, lorem 9개의
-        리소스가 제공됩니다.
+        Resources가 제공됩니다.
       </p>
 
       <table className="min-w-full border-collapse border border-gray-200 shadow-md rounded-lg overflow-hidden">
