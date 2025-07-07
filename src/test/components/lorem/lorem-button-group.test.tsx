@@ -19,14 +19,14 @@ describe("LoremButtonGroup component test", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGenerateButton.mockImplementation((props) => (
-      <button {...props}>생성</button>
+    mockGenerateButton.mockImplementation(({ children }) => (
+      <button type="button">{children || "생성"}</button>
     ));
-    mockCopyButton.mockImplementation((props) => (
-      <button {...props}>복사</button>
+    mockCopyButton.mockImplementation(({ children }) => (
+      <button type="button">{children || "복사"}</button>
     ));
-    mockResetButton.mockImplementation((props) => (
-      <button {...props}>리셋</button>
+    mockResetButton.mockImplementation(({ children }) => (
+      <button type="button">{children || "리셋"}</button>
     ));
   });
 
