@@ -11,8 +11,7 @@ jest.mock("@/src/components/home/resources/resources-rows", () => ({
   )
 }));
 
-describe("Resources 컴포넌트", () => {
-
+describe("Resources component test", () => {
   it("섹션, 제목, 설명, 테이블 헤더, row가 모두 렌더링된다", () => {
     render(<Resources />);
     // 섹션 제목
@@ -22,7 +21,7 @@ describe("Resources 컴포넌트", () => {
     // 설명
     expect(
       screen.getByText(
-        /users, posts, comments, todos, books, reviews, auth, image, lorem 9개의 리소스가 제공됩니다/
+        /users, posts, comments, todos, books, reviews, auth, image, lorem 9개의 Resources가 제공됩니다/
       )
     ).toBeInTheDocument();
     // 테이블 헤더
