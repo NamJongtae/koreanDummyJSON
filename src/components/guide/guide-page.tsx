@@ -42,7 +42,7 @@ export default function GuidePage() {
           "Resource-일부-수정하기",
           "Resource-삭제하기",
           "Resource-필터링하기",
-          "하위-Resource-조회하기",
+          "하위-중첩-Resource-조회하기",
           "라이브러리로-빠르게-시작하기"
         ]}
       />
