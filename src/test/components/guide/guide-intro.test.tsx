@@ -13,7 +13,7 @@ describe("GuideIntro component test", () => {
     // 안내 문구
     expect(
       screen.getByText(
-        "기본 6가지 Resource(users, todos, posts, comments, books, reviews)",
+        "기본 6가지 Resources(users, todos, posts, comments, books, reviews)",
         { selector: "b" }
       )
     ).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe("GuideIntro component test", () => {
       screen.getByText(/korean-dummy-json-fetcher 라이브러리 혹은 CDN/)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/각 리소스에 대한 더 자세한 설명은/)
+      screen.getByText(/각 Resource에 대한 더 자세한 설명은/)
     ).toBeInTheDocument();
 
     // Docs 링크
