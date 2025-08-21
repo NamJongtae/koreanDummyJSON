@@ -36,15 +36,9 @@ export const metadata: Metadata = {
     "DELETE"
   ],
   verification: {
-    google: [
-      "-LptG2gzye6iVIM8aZT5fiJGQqrMVVQVi2lpo1wcPv4",
-      "c6hLQ83ILZIlJb0fwdyrw71DGHnTFaI7hmmORy7fpk0"
-    ],
+    google: "c6hLQ83ILZIlJb0fwdyrw71DGHnTFaI7hmmORy7fpk0",
     other: {
-      "naver-site-verification": [
-        "113a089154e96d7d1603d689bb25f8ac2ac5f289",
-        "af430635bea7730cf8fad862d82246d2e48a1e42"
-      ]
+      "naver-site-verification": "af430635bea7730cf8fad862d82246d2e48a1e42"
     }
   },
   icons: {
