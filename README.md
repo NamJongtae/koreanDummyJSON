@@ -70,11 +70,11 @@ pnpm add korean-dummy-json-fetcher
 #### CDN
 
 ```html
-<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.1.1"></script>
+<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.1.2"></script>
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.1.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.1.2"></script>
 ```
 
 <br/>
