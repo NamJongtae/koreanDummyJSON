@@ -38,7 +38,9 @@
 
 📅 **개발 기간 : 2024. 08. 27. ~ 2024. 09. 14.**
 
-#### 🔗 배포 URL : [📚 Korean Dummy JSON](https://koreandummyjson.site/)
+📆 **리팩토링 기간 : 2025. 06. 22 ~ 2025. 07.07.**
+
+#### 🔗 배포 URL : [📚 Korean Dummy JSON](https://koreandummyjson.vercel.app/)
 
 <br/>
 
@@ -68,11 +70,11 @@ pnpm add korean-dummy-json-fetcher
 #### CDN
 
 ```html
-<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.1.0"></script>
+<script src="https://cdn.unpkg.com/npm/korean-dummy-json-fetcher@1.1.1"></script>
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/korean-dummy-json-fetcher@1.1.1"></script>
 ```
 
 <br/>
@@ -91,15 +93,15 @@ pnpm add korean-dummy-json-fetcher
 
 | Resource                                                          | Information           |
 | ----------------------------------------------------------------- | --------------------- |
-| <a href="https://koreandummyjson.site/api/users">/users</a>       | 유저 20명             |
-| <a href="https://koreandummyjson.site/api/posts">/posts</a>       | 게시물 100개          |
-| <a href="https://koreandummyjson.site/api/comments">/comments</a> | 댓글 500개            |
-| <a href="https://koreandummyjson.site/api/todos">/todos</a>       | 할 일 200개           |
-| <a href="https://koreandummyjson.site/api/books">/books</a>       | 책 100개              |
-| <a href="https://koreandummyjson.site/api/reviews">/reviews</a>   | 리뷰 500개            |
+| <a href="https://koreandummyjson.vercel.app/api/users">/users</a>       | 유저 20명             |
+| <a href="https://koreandummyjson.vercel.app/api/posts">/posts</a>       | 게시물 100개          |
+| <a href="https://koreandummyjson.vercel.app/api/comments">/comments</a> | 댓글 500개            |
+| <a href="https://koreandummyjson.vercel.app/api/todos">/todos</a>       | 할 일 200개           |
+| <a href="https://koreandummyjson.vercel.app/api/books">/books</a>       | 책 100개              |
+| <a href="https://koreandummyjson.vercel.app/api/reviews">/reviews</a>   | 리뷰 500개            |
 | <a href="/#">/auth</a>                                            | 로그인 및 인증/인가   |
-| <a href="https://koreandummyjson.site/api/image">/image</a>       | 동적 더미 이미지 생성 |
-| <a href="https://koreandummyjson.site/api/lorem">/lorem</a>     | 한글 로렘 입숨 생성|
+| <a href="https://koreandummyjson.vercel.app/api/image">/image</a>       | 동적 더미 이미지 생성 |
+| <a href="https://koreandummyjson.vercel.app/api/lorem">/lorem</a>     | 한글 로렘 입숨 생성|
 
 <br/>
 
@@ -109,12 +111,12 @@ pnpm add korean-dummy-json-fetcher
 
 각 예시 코드를 복사한 후 브라우저 콘솔에서 실행해 보세요.
 
-자세한 사용법을 알고 싶으시면 리소스별 [📃Docs](https://koreandummyjson.site/docs/users) 페이지를 참고해 주세요.
+자세한 사용법을 알고 싶으시면 리소스별 [📃Docs](https://koreandummyjson.vercel.app/docs/users) 페이지를 참고해 주세요.
 
 #### 1 ) 데이터 조회하기
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts/1")
+fetch("https://koreandummyjson.vercel.app/api/posts/1")
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => console.error("Error fetching data:", error));
@@ -141,7 +143,7 @@ fetch("https://koreandummyjson.site/api/posts/1")
 #### 2 ) 데이터 목록 조회하기
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts")
+fetch("https://koreandummyjson.vercel.app/api/posts")
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => console.error("Error fetching data:", error));
@@ -179,7 +181,7 @@ fetch("https://koreandummyjson.site/api/posts")
 #### 3 ) 데이터 페이지네이션
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts?page=1&limit=10")
+fetch("https://koreandummyjson.vercel.app/api/posts?page=1&limit=10")
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => console.error("Error fetching data:", error));
@@ -220,7 +222,7 @@ fetch("https://koreandummyjson.site/api/posts?page=1&limit=10")
 #### 4 ) 데이터 생성하기
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts", {
+fetch("https://koreandummyjson.vercel.app/api/posts", {
   method: "POST",
   body: JSON.stringify({
     title: "테스트 글",
@@ -258,7 +260,7 @@ fetch("https://koreandummyjson.site/api/posts", {
 #### 5 ) 데이터 수정하기(PUT)
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts/1", {
+fetch("https://koreandummyjson.vercel.app/api/posts/1", {
   method: "PUT",
   body: JSON.stringify({
     title: "테스트 글",
@@ -294,7 +296,7 @@ fetch("https://koreandummyjson.site/api/posts/1", {
 #### 6 ) 데이터 수정하기(PATCH)
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts/1", {
+fetch("https://koreandummyjson.vercel.app/api/posts/1", {
   method: "PATCH",
   body: JSON.stringify({
     title: "테스트 글"
@@ -329,7 +331,7 @@ fetch("https://koreandummyjson.site/api/posts/1", {
 #### 7 ) 데이터 삭제하기
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts/1", {
+fetch("https://koreandummyjson.vercel.app/api/posts/1", {
   method: "DELETE"
 })
   .then((response) => response.json())
@@ -350,7 +352,7 @@ fetch("https://koreandummyjson.site/api/posts/1", {
 #### 8 ) 데이터 필터링하기
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts/?userId=1")
+fetch("https://koreandummyjson.vercel.app/api/posts/?userId=1")
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => console.error("Error fetching data:", error));
@@ -411,7 +413,7 @@ fetch("https://koreandummyjson.site/api/posts/?userId=1")
 #### 9 ) 중첩 하위 데이터 조회하기
 
 ```javascript
-fetch("https://koreandummyjson.site/api/posts/1/comments")
+fetch("https://koreandummyjson.vercel.app/api/posts/1/comments")
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => console.error("Error fetching data:", error));
@@ -464,7 +466,7 @@ fetch("https://koreandummyjson.site/api/posts/1/comments")
 #### 10 ) 로그인
 
 ```javascript
-fetch("https://koreandummyjson.site/api/auth/login", {
+fetch("https://koreandummyjson.vercel.app/api/auth/login", {
   method: "POST",
   body: JSON.stringify({
     "id": "test",
@@ -495,7 +497,7 @@ fetch("https://koreandummyjson.site/api/auth/login", {
 
 #### 11 ) accessToken를 통해 유저 조회
 ```javascript
-fetch("https://koreandummyjson.site/api/auth/user", {
+fetch("https://koreandummyjson.vercel.app/api/auth/user", {
   headers: {
     "Content-Type": "application/json",
     "Authorization": "Bearer accessToken 입력"
@@ -520,7 +522,7 @@ fetch("https://koreandummyjson.site/api/auth/user", {
 #### 12 ) accessToken 재발급
 
 ```javascript
-fetch("https://koreandummyjson.site/api/auth/refresh", {
+fetch("https://koreandummyjson.vercel.app/api/auth/refresh", {
   headers: {
     "Content-Type": "application/json",
     "Authorization": "Bearer refershToken 입력"
@@ -545,7 +547,7 @@ fetch("https://koreandummyjson.site/api/auth/refresh", {
 #### 13 ) 동적 더미 이미지 생성
 
 ```javascript
-fetch("https://koreandummyjson.site/api/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE")
+fetch("https://koreandummyjson.vercel.app/api/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE")
   .then(response => response.blob())
   .then(blob => console.log(blob))
   .catch(error => console.error('Error fetching blob:', error));
@@ -553,14 +555,14 @@ fetch("https://koreandummyjson.site/api/image?size=300x300&text=KoreanDummyJSON&
 
 결과
 
-<img src="https://koreandummyjson.site/api/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE">
+<img src="https://koreandummyjson.vercel.app/api/image?size=300x300&text=KoreanDummyJSON&textColor=2E64FE">
 
 <br/>
 
 #### 14 ) 한글 로렘 입숨 생성
 
 ```javascript
-fetch("https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200")
+fetch("https://koreandummyjson.vercel.app/api/lorem?mode=p&count=2&length=200")
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error('Error fetching data:', error));
@@ -582,12 +584,12 @@ fetch("https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200")
 
 | Endpoint                                                                        | Method | Action             |
 | ------------------------------------------------------------------------------- | ------ | ------------------ |
-| <a href="/api/users?page=1&limit=10">/users?page={page}&limit={limit}</a>       | GET    | 유저 목록 페이징   |
-| <a href="/api/todos?page=1&limit=10">/todos?page={page}&limit={limit}</a>       | GET    | 할 일 목록 페이징  |
-| <a href="/api/posts?page=1&limit=10">/posts?page={page}&limit={limit}</a>       | GET    | 게시물 목록 페이징 |
-| <a href="/api/comments?page=1&limit=10">/comments?page={page}&limit={limit}</a> | GET    | 댓글 목록 페이징   |
-| <a href="/api/books?page=1&limit=10">/books?page={page}&limit={limit}</a>       | GET    | 책 목록 페이징     |
-| <a href="/api/reviews?page=1&limit=10">/reviews?page={page}&limit={limit}</a>   | GET    | 리뷰 목록 페이징   |
+| <a href="https://koreandummyjson.vercel.app/api/users?page=1&limit=10">/users?page={page}&limit={limit}</a>       | GET    | 유저 목록 페이징   |
+| <a href="https://koreandummyjson.vercel.app/api/todos?page=1&limit=10">/todos?page={page}&limit={limit}</a>       | GET    | 할 일 목록 페이징  |
+| <a href="https://koreandummyjson.vercel.app/api/posts?page=1&limit=10">/posts?page={page}&limit={limit}</a>       | GET    | 게시물 목록 페이징 |
+| <a href="https://koreandummyjson.vercel.app/api/comments?page=1&limit=10">/comments?page={page}&limit={limit}</a> | GET    | 댓글 목록 페이징   |
+| <a href="https://koreandummyjson.vercel.app/api/books?page=1&limit=10">/books?page={page}&limit={limit}</a>       | GET    | 책 목록 페이징     |
+| <a href="https://koreandummyjson.vercel.app/api/reviews?page=1&limit=10">/reviews?page={page}&limit={limit}</a>   | GET    | 리뷰 목록 페이징   |
 
 <br/>
 
@@ -597,11 +599,11 @@ fetch("https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200")
 
 | Endpoint                                                       | Method | Action             |
 | -------------------------------------------------------------- | ------ | ------------------ |
-| <a href="/api/todos?userId=1">/todos?userId={userId}</a>       | GET    | 유저별 할 일 목록  |
-| <a href="/api/comments?userId=1">/comments?userId={userId}</a> | GET    | 유저별 댓글 목록   |
-| <a href="/api/comments?postId=1">/comments?postId={postId}</a> | GET    | 게시물별 댓글 목록 |
-| <a href="/api/reviews?bookId=1">/reviews?bookId={bookId}</a>   | GET    | 책별 리뷰 목록     |
-| <a href="/api/reviews?userId=1">/reviews?userId={userId}</a>   | GET    | 유저별 리뷰 목록   |
+| <a href="https://koreandummyjson.vercel.app/api/todos?userId=1">/todos?userId={userId}</a>       | GET    | 유저별 할 일 목록  |
+| <a href="https://koreandummyjson.vercel.app/api/comments?userId=1">/comments?userId={userId}</a> | GET    | 유저별 댓글 목록   |
+| <a href="https://koreandummyjson.vercel.app/api/comments?postId=1">/comments?postId={postId}</a> | GET    | 게시물별 댓글 목록 |
+| <a href="https://koreandummyjson.vercel.app/api/reviews?bookId=1">/reviews?bookId={bookId}</a>   | GET    | 책별 리뷰 목록     |
+| <a href="https://koreandummyjson.vercel.app/api/reviews?userId=1">/reviews?userId={userId}</a>   | GET    | 유저별 리뷰 목록   |
 
 <br/>
 
@@ -611,12 +613,12 @@ fetch("https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200")
 
 | Endpoint                                                | Method | Action                  |
 | ------------------------------------------------------- | ------ | ----------------------- |
-| <a href="/api/users/1/todos">/users/:id/todos</a>       | GET    | 유저별 할 일 목록 조회  |
-| <a href="/api/users/1/posts">/users/:id/posts</a>       | GET    | 유저별 게시물 목록 조회 |
-| <a href="/api/users/1/comment">/users/:id/comment</a>   | GET    | 유저별 댓글 목록 조회   |
-| <a href="/api/users/1/reviews">/users/:id/reviews</a>   | GET    | 유저별 리뷰 목록 조회   |
-| <a href="/api/posts/1/comments">/posts/:id/comments</a> | GET    | 게시물별 댓글 목록 조회 |
-| <a href="/api/books/1/reviews">/books/:id/reviews</a>   | GET    | 책별 리뷰 목록 조회     |
+| <a href="https://koreandummyjson.vercel.app/api/users/1/todos">/users/:id/todos</a>       | GET    | 유저별 할 일 목록 조회  |
+| <a href="https://koreandummyjson.vercel.app/api/users/1/posts">/users/:id/posts</a>       | GET    | 유저별 게시물 목록 조회 |
+| <a href="https://koreandummyjson.vercel.app/api/users/1/comment">/users/:id/comment</a>   | GET    | 유저별 댓글 목록 조회   |
+| <a href="https://koreandummyjson.vercel.app/api/users/1/reviews">/users/:id/reviews</a>   | GET    | 유저별 리뷰 목록 조회   |
+| <a href="https://koreandummyjson.vercel.app/api/posts/1/comments">/posts/:id/comments</a> | GET    | 게시물별 댓글 목록 조회 |
+| <a href="https://koreandummyjson.vercel.app/api/books/1/reviews">/books/:id/reviews</a>   | GET    | 책별 리뷰 목록 조회     |
 
 <br/>
 
@@ -624,63 +626,63 @@ fetch("https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200")
 
 | Endpoint                                                                                                                   | Method | Action                  |
 | -------------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------- |
-| [/users/:id](https://koreandummyjson.site/api/users/1)                                                                     | GET    | 유저 조회               |
-| [/users](https://koreandummyjson.site/api/users)                                                                           | GET    | 유저 목록               |
-| [/users?page={page}&limit={limit}](https://koreandummyjson.site/api/users?page=1&limit=10)                                 | GET    | 유저 목록 페이지        |
-| [/users/:id/todos](https://koreandummyjson.site/api/users/1/todos)                                                         | GET    | 유저 할 일 목록 조회    |
-| [/users/:id/posts](https://koreandummyjson.site/api/users/1/posts)                                                         | GET    | 유저 게시물 목록 조회   |
-| [/users/:id/comments](https://koreandummyjson.site/api/users/1/comments)                                                   | GET    | 유저 댓글 목록 조회     |
-| [/users/:id/books](https://koreandummyjson.site/api/users/1/books)                                                         | GET    | 유저 책 목록 조회       |
-| [/users/:id/reviews](https://koreandummyjson.site/api/users/1/reviews)                                                     | GET    | 유저 리뷰 목록 조회     |
-| [/users](https://koreandummyjson.site/api/users)                                                                           | POST   | 유저 생성               |
-| [/users/:id](https://koreandummyjson.site/api/users/1)                                                                     | PUT    | 유저 수정               |
-| [/users/:id](https://koreandummyjson.site/api/users/1)                                                                     | PATCH  | 유저 수정               |
-| [/users/:id](https://koreandummyjson.site/api/users/1)                                                                     | DELETE | 유저 삭제               |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                                                     | GET    | 할 일 조회              |
-| [/todos](https://koreandummyjson.site/api/todos)                                                                           | GET    | 할 일 목록              |
-| [/todos?userId={userId}](https://koreandummyjson.site/api/todos?userId=1)                                                  | GET    | 유저 할 일 목록 필터링  |
-| [/todos?page={page}&limit={limit}](https://koreandummyjson.site/api/todos?page=1&limit=10)                                 | GET    | 할 일 목록 페이지       |
-| [/todos](https://koreandummyjson.site/api/todos)                                                                           | POST   | 할 일 생성              |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                                                     | PUT    | 할 일 수정              |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                                                     | PATCH  | 할 일 수정              |
-| [/todos/:id](https://koreandummyjson.site/api/todos/1)                                                                     | DELETE | 할 일 삭제              |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                                                     | GET    | 게시물 조회             |
-| [/posts](https://koreandummyjson.site/api/posts)                                                                           | GET    | 게시물 목록             |
-| [/posts?page={page}&limit={limit}](https://koreandummyjson.site/api/posts?page=1&limit=10)                                 | GET    | 게시물 목록 페이지      |
-| [/posts/:id/comments](https://koreandummyjson.site/api/posts/1/comments)                                                   | GET    | 게시물 댓글 목록 조회   |
-| [/posts?userId={userId}](https://koreandummyjson.site/api/posts?userId=1)                                                  | GET    | 유저 게시물 목록 필터링 |
-| [/posts](https://koreandummyjson.site/api/posts)                                                                           | POST   | 게시물 생성             |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                                                     | PUT    | 게시물 수정             |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                                                     | PATCH  | 게시물 수정             |
-| [/posts/:id](https://koreandummyjson.site/api/posts/1)                                                                     | DELETE | 게시물 삭제             |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                                               | GET    | 댓글 조회               |
-| [/comments](https://koreandummyjson.site/api/comments)                                                                     | GET    | 댓글 목록               |
-| [/comments?page={page}&limit={limit}](https://koreandummyjson.site/api/comments?page=1&limit=10)                           | GET    | 댓글 목록 페이지        |
-| [/comments?userId={userId}](https://koreandummyjson.site/api/comments?userId=1)                                            | GET    | 유저 댓글 목록 필터링   |
-| [/comments?postId={postId}](https://koreandummyjson.site/api/comments?postId=1)                                            | GET    | 게시물 댓글 목록 필터링 |
-| [/comments](https://koreandummyjson.site/api/comments)                                                                     | POST   | 댓글 생성               |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                                               | PUT    | 댓글 수정               |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                                               | PATCH  | 댓글 수정               |
-| [/comments/:id](https://koreandummyjson.site/api/comments/1)                                                               | DELETE | 댓글 삭제               |
-| [/books/:id](https://koreandummyjson.site/api/books/1)                                                                     | GET    | 책 조회                 |
-| [/books](https://koreandummyjson.site/api/books)                                                                           | GET    | 책 목록                 |
-| [/books?page={page}&limit={limit}](https://koreandummyjson.site/api/books?page=1&limit=10)                                 | GET    | 책 목록 페이지          |
-| [/books/:id/reviews](https://koreandummyjson.site/api/books/1/reviews)                                                     | GET    | 책 리뷰 목록 조회       |
-| [/books](https://koreandummyjson.site/api/books)                                                                           | POST   | 책 생성                 |
-| [/books/:id](https://koreandummyjson.site/api/books/1)                                                                     | PUT    | 책 수정                 |
-| [/books/:id](https://koreandummyjson.site/api/books/1)                                                                     | PATCH  | 책 수정                 |
-| [/books/:id](https://koreandummyjson.site/api/books/1)                                                                     | DELETE | 책 삭제                 |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                                                 | GET    | 리뷰 조회               |
-| [/reviews](https://koreandummyjson.site/api/reviews)                                                                       | GET    | 리뷰 목록               |
-| [/reviews?page={page}&limit={limit}](https://koreandummyjson.site/api/reviews?page=1&limit=10)                             | GET    | 리뷰 목록 페이지        |
-| [/reviews?userId={userId}](https://koreandummyjson.site/api/reviews?userId=1)                                              | GET    | 유저 리뷰 필터링        |
-| [/reviews?bookId={bookId}](https://koreandummyjson.site/api/reviews?bookId=1)                                              | GET    | 책 리뷰 필터링          |
-| [/reviews](https://koreandummyjson.site/api/reviews)                                                                       | POST   | 리뷰 생성               |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                                                 | PUT    | 리뷰 수정               |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                                                 | PATCH  | 리뷰 수정               |
-| [/reviews/:id](https://koreandummyjson.site/api/reviews/1)                                                                 | DELETE | 리뷰 삭제               |
-| [/auth/login](https://koreandummyjson.site/api/auth/login)                                                                 | POST   | 로그인                  |
-| [/auth/user](https://koreandummyjson.site/api/auth/user)                                                                   | GET    | 유저 조회               |
-| [/auth/refresh](https://koreandummyjson.site/api/auth/refresh)                                                             | GET    | 토큰 재발급             |
-| [/image?size={size}&bgColor={bgColor}&text={text}&ext={ext}&textColor={textColor}](https://koreandummyjson.site/api/image) | GET    | 동적 더미 이미지 생성   |
-| [/lorem?mode={mode}&count={count}&length={length}](https://koreandummyjson.site/api/lorem?mode=p&count=2&length=200) | GET |한글 로렘 입숨 생성| 
+| [/users/:id](https://koreandummyjson.vercel.app/api/users/1)                                                                     | GET    | 유저 조회               |
+| [/users](https://koreandummyjson.vercel.app/api/users)                                                                           | GET    | 유저 목록               |
+| [/users?page={page}&limit={limit}](https://koreandummyjson.vercel.app/api/users?page=1&limit=10)                                 | GET    | 유저 목록 페이지        |
+| [/users/:id/todos](https://koreandummyjson.vercel.app/api/users/1/todos)                                                         | GET    | 유저 할 일 목록 조회    |
+| [/users/:id/posts](https://koreandummyjson.vercel.app/api/users/1/posts)                                                         | GET    | 유저 게시물 목록 조회   |
+| [/users/:id/comments](https://koreandummyjson.vercel.app/api/users/1/comments)                                                   | GET    | 유저 댓글 목록 조회     |
+| [/users/:id/books](https://koreandummyjson.vercel.app/api/users/1/books)                                                         | GET    | 유저 책 목록 조회       |
+| [/users/:id/reviews](https://koreandummyjson.vercel.app/api/users/1/reviews)                                                     | GET    | 유저 리뷰 목록 조회     |
+| [/users](https://koreandummyjson.vercel.app/api/users)                                                                           | POST   | 유저 생성               |
+| [/users/:id](https://koreandummyjson.vercel.app/api/users/1)                                                                     | PUT    | 유저 수정               |
+| [/users/:id](https://koreandummyjson.vercel.app/api/users/1)                                                                     | PATCH  | 유저 수정               |
+| [/users/:id](https://koreandummyjson.vercel.app/api/users/1)                                                                     | DELETE | 유저 삭제               |
+| [/todos/:id](https://koreandummyjson.vercel.app/api/todos/1)                                                                     | GET    | 할 일 조회              |
+| [/todos](https://koreandummyjson.vercel.app/api/todos)                                                                           | GET    | 할 일 목록              |
+| [/todos?userId={userId}](https://koreandummyjson.vercel.app/api/todos?userId=1)                                                  | GET    | 유저 할 일 목록 필터링  |
+| [/todos?page={page}&limit={limit}](https://koreandummyjson.vercel.app/api/todos?page=1&limit=10)                                 | GET    | 할 일 목록 페이지       |
+| [/todos](https://koreandummyjson.vercel.app/api/todos)                                                                           | POST   | 할 일 생성              |
+| [/todos/:id](https://koreandummyjson.vercel.app/api/todos/1)                                                                     | PUT    | 할 일 수정              |
+| [/todos/:id](https://koreandummyjson.vercel.app/api/todos/1)                                                                     | PATCH  | 할 일 수정              |
+| [/todos/:id](https://koreandummyjson.vercel.app/api/todos/1)                                                                     | DELETE | 할 일 삭제              |
+| [/posts/:id](https://koreandummyjson.vercel.app/api/posts/1)                                                                     | GET    | 게시물 조회             |
+| [/posts](https://koreandummyjson.vercel.app/api/posts)                                                                           | GET    | 게시물 목록             |
+| [/posts?page={page}&limit={limit}](https://koreandummyjson.vercel.app/api/posts?page=1&limit=10)                                 | GET    | 게시물 목록 페이지      |
+| [/posts/:id/comments](https://koreandummyjson.vercel.app/api/posts/1/comments)                                                   | GET    | 게시물 댓글 목록 조회   |
+| [/posts?userId={userId}](https://koreandummyjson.vercel.app/api/posts?userId=1)                                                  | GET    | 유저 게시물 목록 필터링 |
+| [/posts](https://koreandummyjson.vercel.app/api/posts)                                                                           | POST   | 게시물 생성             |
+| [/posts/:id](https://koreandummyjson.vercel.app/api/posts/1)                                                                     | PUT    | 게시물 수정             |
+| [/posts/:id](https://koreandummyjson.vercel.app/api/posts/1)                                                                     | PATCH  | 게시물 수정             |
+| [/posts/:id](https://koreandummyjson.vercel.app/api/posts/1)                                                                     | DELETE | 게시물 삭제             |
+| [/comments/:id](https://koreandummyjson.vercel.app/api/comments/1)                                                               | GET    | 댓글 조회               |
+| [/comments](https://koreandummyjson.vercel.app/api/comments)                                                                     | GET    | 댓글 목록               |
+| [/comments?page={page}&limit={limit}](https://koreandummyjson.vercel.app/api/comments?page=1&limit=10)                           | GET    | 댓글 목록 페이지        |
+| [/comments?userId={userId}](https://koreandummyjson.vercel.app/api/comments?userId=1)                                            | GET    | 유저 댓글 목록 필터링   |
+| [/comments?postId={postId}](https://koreandummyjson.vercel.app/api/comments?postId=1)                                            | GET    | 게시물 댓글 목록 필터링 |
+| [/comments](https://koreandummyjson.vercel.app/api/comments)                                                                     | POST   | 댓글 생성               |
+| [/comments/:id](https://koreandummyjson.vercel.app/api/comments/1)                                                               | PUT    | 댓글 수정               |
+| [/comments/:id](https://koreandummyjson.vercel.app/api/comments/1)                                                               | PATCH  | 댓글 수정               |
+| [/comments/:id](https://koreandummyjson.vercel.app/api/comments/1)                                                               | DELETE | 댓글 삭제               |
+| [/books/:id](https://koreandummyjson.vercel.app/api/books/1)                                                                     | GET    | 책 조회                 |
+| [/books](https://koreandummyjson.vercel.app/api/books)                                                                           | GET    | 책 목록                 |
+| [/books?page={page}&limit={limit}](https://koreandummyjson.vercel.app/api/books?page=1&limit=10)                                 | GET    | 책 목록 페이지          |
+| [/books/:id/reviews](https://koreandummyjson.vercel.app/api/books/1/reviews)                                                     | GET    | 책 리뷰 목록 조회       |
+| [/books](https://koreandummyjson.vercel.app/api/books)                                                                           | POST   | 책 생성                 |
+| [/books/:id](https://koreandummyjson.vercel.app/api/books/1)                                                                     | PUT    | 책 수정                 |
+| [/books/:id](https://koreandummyjson.vercel.app/api/books/1)                                                                     | PATCH  | 책 수정                 |
+| [/books/:id](https://koreandummyjson.vercel.app/api/books/1)                                                                     | DELETE | 책 삭제                 |
+| [/reviews/:id](https://koreandummyjson.vercel.app/api/reviews/1)                                                                 | GET    | 리뷰 조회               |
+| [/reviews](https://koreandummyjson.vercel.app/api/reviews)                                                                       | GET    | 리뷰 목록               |
+| [/reviews?page={page}&limit={limit}](https://koreandummyjson.vercel.app/api/reviews?page=1&limit=10)                             | GET    | 리뷰 목록 페이지        |
+| [/reviews?userId={userId}](https://koreandummyjson.vercel.app/api/reviews?userId=1)                                              | GET    | 유저 리뷰 필터링        |
+| [/reviews?bookId={bookId}](https://koreandummyjson.vercel.app/api/reviews?bookId=1)                                              | GET    | 책 리뷰 필터링          |
+| [/reviews](https://koreandummyjson.vercel.app/api/reviews)                                                                       | POST   | 리뷰 생성               |
+| [/reviews/:id](https://koreandummyjson.vercel.app/api/reviews/1)                                                                 | PUT    | 리뷰 수정               |
+| [/reviews/:id](https://koreandummyjson.vercel.app/api/reviews/1)                                                                 | PATCH  | 리뷰 수정               |
+| [/reviews/:id](https://koreandummyjson.vercel.app/api/reviews/1)                                                                 | DELETE | 리뷰 삭제               |
+| [/auth/login](https://koreandummyjson.vercel.app/api/auth/login)                                                                 | POST   | 로그인                  |
+| [/auth/user](https://koreandummyjson.vercel.app/api/auth/user)                                                                   | GET    | 유저 조회               |
+| [/auth/refresh](https://koreandummyjson.vercel.app/api/auth/refresh)                                                             | GET    | 토큰 재발급             |
+| [/image?size={size}&bgColor={bgColor}&text={text}&ext={ext}&textColor={textColor}](https://koreandummyjson.vercel.app/api/image) | GET    | 동적 더미 이미지 생성   |
+| [/lorem?mode={mode}&count={count}&length={length}](https://koreandummyjson.vercel.app/api/lorem?mode=p&count=2&length=200) | GET |한글 로렘 입숨 생성| 
