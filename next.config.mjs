@@ -15,7 +15,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "koreandummyjson.site"
+        hostname: "koreandummyjson.vercel.app"
       },
       {
         protocol: "http",
