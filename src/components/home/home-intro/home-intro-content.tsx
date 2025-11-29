@@ -11,7 +11,7 @@ export default function HomeIntroContent() {
       <QuoteIcon position="bottom" />
 
       <div className="flex flex-wrap gap-6 justify-between items-center">
-        <ApiRequestCount />
+       
         <HomeIntroLinks />
       </div>
     </div>
