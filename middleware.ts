@@ -4,15 +4,15 @@ export async function middleware(req: NextRequest) {
   const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0];
   console.log(clientIp);
 
-  if (process.env.TEST_MODE !== "1" && process.env.NODE_ENV !== "development") {
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request-count`, {
-        method: "POST"
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // if (process.env.TEST_MODE !== "1" && process.env.NODE_ENV !== "development") {
+  //   try {
+  //     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/request-count`, {
+  //       method: "POST"
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   if (req.nextUrl.pathname.startsWith("/api/")) {
     const response = NextResponse.next();
