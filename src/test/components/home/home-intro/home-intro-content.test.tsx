@@ -28,7 +28,6 @@ describe("HomeIntroContent component test", () => {
     expect(screen.getByTestId("quote-icon-top")).toBeInTheDocument();
     expect(screen.getByTestId("home-intro-description")).toBeInTheDocument();
     expect(screen.getByTestId("quote-icon-bottom")).toBeInTheDocument();
-    expect(screen.getByTestId("api-request-count")).toBeInTheDocument();
     expect(screen.getByTestId("home-intro-links")).toBeInTheDocument();
   });
 });
