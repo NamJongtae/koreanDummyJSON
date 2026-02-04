@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function useDropdownMenu() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -22,7 +22,7 @@ export default function useDropdownMenu() {
     setIsOpenMenu(false);
   };
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     if (isOpenMenu) {
       if (!menuRef.current) return;
       menuRef.current.classList.remove("animate-entering");
@@ -33,7 +33,7 @@ export default function useDropdownMenu() {
       return;
     }
     openMenu();
-  };
+  }, [isOpenMenu]);
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -51,7 +51,7 @@ export default function useDropdownMenu() {
       document.removeEventListener("mousedown", handleOutsideClick);
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [isOpenMenu]);
+  }, [isOpenMenu, toggleMenu]);
 
   return {
     isOpenMenu,
