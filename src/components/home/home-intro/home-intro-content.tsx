@@ -1,7 +1,6 @@
 import QuoteIcon from "./quote-icon";
 import HomeIntroLinks from "./home-intro-links";
 import HomeIntroDescription from "./home-intro-description";
-import ApiRequestCount from "./api-request-count";
 
 export default function HomeIntroContent() {
   return (
