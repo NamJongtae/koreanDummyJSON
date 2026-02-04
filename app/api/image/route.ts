@@ -7,6 +7,17 @@ function isValidHexColor(color: string) {
   return /^([0-9A-F]{6})$/i.test(color);
 }
 
+// ✅ 폰트는 요청마다 등록하지 말고, 프로세스당 1회만
+let fontRegistered = false;
+function ensureFontRegistered() {
+  if (fontRegistered) return;
+  registerFont(
+    path.join(process.cwd(), "public/fonts/NotoSansKR-Regular.ttf"),
+    { family: "Noto Sans KR" }
+  );
+  fontRegistered = true;
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
@@ -31,7 +42,10 @@ export async function GET(request: NextRequest) {
   let width = parseInt(widthStr, 10);
   let height = heightStr ? parseInt(heightStr, 10) : width;
 
-  // 최대 크기 제한 적용
+  // NaN 방지 + 최대 크기 제한 적용
+  if (!Number.isFinite(width) || width <= 0) width = 150;
+  if (!Number.isFinite(height) || height <= 0) height = width;
+
   width = Math.min(width, MAX_WIDTH);
   height = Math.min(height, MAX_HEIGHT);
 
@@ -45,13 +59,8 @@ export async function GET(request: NextRequest) {
   const textLength = displayText.length;
   const fontSize = Math.min(width, height) / (textLength > 10 ? 15 : 10);
 
-  // 폰트 등록
-  registerFont(
-    path.join(process.cwd(), "public/fonts/NotoSansKR-Regular.ttf"),
-    {
-      family: "Noto Sans KR"
-    }
-  );
+  // ✅ 폰트 등록(1회)
+  ensureFontRegistered();
 
   let buffer: Buffer | string;
   let contentType: string;
@@ -89,7 +98,10 @@ export async function GET(request: NextRequest) {
     contentType = ext === "png" ? "image/png" : "image/jpeg";
   }
 
-  return new NextResponse(buffer, {
+  // ✅ NextResponse body 타입 호환(Next 16/TS): Buffer → Uint8Array 변환
+  const body = typeof buffer === "string" ? buffer : new Uint8Array(buffer);
+
+  return new NextResponse(body, {
     headers: { "Content-Type": contentType }
   });
 }
