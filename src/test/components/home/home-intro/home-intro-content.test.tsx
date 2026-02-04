@@ -13,17 +13,13 @@ jest.mock("@/src/components/home/home-intro/home-intro-description", () => ({
     <div data-testid="home-intro-description">HomeIntroDescription</div>
   )
 }));
-jest.mock("@/src/components/home/home-intro/api-request-count", () => ({
-  __esModule: true,
-  default: () => <div data-testid="api-request-count">ApiRequestCount</div>
-}));
 jest.mock("@/src/components/home/home-intro/home-intro-links", () => ({
   __esModule: true,
   default: () => <div data-testid="home-intro-links">HomeIntroLinks</div>
 }));
 
 describe("HomeIntroContent component test", () => {
-  it("QuoteIcon, HomeIntroDescription, ApiRequestCount, HomeIntroLinks가 렌더링된다", () => {
+  it("QuoteIcon, HomeIntroDescription, HomeIntroLinks가 렌더링된다", () => {
     render(<HomeIntroContent />);
     expect(screen.getByTestId("quote-icon-top")).toBeInTheDocument();
     expect(screen.getByTestId("home-intro-description")).toBeInTheDocument();
