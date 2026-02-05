@@ -18,7 +18,11 @@ function useFetch() {
         "Content-Type": "application/json",
         ...headers
       },
-      ...(method === "GET" && { cache: "force-cache" })
+      ...(method === "GET" &&
+        !url.includes("/auth") &&
+        !url.includes("/lorem") && {
+          cache: "force-cache"
+        })
     })
       .then((response) => response.json())
       .then((data) => setData(data))
