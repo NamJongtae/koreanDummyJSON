@@ -1,8 +1,11 @@
 import LoremPage from "@/src/components/lorem/lorem-page";
+import { BASE_METADATA } from "@/src/constants/constants";
 
 export const metadata = {
+  ...BASE_METADATA,
   title: "한글 Lorem Ipsum 생성기",
-  description: "한국어, 한글 더미 텍스트(문단, 문장, 단어)를 쉽고 빠르게 생성하세요.",
+  description:
+    "한글입숨 한국어, 한글 더미 텍스트(문단, 문장, 단어)를 쉽고 빠르게 생성하세요.",
   keywords: [
     "한글 더미 텍스트",
     "Lorem Ipsum",
@@ -14,18 +17,11 @@ export const metadata = {
     "한국어 Lorem Ipsum"
   ],
   openGraph: {
+    ...BASE_METADATA.openGraph,
     url: new URL(process.env.NEXT_PUBLIC_BASE_URL as string),
     title: "한글 Lorem Ipsum 생성기 | Korean Dummy JSON",
     description:
-      "한국어, 한글 더미 텍스트(문단, 문장, 단어)를 쉽고 빠르게 생성하세요.",
-    images: {
-      url: "/images/og-img.jpg",
-      width: 1200,
-      height: 630,
-      alt: "Korean Dummy JSON"
-    },
-    siteName: "Korean Dummy JSON",
-    type: "website"
+      "한글입숨 한국어, 한글 더미 텍스트(문단, 문장, 단어)를 쉽고 빠르게 생성하세요."
   }
 };
 
