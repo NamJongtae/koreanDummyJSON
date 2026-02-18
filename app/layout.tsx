@@ -4,6 +4,7 @@ import "./globals.css";
 import Layout from "@/src/components/commons/layout/layout";
 import { Analytics } from "@vercel/analytics/next";
 import { BASE_METADATA } from "@/src/constants/constants";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Noto_Sans_KR({
   weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -11,6 +12,7 @@ const inter = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = BASE_METADATA;
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function RootLayout({
   children
@@ -26,6 +28,7 @@ export default function RootLayout({
           </main>
         </Layout>
         <Analytics />
+        {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
       </body>
     </html>
   );
