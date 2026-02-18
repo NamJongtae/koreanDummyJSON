@@ -20,6 +20,7 @@
     "db:all": "npm run db:init && npm run db:users && npm run db:books && npm run db:posts && npm run db:todos && npm run db:comments && npm run db:reviews"
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.6",
     "@vercel/analytics": "^1.5.0",
     "canvas": "^3.1.0",
     "jsonwebtoken": "^9.0.2",
